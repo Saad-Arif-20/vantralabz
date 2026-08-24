@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, Globe, Mail, Menu, X } from 'lucide-react';
-
-const HERO_VIDEO_URL =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_074625_a81f018a-956b-43fb-9aee-4d1508e30e6a.mp4';
+import heroVideo from '../assets/video/hero.mp4';
 
 const NEWSLETTER_ENDPOINT = 'https://formspree.io/f/xeajbjza';
 
@@ -118,7 +116,7 @@ export default function Hero() {
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover object-bottom"
         style={{ opacity: 0 }}
-        src={HERO_VIDEO_URL}
+        src={heroVideo}
         muted
         autoPlay
         playsInline

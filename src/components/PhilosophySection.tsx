@@ -1,8 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-
-const PHILOSOPHY_VIDEO_URL =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260307_083826_e938b29f-a43a-41ec-a153-3d4730578ab8.mp4';
+import philosophyVideo from '../assets/video/philosophy.mp4';
 
 export default function PhilosophySection() {
   const headingRef = useRef(null);
@@ -36,15 +34,17 @@ export default function PhilosophySection() {
             transition={{ duration: 0.8 }}
             className="aspect-[4/3] overflow-hidden rounded-3xl"
           >
-            <video
-              className="h-full w-full object-cover"
-              src={PHILOSOPHY_VIDEO_URL}
-              muted
-              autoPlay
-              loop
-              playsInline
-              preload="auto"
-            />
+            {leftInView && (
+              <video
+                className="h-full w-full object-cover"
+                src={philosophyVideo}
+                muted
+                autoPlay
+                loop
+                playsInline
+                preload="none"
+              />
+            )}
           </motion.div>
 
           <motion.div
