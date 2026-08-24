@@ -24,7 +24,7 @@ export default function PhilosophySection() {
           className="mb-16 tracking-tight text-white text-5xl md:mb-24 md:text-7xl lg:text-8xl"
         >
           Innovation{' '}
-          <span className="font-serif-display italic text-white/40">x</span>{' '}
+          <span className="font-serif-display italic text-white/50">x</span>{' '}
           Vision
         </motion.h2>
 
@@ -55,10 +55,10 @@ export default function PhilosophySection() {
             className="flex flex-col justify-center gap-10"
           >
             <div>
-              <p className="mb-4 text-xs uppercase tracking-widest text-white/40">
+              <p className="mb-4 text-xs uppercase tracking-widest text-white/50">
                 Strategy meets creativity
               </p>
-              <p className="text-base leading-relaxed text-white/70 md:text-lg">
+              <p className="text-base leading-relaxed text-white/80 md:text-lg">
                 The best work lives where sharp strategy meets bold creative
                 instinct. That's the intersection we work from — turning
                 early ideas into brands, sites, and campaigns that people
@@ -69,10 +69,10 @@ export default function PhilosophySection() {
             <div className="h-px w-full bg-white/10" />
 
             <div>
-              <p className="mb-4 text-xs uppercase tracking-widest text-white/40">
+              <p className="mb-4 text-xs uppercase tracking-widest text-white/50">
                 Shape the future
               </p>
-              <p className="text-base leading-relaxed text-white/70 md:text-lg">
+              <p className="text-base leading-relaxed text-white/80 md:text-lg">
                 Our best ideas rarely come from following trends — they come
                 from staying curious. We dig until we find the angle no one
                 else has tried, then build it into something your audience

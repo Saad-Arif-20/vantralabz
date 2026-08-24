@@ -202,7 +202,7 @@ function ServiceCard({
 
       <div className="p-6 md:p-8">
         <div className="mb-4 flex items-center justify-between">
-          <span className="text-xs uppercase tracking-widest text-white/40">
+          <span className="text-xs uppercase tracking-widest text-white/50">
             {service.tag}
           </span>
           <span className="liquid-glass rounded-full p-2 transition-transform duration-300 group-hover:rotate-45">
@@ -212,7 +212,7 @@ function ServiceCard({
         <h3 className="mb-3 tracking-tight text-white text-xl md:text-2xl">
           {service.title}
         </h3>
-        <p className="text-sm leading-relaxed text-white/50">
+        <p className="text-sm leading-relaxed text-white/60">
           {service.description}
         </p>
       </div>
@@ -245,7 +245,7 @@ export default function ServicesSection() {
           <h2 className="tracking-tight text-white text-3xl md:text-5xl">
             What we do
           </h2>
-          <span className="hidden text-sm text-white/40 md:inline">
+          <span className="hidden text-sm text-white/50 md:inline">
             Our services
           </span>
         </motion.div>

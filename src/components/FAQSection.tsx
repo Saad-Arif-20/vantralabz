@@ -59,7 +59,7 @@ function FAQItem({
         </span>
         <ChevronDown
           size={20}
-          className={`shrink-0 text-white/60 transition-transform duration-300 ${
+          className={`shrink-0 text-white/70 transition-transform duration-300 ${
             isOpen ? 'rotate-180' : ''
           }`}
         />
@@ -74,7 +74,7 @@ function FAQItem({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <p className="px-6 pb-5 text-sm leading-relaxed text-white/50 md:text-base">
+            <p className="px-6 pb-5 text-sm leading-relaxed text-white/60 md:text-base">
               {answer}
             </p>
           </motion.div>
@@ -99,12 +99,12 @@ export default function FAQSection() {
           transition={{ duration: 0.7 }}
           className="mb-12 text-center md:mb-16"
         >
-          <p className="mb-4 text-sm uppercase tracking-widest text-white/40">
+          <p className="mb-4 text-sm uppercase tracking-widest text-white/50">
             FAQ
           </p>
           <h2 className="tracking-tight text-white text-4xl md:text-6xl">
             Frequently asked{' '}
-            <span className="font-serif-display italic text-white/60">
+            <span className="font-serif-display italic text-white/70">
               questions.
             </span>
           </h2>

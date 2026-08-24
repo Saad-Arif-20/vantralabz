@@ -224,7 +224,7 @@ export default function Hero() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full bg-transparent text-white placeholder:text-white/40 focus:outline-none"
+              className="w-full bg-transparent text-white placeholder:text-white/50 focus:outline-none"
             />
             <button
               type="submit"

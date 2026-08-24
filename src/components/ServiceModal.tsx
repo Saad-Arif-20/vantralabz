@@ -71,7 +71,7 @@ export default function ServiceModal({
             >
               <X size={18} />
             </button>
-            <span className="absolute bottom-4 left-6 text-xs uppercase tracking-widest text-white/60">
+            <span className="absolute bottom-4 left-6 text-xs uppercase tracking-widest text-white/70">
               {service.tag}
             </span>
           </div>
@@ -88,43 +88,43 @@ export default function ServiceModal({
               {service.detail.hook}
             </p>
 
-            <p className="mb-8 text-sm leading-relaxed text-white/60 md:text-base">
+            <p className="mb-8 text-sm leading-relaxed text-white/70 md:text-base">
               {service.detail.intro}
             </p>
 
             <div className="mb-8">
-              <p className="mb-4 text-xs uppercase tracking-widest text-white/40">
+              <p className="mb-4 text-xs uppercase tracking-widest text-white/50">
                 What's included
               </p>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 {service.detail.included.map((item) => (
                   <div key={item} className="flex items-start gap-2">
-                    <Check size={16} className="mt-0.5 shrink-0 text-white/50" />
-                    <span className="text-sm text-white/70">{item}</span>
+                    <Check size={16} className="mt-0.5 shrink-0 text-white/60" />
+                    <span className="text-sm text-white/80">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="mb-8">
-              <p className="mb-4 text-xs uppercase tracking-widest text-white/40">
+              <p className="mb-4 text-xs uppercase tracking-widest text-white/50">
                 You'll walk away with
               </p>
               <div className="flex flex-col gap-2">
                 {service.detail.walkAway.map((item) => (
                   <div key={item} className="flex items-start gap-2">
                     <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-white/40" />
-                    <span className="text-sm text-white/70">{item}</span>
+                    <span className="text-sm text-white/80">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="mb-8">
-              <p className="mb-3 text-xs uppercase tracking-widest text-white/40">
+              <p className="mb-3 text-xs uppercase tracking-widest text-white/50">
                 This is for you if —
               </p>
-              <p className="text-sm leading-relaxed text-white/70 md:text-base">
+              <p className="text-sm leading-relaxed text-white/80 md:text-base">
                 {service.detail.forYou}
               </p>
             </div>

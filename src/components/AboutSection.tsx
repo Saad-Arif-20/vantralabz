@@ -18,7 +18,7 @@ export default function AboutSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-sm uppercase tracking-widest text-white/40"
+          className="text-sm uppercase tracking-widest text-white/50"
         >
           About Us
         </motion.p>
@@ -30,12 +30,12 @@ export default function AboutSection() {
           className="mt-6 text-4xl leading-[1.1] tracking-tight text-white md:text-6xl lg:text-7xl"
         >
           Pioneering{' '}
-          <span className="font-serif-display italic text-white/60">
+          <span className="font-serif-display italic text-white/70">
             ideas
           </span>{' '}
           for
           <br className="hidden md:block" /> brands that{' '}
-          <span className="font-serif-display italic text-white/60">
+          <span className="font-serif-display italic text-white/70">
             grow, evolve, and lead.
           </span>
         </motion.h2>

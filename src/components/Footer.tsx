@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-black px-6 py-12">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
-        <div className="flex items-center gap-2 text-white/60">
+        <div className="flex items-center gap-2 text-white/70">
           <Globe size={18} />
           <span className="text-sm">
             Vantralabz — ideas that grow brands.
@@ -20,15 +20,19 @@ export default function Footer() {
               key={label}
               href="#"
               aria-label={label}
-              className="liquid-glass rounded-full p-3 text-white/70 transition-all hover:bg-white/5 hover:text-white"
+              className="liquid-glass rounded-full p-3 text-white/80 transition-all hover:bg-white/5 hover:text-white"
             >
               <Icon size={16} />
             </a>
           ))}
         </div>
 
-        <p className="text-xs text-white/30">
+        <p className="text-xs text-white/50">
           © {new Date().getFullYear()} Vantralabz. All rights reserved.
+          {' · '}
+          <a href="/privacy.html" className="underline hover:text-white/60">
+            Privacy Policy
+          </a>
         </p>
       </div>
     </footer>

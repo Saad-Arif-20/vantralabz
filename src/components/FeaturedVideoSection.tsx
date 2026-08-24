@@ -33,7 +33,7 @@ export default function FeaturedVideoSection() {
 
         <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-6 p-6 md:flex-row md:items-end md:justify-between md:p-10">
           <div className="liquid-glass max-w-md rounded-2xl p-6 md:p-8">
-            <p className="mb-3 text-xs uppercase tracking-widest text-white/50">
+            <p className="mb-3 text-xs uppercase tracking-widest text-white/60">
               Our Approach
             </p>
             <p className="text-sm leading-relaxed text-white md:text-base">

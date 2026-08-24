@@ -61,12 +61,12 @@ export default function ContactSection() {
         className="mx-auto max-w-6xl"
       >
         <div className="mb-12 text-center md:mb-16">
-          <p className="mb-4 text-sm uppercase tracking-widest text-white/40">
+          <p className="mb-4 text-sm uppercase tracking-widest text-white/50">
             Contact
           </p>
           <h2 className="tracking-tight text-white text-4xl md:text-6xl">
             Let's talk about your{' '}
-            <span className="font-serif-display italic text-white/60">
+            <span className="font-serif-display italic text-white/70">
               next move.
             </span>
           </h2>
@@ -77,7 +77,7 @@ export default function ContactSection() {
             {status === 'sent' ? (
               <div className="flex h-full min-h-[320px] flex-col items-center justify-center text-center">
                 <h3 className="mb-3 text-2xl text-white">Message sent.</h3>
-                <p className="max-w-sm text-sm leading-relaxed text-white/50">
+                <p className="max-w-sm text-sm leading-relaxed text-white/60">
                   Thanks for reaching out — we'll get back to you within one
                   business day.
                 </p>
@@ -86,7 +86,7 @@ export default function ContactSection() {
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <div>
-                    <label className="mb-2 block text-sm text-white/60">
+                    <label className="mb-2 block text-sm text-white/70">
                       Full Name
                     </label>
                     <div className="liquid-glass rounded-xl">
@@ -104,7 +104,7 @@ export default function ContactSection() {
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm text-white/60">
+                    <label className="mb-2 block text-sm text-white/70">
                       Email Address
                     </label>
                     <div className="liquid-glass rounded-xl">
@@ -123,7 +123,7 @@ export default function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm text-white/60">
+                  <label className="mb-2 block text-sm text-white/70">
                     Subject
                   </label>
                   <div className="liquid-glass relative rounded-xl">
@@ -142,13 +142,13 @@ export default function ContactSection() {
                     </select>
                     <ChevronDown
                       size={18}
-                      className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/40"
+                      className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/50"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm text-white/60">
+                  <label className="mb-2 block text-sm text-white/70">
                     Message
                   </label>
                   <div className="liquid-glass rounded-xl">
@@ -186,7 +186,7 @@ export default function ContactSection() {
 
           <div className="liquid-glass flex flex-col gap-8 rounded-3xl p-6 md:col-span-2 md:p-10">
             <div>
-              <p className="mb-2 text-xs uppercase tracking-widest text-white/40">
+              <p className="mb-2 text-xs uppercase tracking-widest text-white/50">
                 Email Us
               </p>
               <p className="text-lg text-white">hello@vantralabz.com</p>
@@ -195,7 +195,7 @@ export default function ContactSection() {
             <div className="h-px w-full bg-white/10" />
 
             <div>
-              <p className="mb-2 text-xs uppercase tracking-widest text-white/40">
+              <p className="mb-2 text-xs uppercase tracking-widest text-white/50">
                 Location
               </p>
               <p className="text-lg text-white">
@@ -206,7 +206,7 @@ export default function ContactSection() {
             <div className="h-px w-full bg-white/10" />
 
             <div>
-              <p className="mb-3 text-xs uppercase tracking-widest text-white/40">
+              <p className="mb-3 text-xs uppercase tracking-widest text-white/50">
                 Follow Us
               </p>
               <div className="flex gap-3">
@@ -219,7 +219,7 @@ export default function ContactSection() {
                     key={label}
                     href="#"
                     aria-label={label}
-                    className="liquid-glass rounded-full p-3 text-white/70 transition-all hover:bg-white/5 hover:text-white"
+                    className="liquid-glass rounded-full p-3 text-white/80 transition-all hover:bg-white/5 hover:text-white"
                   >
                     <Icon size={16} />
                   </a>
