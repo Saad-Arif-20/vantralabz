@@ -198,7 +198,7 @@ export default function Hero() {
         </AnimatePresence>
       </nav>
 
-      <div className="relative z-10 flex flex-1 -translate-y-[20%] flex-col items-center justify-center px-6 py-12 text-center">
+      <div className="relative z-10 flex flex-1 translate-y-0 flex-col items-center justify-center px-6 py-12 text-center md:-translate-y-[20%]">
         <h1
           className="font-serif-display mb-8 tracking-tight text-white text-5xl sm:text-6xl sm:whitespace-nowrap md:text-8xl lg:text-9xl"
         >
