@@ -16,7 +16,7 @@ export default function FeaturedVideoSection() {
         initial={{ opacity: 0, y: 60 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.9 }}
-        className="relative mx-auto aspect-video max-w-6xl overflow-hidden rounded-3xl"
+        className="relative mx-auto aspect-[3/4] max-w-6xl overflow-hidden rounded-3xl sm:aspect-[16/10] md:aspect-video"
       >
         {isInView && (
           <video
