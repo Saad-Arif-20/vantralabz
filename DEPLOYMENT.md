@@ -120,10 +120,16 @@ working since certbot's certificate doesn't care what's being served.
 
 ## Redeploying after future changes
 
+Vite hashes every asset filename per build (`hero-rlTHXbtE.mp4`, etc.), so
+a plain `scp` only adds files — it never removes the previous build's
+assets. Left unchecked, every redeploy leaves the old hashed files behind
+forever, quietly eating disk space. Clear the target directory first:
+
 ```bash
 npm run build
+ssh root@YOUR_VPS_IP "rm -rf /var/www/vantralabz-static/*"
 scp -r dist/* root@YOUR_VPS_IP:/var/www/vantralabz-static
 ```
 
-That's it — no restart, no build step on the server. Nginx serves whatever
-is in that folder immediately.
+No restart, no build step on the server — Nginx serves whatever is in
+that folder immediately.
