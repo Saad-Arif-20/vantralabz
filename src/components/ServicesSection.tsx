@@ -194,7 +194,7 @@ function ServiceCard({
       <div className="relative aspect-video overflow-hidden">
         <img
           src={service.image}
-          alt={service.title}
+          alt={`${service.title} service by Vantralabz`}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
