@@ -67,9 +67,15 @@ interface IntakeModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialStep?: number;
+  initialService?: string;
 }
 
-export default function IntakeModal({ isOpen, onClose, initialStep = 1 }: IntakeModalProps) {
+export default function IntakeModal({
+  isOpen,
+  onClose,
+  initialStep = 1,
+  initialService,
+}: IntakeModalProps) {
   const [step, setStep] = useState(initialStep);
   const [selectedServices, setSelectedServices] = useState<string[]>(['web-design']);
   const [situation, setSituation] = useState(SITUATION_OPTIONS[0]);
@@ -92,13 +98,16 @@ export default function IntakeModal({ isOpen, onClose, initialStep = 1 }: Intake
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       setStep(initialStep);
+      if (initialService) {
+        setSelectedServices([initialService]);
+      }
     } else {
       document.body.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen, initialStep]);
+  }, [isOpen, initialStep, initialService]);
 
   const toggleService = (id: string) => {
     setSelectedServices((prev) =>

@@ -10,8 +10,24 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import IntakeModal from './components/IntakeModal';
 
+const mapServiceToId = (title?: string): string | undefined => {
+  if (!title) return undefined;
+  const lower = title.toLowerCase();
+  if (lower.includes('brand')) return 'brand-strategy';
+  if (lower.includes('web')) return 'web-design';
+  if (lower.includes('copy') || lower.includes('writing') || lower.includes('content')) return 'content-copy';
+  if (lower.includes('ai') || lower.includes('bot') || lower.includes('automation')) return 'ai-automation';
+  return undefined;
+};
+
 function App() {
   const [isIntakeOpen, setIsIntakeOpen] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState<string | undefined>(undefined);
+
+  const handleOpenIntake = (serviceTitle?: string) => {
+    setSelectedServiceId(mapServiceToId(serviceTitle));
+    setIsIntakeOpen(true);
+  };
 
   useEffect(() => {
     const checkRoute = () => {
@@ -35,6 +51,7 @@ function App() {
 
   const handleCloseIntake = () => {
     setIsIntakeOpen(false);
+    setSelectedServiceId(undefined);
     if (window.location.hash === '#intake') {
       window.history.replaceState(null, '', window.location.pathname);
     }
@@ -42,11 +59,11 @@ function App() {
 
   return (
     <div className="relative bg-black">
-      <Hero onOpenIntake={() => setIsIntakeOpen(true)} />
+      <Hero onOpenIntake={() => handleOpenIntake()} />
       <AboutSection />
       <FeaturedVideoSection />
       <PhilosophySection />
-      <ServicesSection />
+      <ServicesSection onOpenIntake={(serviceTitle) => handleOpenIntake(serviceTitle)} />
       <FAQSection />
       <ContactSection />
       <Footer />
@@ -54,7 +71,7 @@ function App() {
       {/* Floating Schedule / Intake Quick Action Button */}
       <div className="fixed bottom-6 right-6 z-40">
         <button
-          onClick={() => setIsIntakeOpen(true)}
+          onClick={() => handleOpenIntake()}
           className="liquid-glass group flex cursor-pointer items-center gap-2.5 rounded-full border border-white/20 bg-neutral-900/80 px-5 py-3 text-sm font-medium text-white shadow-2xl backdrop-blur-md transition-all hover:scale-105 hover:border-white/40 hover:bg-neutral-800"
         >
           <Calendar size={16} className="text-white/80 transition-transform group-hover:rotate-12" />
@@ -63,7 +80,11 @@ function App() {
       </div>
 
       {/* Multi-step Intake & Calendly Scheduler Modal */}
-      <IntakeModal isOpen={isIntakeOpen} onClose={handleCloseIntake} />
+      <IntakeModal
+        isOpen={isIntakeOpen}
+        onClose={handleCloseIntake}
+        initialService={selectedServiceId}
+      />
     </div>
   );
 }

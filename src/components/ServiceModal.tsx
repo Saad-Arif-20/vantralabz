@@ -6,9 +6,11 @@ import type { Service } from './ServicesSection';
 export default function ServiceModal({
   service,
   onClose,
+  onOpenIntake,
 }: {
   service: Service;
   onClose: () => void;
+  onOpenIntake?: (serviceTitle?: string) => void;
 }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -32,7 +34,13 @@ export default function ServiceModal({
 
   const handleBookCall = () => {
     onClose();
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    if (onOpenIntake) {
+      setTimeout(() => {
+        onOpenIntake(service.title);
+      }, 50);
+    } else {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (

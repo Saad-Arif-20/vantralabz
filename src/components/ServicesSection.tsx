@@ -220,7 +220,11 @@ function ServiceCard({
   );
 }
 
-export default function ServicesSection() {
+interface ServicesSectionProps {
+  onOpenIntake?: (serviceTitle?: string) => void;
+}
+
+export default function ServicesSection({ onOpenIntake }: ServicesSectionProps) {
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' });
   const [selectedService, setSelectedService] = useState<Service | null>(
@@ -267,6 +271,7 @@ export default function ServicesSection() {
           <ServiceModal
             service={selectedService}
             onClose={() => setSelectedService(null)}
+            onOpenIntake={onOpenIntake}
           />
         )}
       </AnimatePresence>
