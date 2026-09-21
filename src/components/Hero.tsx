@@ -77,7 +77,11 @@ function useSeamlessVideoLoop() {
   return videoRef;
 }
 
-export default function Hero() {
+interface HeroProps {
+  onOpenIntake?: () => void;
+}
+
+export default function Hero({ onOpenIntake }: HeroProps) {
   const videoRef = useSeamlessVideoLoop();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>(
@@ -149,12 +153,19 @@ export default function Hero() {
             >
               Contact
             </a>
-            <a
-              href="#contact"
-              className="liquid-glass rounded-full px-4 py-2 text-sm font-medium text-white sm:px-6"
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenIntake) {
+                  onOpenIntake();
+                } else {
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="liquid-glass rounded-full px-4 py-2 text-sm font-medium text-white sm:px-6 cursor-pointer"
             >
               Book a Call
-            </a>
+            </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen((open) => !open)}
@@ -198,7 +209,7 @@ export default function Hero() {
         </AnimatePresence>
       </nav>
 
-      <div className="relative z-10 flex flex-1 translate-y-0 flex-col items-center justify-center px-6 py-12 text-center md:-translate-y-[20%]">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 py-8 text-center md:-translate-y-4 lg:-translate-y-6">
         <h1
           className="font-serif-display mb-8 tracking-tight text-white text-5xl sm:text-6xl sm:whitespace-nowrap md:text-8xl lg:text-9xl"
         >
