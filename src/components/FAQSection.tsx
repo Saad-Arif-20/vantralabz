@@ -42,11 +42,13 @@ function FAQItem({
   answer,
   isOpen,
   onToggle,
+  index,
 }: {
   question: string;
   answer: string;
   isOpen: boolean;
   onToggle: () => void;
+  index: number;
 }) {
   return (
     <div className="liquid-glass overflow-hidden rounded-2xl">
@@ -56,8 +58,13 @@ function FAQItem({
         className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
         aria-expanded={isOpen}
       >
-        <span className="text-base font-medium text-white md:text-lg">
-          {question}
+        <span className="flex items-baseline gap-4">
+          <span className="font-serif-display text-sm italic text-white/30">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className="text-base font-medium text-white md:text-lg">
+            {question}
+          </span>
         </span>
         <ChevronDown
           size={20}
@@ -107,8 +114,8 @@ export default function FAQSection() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
       <AmbientBackground variant="quiet" />
-      <div className="relative mx-auto max-w-3xl">
-        <div ref={headerRef} className="mb-12 text-center md:mb-16">
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+        <div ref={headerRef} className="lg:sticky lg:top-32 lg:self-start">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
@@ -122,12 +129,30 @@ export default function FAQSection() {
             className="tracking-tight text-white text-4xl md:text-6xl"
             segments={[{ text: 'Frequently asked' }, { text: 'questions.', emphasis: true }]}
           />
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-6 max-w-sm text-sm leading-relaxed text-white/60"
+          >
+            Still have a question we didn't cover here?
+          </motion.p>
+          <motion.a
+            initial={{ opacity: 0, y: 20 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            href="#contact"
+            className="liquid-glass mt-6 inline-block rounded-full px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5"
+          >
+            Ask us directly
+          </motion.a>
         </div>
 
         <div className="flex flex-col gap-4">
           {FAQS.map((faq, index) => (
             <FAQItem
               key={faq.question}
+              index={index}
               question={faq.question}
               answer={faq.answer}
               isOpen={openIndex === index}

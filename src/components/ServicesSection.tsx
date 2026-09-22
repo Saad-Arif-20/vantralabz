@@ -16,7 +16,7 @@ export type Service = {
   title: string;
   description: string;
   image: string;
-  featured?: boolean;
+  layout: 'tall' | 'normal' | 'wide' | 'full';
   detail: {
     hook: string;
     intro: string;
@@ -33,6 +33,7 @@ const SERVICES: Service[] = [
     description:
       'We research your market, sharpen your positioning, and build a visual identity that makes you the obvious choice before you say a word.',
     image: brandStrategyImg,
+    layout: 'tall',
     detail: {
       hook: 'Your brand is the reason people choose you over someone cheaper.',
       intro:
@@ -60,6 +61,7 @@ const SERVICES: Service[] = [
     description:
       'Fast, focused websites built to convert — conversion-minded UX, custom responsive design, and a modern codebase you actually own.',
     image: webDesignImg,
+    layout: 'normal',
     detail: {
       hook: 'A website should print customers, not just collect impressions.',
       intro:
@@ -87,6 +89,7 @@ const SERVICES: Service[] = [
     description:
       'Words that sell while you sleep. We turn your expertise into copy and content that builds trust and moves people to act.',
     image: contentCopyImg,
+    layout: 'normal',
     detail: {
       hook: 'Great copy sells while you sleep. Bad copy costs you every day.',
       intro:
@@ -114,6 +117,7 @@ const SERVICES: Service[] = [
     description:
       'Ebooks, guides, and signature pieces that position you as the expert people remember — and keep generating leads for years.',
     image: writingImg,
+    layout: 'wide',
     detail: {
       hook: 'Long-form writing that turns your knowledge into authority.',
       intro:
@@ -141,7 +145,7 @@ const SERVICES: Service[] = [
     description:
       'We design intelligent chatbots and automated workflows that take repetitive work off your plate — so your team can focus on growth, not busywork.',
     image: aiAutomationImg,
-    featured: true,
+    layout: 'full',
     detail: {
       hook: "Your team's time is worth more than repetitive busywork.",
       intro:
@@ -164,6 +168,13 @@ const SERVICES: Service[] = [
     },
   },
 ];
+
+const GRID_POSITION: Record<Service['layout'], string> = {
+  tall: 'lg:col-start-1 lg:row-start-1 lg:row-span-2',
+  normal: '',
+  wide: 'sm:col-span-2 lg:col-start-2 lg:col-span-2 lg:row-start-2',
+  full: 'sm:col-span-2 lg:col-span-3 lg:row-start-3',
+};
 
 function ServiceCard({
   service,
@@ -190,12 +201,14 @@ function ServiceCard({
     ref.current?.style.setProperty('--spot-opacity', '0');
   };
 
+  const isFeature = service.layout === 'full';
+
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: index * 0.15 }}
+      transition={{ duration: 0.8, delay: index * 0.12 }}
       onClick={onOpen}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -204,20 +217,30 @@ function ServiceCard({
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') onOpen();
       }}
-      className={`liquid-glass spotlight-glow group cursor-pointer overflow-hidden rounded-3xl transition-shadow duration-500 ${
-        service.featured
-          ? 'ring-1 ring-white/15 shadow-[0_0_90px_-25px_rgba(255,255,255,0.3)] md:col-span-2'
+      className={`liquid-glass spotlight-glow group flex cursor-pointer overflow-hidden rounded-3xl transition-shadow duration-500 ${
+        service.layout === 'tall' ? 'h-full flex-col' : 'flex-col'
+      } ${
+        isFeature
+          ? 'ring-1 ring-white/15 shadow-[0_0_90px_-25px_rgba(255,255,255,0.3)] md:flex-row'
           : ''
-      }`}
+      } ${GRID_POSITION[service.layout]}`}
     >
-      {service.featured && (
+      {isFeature && (
         <span className="liquid-glass absolute left-4 top-4 z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white/90">
           <Sparkles size={12} className="text-white" />
           Our specialty
         </span>
       )}
 
-      <div className="relative aspect-video overflow-hidden">
+      <div
+        className={`relative overflow-hidden ${
+          service.layout === 'tall'
+            ? 'aspect-[4/3] flex-1 lg:aspect-auto'
+            : isFeature
+              ? 'aspect-video md:w-2/5 md:shrink-0'
+              : 'aspect-video'
+        }`}
+      >
         <img
           src={service.image}
           alt={`${service.title} service by Vantralabz`}
@@ -226,7 +249,11 @@ function ServiceCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
 
-      <div className="relative p-6 md:p-8">
+      <div
+        className={`relative flex flex-col p-6 md:p-8 ${
+          isFeature ? 'justify-center md:w-3/5' : ''
+        }`}
+      >
         <div className="mb-4 flex items-center justify-between">
           <span className="text-xs uppercase tracking-widest text-white/50">
             {service.tag}
@@ -235,7 +262,11 @@ function ServiceCard({
             <ArrowUpRight size={16} className="text-white" />
           </span>
         </div>
-        <h3 className="mb-3 tracking-tight text-white text-xl md:text-2xl">
+        <h3
+          className={`mb-3 tracking-tight text-white ${
+            isFeature ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'
+          }`}
+        >
           {service.title}
         </h3>
         <p className="text-sm leading-relaxed text-white/60">
@@ -281,7 +312,7 @@ export default function ServicesSection({ onOpenIntake }: ServicesSectionProps) 
           </motion.span>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 md:gap-8">
           {SERVICES.map((service, index) => (
             <ServiceCard
               key={service.title}

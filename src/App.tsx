@@ -63,7 +63,7 @@ function App() {
   return (
     <div className="relative bg-black">
       <Header onOpenIntake={() => handleOpenIntake()} />
-      <Hero />
+      <Hero onOpenIntake={() => handleOpenIntake()} />
       <AboutSection />
       <FeaturedVideoSection />
       <PhilosophySection />

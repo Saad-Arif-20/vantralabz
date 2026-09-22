@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Globe, Mail, X } from 'lucide-react';
 import heroVideo from '../assets/video/hero.mp4';
 import RevealHeading from './RevealHeading';
+import MagneticButton from './MagneticButton';
 
 const NEWSLETTER_ENDPOINT = 'https://formspree.io/f/xeajbjza';
 
@@ -70,7 +71,11 @@ function useSeamlessVideoLoop() {
   return videoRef;
 }
 
-export default function Hero() {
+interface HeroProps {
+  onOpenIntake?: () => void;
+}
+
+export default function Hero({ onOpenIntake }: HeroProps) {
   const videoRef = useSeamlessVideoLoop();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>(
@@ -127,53 +132,63 @@ export default function Hero() {
           ]}
         />
 
-        {status === 'sent' ? (
-          <div className="liquid-glass mb-6 flex w-full max-w-xl items-center justify-center rounded-full px-6 py-3">
-            <p className="text-sm font-medium text-white">
-              You're on the list — welcome aboard.
-            </p>
-          </div>
-        ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="liquid-glass mb-6 flex w-full max-w-xl items-center gap-3 rounded-full py-2 pl-6 pr-2"
-          >
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-full bg-transparent text-white placeholder:text-white/50 focus:outline-none"
-            />
-            <button
-              type="submit"
-              disabled={status === 'sending'}
-              aria-label="Subscribe"
-              className="rounded-full bg-white p-3 text-black disabled:opacity-60"
-            >
-              <ArrowRight size={20} />
-            </button>
-          </form>
-        )}
-
-        {status === 'error' && (
-          <p className="mb-4 max-w-xl px-4 text-sm text-red-400">
-            Something went wrong — please try again in a moment.
-          </p>
-        )}
-
-        <p className="max-w-xl px-4 text-sm leading-relaxed text-white">
-          Get fresh brand, design, and growth ideas from Vantralabz — straight
-          to your inbox. No fluff, just thinking that moves the needle.
+        <p className="mb-9 max-w-xl px-4 text-base leading-relaxed text-white/80 md:text-lg">
+          We turn early-stage ideas into brand, web, and growth systems that
+          make you the obvious choice in your market — not just another
+          agency delivering deliverables.
         </p>
 
-        <a
-          href="#about"
-          className="liquid-glass mt-8 rounded-full px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5"
-        >
-          Manifesto
-        </a>
+        <div className="mb-14 flex flex-col items-center gap-4 sm:flex-row">
+          <MagneticButton
+            onClick={onOpenIntake}
+            className="rounded-full px-8 py-3.5 text-sm font-medium text-white"
+          >
+            Book a Call
+            <ArrowRight size={16} />
+          </MagneticButton>
+          <a
+            href="#work"
+            className="liquid-glass rounded-full px-8 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/5"
+          >
+            View our work
+          </a>
+        </div>
+
+        <div className="w-full max-w-sm px-4">
+          {status === 'sent' ? (
+            <p className="text-center text-xs text-white/60">
+              You're on the list — welcome aboard.
+            </p>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="liquid-glass flex items-center gap-2 rounded-full py-1.5 pl-4 pr-1.5"
+            >
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Or get our thinking in your inbox"
+                className="w-full bg-transparent text-xs text-white placeholder:text-white/40 focus:outline-none"
+              />
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                aria-label="Subscribe"
+                className="shrink-0 rounded-full bg-white/90 p-2 text-black disabled:opacity-60"
+              >
+                <ArrowRight size={14} />
+              </button>
+            </form>
+          )}
+
+          {status === 'error' && (
+            <p className="mt-2 text-center text-xs text-red-400">
+              Something went wrong — please try again in a moment.
+            </p>
+          )}
+        </div>
       </div>
 
       <div className="relative z-10 flex justify-center gap-4 pb-12">

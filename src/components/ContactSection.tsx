@@ -86,56 +86,52 @@ export default function ContactSection() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-7">
+                <div className="grid grid-cols-1 gap-7 md:grid-cols-2">
                   <div>
-                    <label className="mb-2 block text-sm text-white/70">
+                    <label className="mb-2 block text-sm text-white/50">
                       Full Name
                     </label>
-                    <div className="liquid-glass rounded-xl">
-                      <input
-                        type="text"
-                        required
-                        value={form.name}
-                        onChange={(e) =>
-                          setForm({ ...form, name: e.target.value })
-                        }
-                        placeholder="John Doe"
-                        className="w-full bg-transparent px-4 py-3 text-white placeholder:text-white/30 focus:outline-none"
-                      />
-                    </div>
+                    <input
+                      type="text"
+                      required
+                      value={form.name}
+                      onChange={(e) =>
+                        setForm({ ...form, name: e.target.value })
+                      }
+                      placeholder="John Doe"
+                      className="w-full border-b border-white/15 bg-transparent px-0 py-3 text-white placeholder:text-white/30 focus:border-white/60 focus:outline-none"
+                    />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm text-white/70">
+                    <label className="mb-2 block text-sm text-white/50">
                       Email Address
                     </label>
-                    <div className="liquid-glass rounded-xl">
-                      <input
-                        type="email"
-                        required
-                        value={form.email}
-                        onChange={(e) =>
-                          setForm({ ...form, email: e.target.value })
-                        }
-                        placeholder="john@company.com"
-                        className="w-full bg-transparent px-4 py-3 text-white placeholder:text-white/30 focus:outline-none"
-                      />
-                    </div>
+                    <input
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={(e) =>
+                        setForm({ ...form, email: e.target.value })
+                      }
+                      placeholder="john@company.com"
+                      className="w-full border-b border-white/15 bg-transparent px-0 py-3 text-white placeholder:text-white/30 focus:border-white/60 focus:outline-none"
+                    />
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm text-white/70">
+                  <label className="mb-2 block text-sm text-white/50">
                     Subject
                   </label>
-                  <div className="liquid-glass relative rounded-xl">
+                  <div className="relative">
                     <select
                       value={form.subject}
                       onChange={(e) =>
                         setForm({ ...form, subject: e.target.value })
                       }
-                      className="w-full appearance-none bg-transparent px-4 py-3 pr-10 text-white focus:outline-none"
+                      className="w-full appearance-none border-b border-white/15 bg-transparent px-0 py-3 pr-10 text-white focus:border-white/60 focus:outline-none"
                     >
                       {SUBJECTS.map((subject) => (
                         <option key={subject} value={subject} className="bg-black">
@@ -145,27 +141,25 @@ export default function ContactSection() {
                     </select>
                     <ChevronDown
                       size={18}
-                      className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white/50"
+                      className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-white/50"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="mb-2 block text-sm text-white/70">
+                  <label className="mb-2 block text-sm text-white/50">
                     Message
                   </label>
-                  <div className="liquid-glass rounded-xl">
-                    <textarea
-                      required
-                      rows={5}
-                      value={form.message}
-                      onChange={(e) =>
-                        setForm({ ...form, message: e.target.value })
-                      }
-                      placeholder="Tell us about your project..."
-                      className="w-full resize-none bg-transparent px-4 py-3 text-white placeholder:text-white/30 focus:outline-none"
-                    />
-                  </div>
+                  <textarea
+                    required
+                    rows={4}
+                    value={form.message}
+                    onChange={(e) =>
+                      setForm({ ...form, message: e.target.value })
+                    }
+                    placeholder="Tell us about your project..."
+                    className="w-full resize-none border-b border-white/15 bg-transparent px-0 py-3 text-white placeholder:text-white/30 focus:border-white/60 focus:outline-none"
+                  />
                 </div>
 
                 {status === 'error' && (
@@ -187,28 +181,33 @@ export default function ContactSection() {
             )}
           </div>
 
-          <div className="liquid-glass flex flex-col gap-8 rounded-3xl p-6 md:col-span-2 md:p-10">
-            <div>
-              <p className="mb-2 text-xs uppercase tracking-widest text-white/50">
-                Email Us
-              </p>
-              <p className="text-lg text-white">hello@vantralabz.com</p>
+          <div className="relative flex flex-col justify-between gap-10 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent p-6 md:col-span-2 md:p-10">
+            <span
+              aria-hidden
+              className="font-serif-display pointer-events-none absolute -right-4 -top-8 select-none text-9xl italic text-white/5"
+            >
+              &rsquo;
+            </span>
+
+            <div className="relative flex flex-col gap-8">
+              <div>
+                <p className="mb-2 text-xs uppercase tracking-widest text-white/50">
+                  Email Us
+                </p>
+                <p className="text-lg text-white">hello@vantralabz.com</p>
+              </div>
+
+              <div>
+                <p className="mb-2 text-xs uppercase tracking-widest text-white/50">
+                  Location
+                </p>
+                <p className="text-lg text-white">
+                  Remote-first — working with clients worldwide
+                </p>
+              </div>
             </div>
 
-            <div className="h-px w-full bg-white/10" />
-
-            <div>
-              <p className="mb-2 text-xs uppercase tracking-widest text-white/50">
-                Location
-              </p>
-              <p className="text-lg text-white">
-                Remote-first — working with clients worldwide
-              </p>
-            </div>
-
-            <div className="h-px w-full bg-white/10" />
-
-            <div>
+            <div className="relative">
               <p className="mb-3 text-xs uppercase tracking-widest text-white/50">
                 Follow Us
               </p>
