@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import featuredVideo from '../assets/video/featured.mp4';
+import WorkflowMockup from './WorkflowMockup';
 
 export default function FeaturedVideoSection() {
   const ref = useRef(null);
@@ -16,22 +16,11 @@ export default function FeaturedVideoSection() {
         initial={{ opacity: 0, y: 60 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.9 }}
-        className="relative mx-auto aspect-[3/4] max-w-6xl overflow-hidden rounded-3xl sm:aspect-[16/10] md:aspect-video"
+        className="mx-auto max-w-6xl"
       >
-        {isInView && (
-          <video
-            className="h-full w-full object-cover"
-            src={featuredVideo}
-            muted
-            autoPlay
-            loop
-            playsInline
-            preload="none"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        <WorkflowMockup />
 
-        <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-6 p-6 md:flex-row md:items-end md:justify-between md:p-10">
+        <div className="mt-6 flex flex-col gap-6 md:mt-8 md:flex-row md:items-end md:justify-between">
           <div className="liquid-glass max-w-md rounded-2xl p-6 md:p-8">
             <p className="mb-3 text-xs uppercase tracking-widest text-white/60">
               Our Approach

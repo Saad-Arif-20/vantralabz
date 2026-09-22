@@ -1,82 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { ArrowRight, Globe, Mail, X } from 'lucide-react';
-import heroVideo from '../assets/video/hero.mp4';
 import RevealHeading from './RevealHeading';
 import MagneticButton from './MagneticButton';
+import HeroBackground from './HeroBackground';
 
 const NEWSLETTER_ENDPOINT = 'https://formspree.io/f/xeajbjza';
-
-function useSeamlessVideoLoop() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    let rafId = 0;
-    const startedRef = { current: false };
-    const fadingOutRef = { current: false };
-
-    const animateOpacity = (from: number, to: number, duration: number) => {
-      cancelAnimationFrame(rafId);
-      const start = performance.now();
-      const step = (now: number) => {
-        const elapsed = now - start;
-        const t = Math.min(elapsed / duration, 1);
-        video.style.opacity = String(from + (to - from) * t);
-        if (t < 1) rafId = requestAnimationFrame(step);
-      };
-      rafId = requestAnimationFrame(step);
-    };
-
-    const handleCanPlay = () => {
-      if (startedRef.current) return;
-      startedRef.current = true;
-      video.play().catch(() => {});
-      animateOpacity(0, 1, 500);
-    };
-
-    const handleTimeUpdate = () => {
-      if (!video.duration || fadingOutRef.current) return;
-      const remaining = video.duration - video.currentTime;
-      if (remaining <= 0.55 && remaining >= 0) {
-        fadingOutRef.current = true;
-        const current = parseFloat(video.style.opacity || '1');
-        animateOpacity(current, 0, 500);
-      }
-    };
-
-    const handleEnded = () => {
-      video.style.opacity = '0';
-      window.setTimeout(() => {
-        video.currentTime = 0;
-        fadingOutRef.current = false;
-        video.play().catch(() => {});
-        animateOpacity(0, 1, 500);
-      }, 100);
-    };
-
-    video.addEventListener('canplay', handleCanPlay);
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('ended', handleEnded);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      video.removeEventListener('canplay', handleCanPlay);
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('ended', handleEnded);
-    };
-  }, []);
-
-  return videoRef;
-}
 
 interface HeroProps {
   onOpenIntake?: () => void;
 }
 
 export default function Hero({ onOpenIntake }: HeroProps) {
-  const videoRef = useSeamlessVideoLoop();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>(
     'idle',
@@ -109,16 +43,7 @@ export default function Hero({ onOpenIntake }: HeroProps) {
 
   return (
     <section className="relative flex min-h-screen flex-col overflow-hidden bg-black">
-      <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover object-bottom"
-        style={{ opacity: 0 }}
-        src={heroVideo}
-        muted
-        autoPlay
-        playsInline
-        preload="auto"
-      />
+      <HeroBackground />
 
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-8 pt-28 text-center md:pt-32">
         <RevealHeading
