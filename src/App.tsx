@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Calendar } from 'lucide-react';
+import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutSection from './components/AboutSection';
 import FeaturedVideoSection from './components/FeaturedVideoSection';
 import PhilosophySection from './components/PhilosophySection';
 import ServicesSection from './components/ServicesSection';
+import ProcessSection from './components/ProcessSection';
 import FAQSection from './components/FAQSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import IntakeModal from './components/IntakeModal';
+import MagneticButton from './components/MagneticButton';
 
 const mapServiceToId = (title?: string): string | undefined => {
   if (!title) return undefined;
@@ -59,24 +62,26 @@ function App() {
 
   return (
     <div className="relative bg-black">
-      <Hero onOpenIntake={() => handleOpenIntake()} />
+      <Header onOpenIntake={() => handleOpenIntake()} />
+      <Hero />
       <AboutSection />
       <FeaturedVideoSection />
       <PhilosophySection />
       <ServicesSection onOpenIntake={(serviceTitle) => handleOpenIntake(serviceTitle)} />
+      <ProcessSection />
       <FAQSection />
       <ContactSection />
       <Footer />
 
       {/* Floating Schedule / Intake Quick Action Button */}
       <div className="fixed bottom-6 right-6 z-40">
-        <button
+        <MagneticButton
           onClick={() => handleOpenIntake()}
-          className="liquid-glass group flex cursor-pointer items-center gap-2.5 rounded-full border border-white/20 bg-neutral-900/80 px-5 py-3 text-sm font-medium text-white shadow-2xl backdrop-blur-md transition-all hover:scale-105 hover:border-white/40 hover:bg-neutral-800"
+          className="group flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-medium text-white shadow-2xl"
         >
           <Calendar size={16} className="text-white/80 transition-transform group-hover:rotate-12" />
           <span>Book a Call</span>
-        </button>
+        </MagneticButton>
       </div>
 
       {/* Multi-step Intake & Calendly Scheduler Modal */}

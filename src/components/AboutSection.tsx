@@ -1,5 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import AmbientBackground from './AmbientBackground';
+import RevealHeading from './RevealHeading';
 
 export default function AboutSection() {
   const ref = useRef(null);
@@ -11,7 +13,7 @@ export default function AboutSection() {
       ref={ref}
       className="relative overflow-hidden bg-black px-6 pb-10 pt-32 md:pb-14 md:pt-44"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.03)_0%,_transparent_70%)]" />
+      <AmbientBackground variant="quiet" />
 
       <div className="relative mx-auto max-w-5xl">
         <motion.p
@@ -23,22 +25,16 @@ export default function AboutSection() {
           About Us
         </motion.p>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.1 }}
+        <RevealHeading
+          as="h2"
           className="mt-6 text-4xl leading-[1.1] tracking-tight text-white md:text-6xl lg:text-7xl"
-        >
-          Pioneering{' '}
-          <span className="font-serif-display italic text-white/70">
-            ideas
-          </span>{' '}
-          for
-          <br className="hidden md:block" /> brands that{' '}
-          <span className="font-serif-display italic text-white/70">
-            grow, evolve, and lead.
-          </span>
-        </motion.h2>
+          segments={[
+            { text: 'Pioneering' },
+            { text: 'ideas', emphasis: true },
+            { text: 'for brands that' },
+            { text: 'grow, evolve, and lead.', emphasis: true },
+          ]}
+        />
       </div>
     </section>
   );

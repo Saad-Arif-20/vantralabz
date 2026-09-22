@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type MouseEvent } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Sparkles } from 'lucide-react';
 
 import brandStrategyImg from '../assets/services/brand-strategy.webp';
 import webDesignImg from '../assets/services/web-design.webp';
@@ -8,6 +8,8 @@ import contentCopyImg from '../assets/services/content-copy.webp';
 import writingImg from '../assets/services/writing.webp';
 import aiAutomationImg from '../assets/services/ai-automation.webp';
 import ServiceModal from './ServiceModal';
+import AmbientBackground from './AmbientBackground';
+import RevealHeading from './RevealHeading';
 
 export type Service = {
   tag: string;
@@ -172,8 +174,21 @@ function ServiceCard({
   index: number;
   onOpen: () => void;
 }) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty('--spot-x', `${((e.clientX - rect.left) / rect.width) * 100}%`);
+    el.style.setProperty('--spot-y', `${((e.clientY - rect.top) / rect.height) * 100}%`);
+    el.style.setProperty('--spot-opacity', '1');
+  };
+
+  const handleMouseLeave = () => {
+    ref.current?.style.setProperty('--spot-opacity', '0');
+  };
 
   return (
     <motion.div
@@ -182,15 +197,26 @@ function ServiceCard({
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, delay: index * 0.15 }}
       onClick={onOpen}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') onOpen();
       }}
-      className={`liquid-glass group cursor-pointer overflow-hidden rounded-3xl ${
-        service.featured ? 'md:col-span-2' : ''
+      className={`liquid-glass spotlight-glow group cursor-pointer overflow-hidden rounded-3xl transition-shadow duration-500 ${
+        service.featured
+          ? 'ring-1 ring-white/15 shadow-[0_0_90px_-25px_rgba(255,255,255,0.3)] md:col-span-2'
+          : ''
       }`}
     >
+      {service.featured && (
+        <span className="liquid-glass absolute left-4 top-4 z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white/90">
+          <Sparkles size={12} className="text-white" />
+          Our specialty
+        </span>
+      )}
+
       <div className="relative aspect-video overflow-hidden">
         <img
           src={service.image}
@@ -200,7 +226,7 @@ function ServiceCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
 
-      <div className="p-6 md:p-8">
+      <div className="relative p-6 md:p-8">
         <div className="mb-4 flex items-center justify-between">
           <span className="text-xs uppercase tracking-widest text-white/50">
             {service.tag}
@@ -236,23 +262,24 @@ export default function ServicesSection({ onOpenIntake }: ServicesSectionProps) 
       id="services"
       className="relative overflow-hidden bg-black px-6 py-28 md:py-40"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.02)_0%,_transparent_60%)]" />
+      <AmbientBackground variant="quiet" />
 
       <div className="relative mx-auto max-w-6xl">
-        <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="mb-12 flex items-end justify-between md:mb-16"
-        >
-          <h2 className="tracking-tight text-white text-3xl md:text-5xl">
-            What we do
-          </h2>
-          <span className="hidden text-sm text-white/50 md:inline">
+        <div ref={headerRef} className="mb-12 flex items-end justify-between md:mb-16">
+          <RevealHeading
+            as="h2"
+            className="tracking-tight text-white text-3xl md:text-5xl"
+            segments={[{ text: 'What we do' }]}
+          />
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={headerInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="hidden text-sm text-white/50 md:inline"
+          >
             Our services
-          </span>
-        </motion.div>
+          </motion.span>
+        </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
           {SERVICES.map((service, index) => (

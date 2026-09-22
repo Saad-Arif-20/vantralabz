@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import AmbientBackground from './AmbientBackground';
+import RevealHeading from './RevealHeading';
 
 const FAQS = [
   {
@@ -98,30 +100,29 @@ export default function FAQSection() {
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' });
 
   return (
-    <section id="faq" className="overflow-hidden bg-black px-6 py-28 md:py-40">
+    <section id="faq" className="relative overflow-hidden bg-black px-6 py-28 md:py-40">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
-      <div className="mx-auto max-w-3xl">
-        <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="mb-12 text-center md:mb-16"
-        >
-          <p className="mb-4 text-sm uppercase tracking-widest text-white/50">
+      <AmbientBackground variant="quiet" />
+      <div className="relative mx-auto max-w-3xl">
+        <div ref={headerRef} className="mb-12 text-center md:mb-16">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mb-4 text-sm uppercase tracking-widest text-white/50"
+          >
             FAQ
-          </p>
-          <h2 className="tracking-tight text-white text-4xl md:text-6xl">
-            Frequently asked{' '}
-            <span className="font-serif-display italic text-white/70">
-              questions.
-            </span>
-          </h2>
-        </motion.div>
+          </motion.p>
+          <RevealHeading
+            as="h2"
+            className="tracking-tight text-white text-4xl md:text-6xl"
+            segments={[{ text: 'Frequently asked' }, { text: 'questions.', emphasis: true }]}
+          />
+        </div>
 
         <div className="flex flex-col gap-4">
           {FAQS.map((faq, index) => (

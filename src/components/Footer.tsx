@@ -2,7 +2,8 @@ import { Globe, Mail, X } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-black px-6 py-12">
+    <footer className="relative border-t border-white/10 bg-black px-6 py-12">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
         <div className="flex items-center gap-2 text-white/70">
           <Globe size={18} />

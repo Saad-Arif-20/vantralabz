@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, ChevronDown, Globe, Mail, X } from 'lucide-react';
+import AmbientBackground from './AmbientBackground';
+import RevealHeading from './RevealHeading';
+import MagneticButton from './MagneticButton';
 
 const SUBJECTS = [
   'Brand Strategy',
@@ -52,24 +55,24 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="overflow-hidden bg-black px-6 py-28 md:py-40">
+    <section id="contact" className="relative overflow-hidden bg-black px-6 py-28 md:py-40">
+      <AmbientBackground variant="bright" />
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8 }}
-        className="mx-auto max-w-6xl"
+        className="relative mx-auto max-w-6xl"
       >
         <div className="mb-12 text-center md:mb-16">
           <p className="mb-4 text-sm uppercase tracking-widest text-white/50">
             Contact
           </p>
-          <h2 className="tracking-tight text-white text-4xl md:text-6xl">
-            Let's talk about your{' '}
-            <span className="font-serif-display italic text-white/70">
-              next move.
-            </span>
-          </h2>
+          <RevealHeading
+            as="h2"
+            className="tracking-tight text-white text-4xl md:text-6xl"
+            segments={[{ text: "Let's talk about your" }, { text: 'next move.', emphasis: true }]}
+          />
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-5 md:gap-8">
@@ -172,14 +175,14 @@ export default function ContactSection() {
                   </p>
                 )}
 
-                <button
+                <MagneticButton
                   type="submit"
                   disabled={status === 'sending'}
-                  className="flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-black transition-opacity hover:opacity-90 disabled:opacity-60"
+                  className="flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-sm font-medium text-white disabled:opacity-60"
                 >
                   {status === 'sending' ? 'Sending...' : 'Send Message'}
                   <ArrowRight size={16} />
-                </button>
+                </MagneticButton>
               </form>
             )}
           </div>

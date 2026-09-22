@@ -1,30 +1,27 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import philosophyVideo from '../assets/video/philosophy.mp4';
+import AmbientBackground from './AmbientBackground';
+import RevealHeading from './RevealHeading';
 
 export default function PhilosophySection() {
-  const headingRef = useRef(null);
   const leftRef = useRef(null);
   const rightRef = useRef(null);
 
-  const headingInView = useInView(headingRef, { once: true, margin: '-100px' });
   const leftInView = useInView(leftRef, { once: true, margin: '-100px' });
   const rightInView = useInView(rightRef, { once: true, margin: '-100px' });
 
   return (
-    <section className="overflow-hidden bg-black px-6 py-28 md:py-40">
-      <div className="mx-auto max-w-6xl">
-        <motion.h2
-          ref={headingRef}
-          initial={{ opacity: 0, y: 40 }}
-          animate={headingInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+    <section className="relative overflow-hidden bg-black px-6 py-28 md:py-40">
+      <AmbientBackground variant="quiet" />
+
+      <div className="relative mx-auto max-w-6xl">
+        <RevealHeading
+          as="h2"
           className="mb-16 tracking-tight text-white text-5xl md:mb-24 md:text-7xl lg:text-8xl"
-        >
-          Innovation{' '}
-          <span className="font-serif-display italic text-white/50">x</span>{' '}
-          Vision
-        </motion.h2>
+          emphasisClassName="font-serif-display italic text-white/50"
+          segments={[{ text: 'Innovation' }, { text: 'x', emphasis: true }, { text: 'Vision' }]}
+        />
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
           <motion.div
