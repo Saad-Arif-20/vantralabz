@@ -21,7 +21,7 @@ export default function WorkflowMockup() {
   }, []);
 
   return (
-    <div className="liquid-glass overflow-hidden rounded-3xl">
+    <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
       <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.02] px-5 py-3.5">
         <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
@@ -50,7 +50,7 @@ export default function WorkflowMockup() {
                 )}
               </span>
               <span
-                className={`liquid-glass rounded-2xl px-4 py-2.5 text-sm text-white/80 ${
+                className={`rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white/80 ${
                   message.from === 'system' ? 'rounded-tr-sm' : 'rounded-tl-sm'
                 }`}
               >
@@ -65,7 +65,7 @@ export default function WorkflowMockup() {
             <div key={step} className="flex items-center gap-3">
               <span
                 className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-colors duration-500 ${
-                  index === activeStep ? 'bg-white text-black' : 'bg-white/10 text-white/40'
+                  index === activeStep ? 'bg-vlz-red text-white' : 'bg-white/10 text-white/40'
                 }`}
               >
                 {index === activeStep ? (

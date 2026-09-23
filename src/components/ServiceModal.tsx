@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import type { Service } from './ServicesSection';
+import PrimaryButton from './PrimaryButton';
 
 export default function ServiceModal({
   service,
@@ -60,7 +61,7 @@ export default function ServiceModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="service-modal-title"
-        className="liquid-glass w-full max-w-3xl overflow-hidden rounded-3xl"
+        className="w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-vlz-dark"
       >
         <div className="max-h-[90vh] overflow-y-auto">
           <div className="relative aspect-[16/7] w-full overflow-hidden">
@@ -75,11 +76,11 @@ export default function ServiceModal({
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="liquid-glass absolute right-4 top-4 rounded-full p-2 text-white"
+              className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/50 p-2 text-white backdrop-blur-sm"
             >
               <X size={18} />
             </button>
-            <span className="absolute bottom-4 left-6 text-xs uppercase tracking-widest text-white/70">
+            <span className="absolute bottom-4 left-6 text-xs font-semibold uppercase tracking-widest text-vlz-red">
               {service.tag}
             </span>
           </div>
@@ -101,13 +102,13 @@ export default function ServiceModal({
             </p>
 
             <div className="mb-8">
-              <p className="mb-4 text-xs uppercase tracking-widest text-white/50">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-vlz-red">
                 What's included
               </p>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 {service.detail.included.map((item) => (
                   <div key={item} className="flex items-start gap-2">
-                    <Check size={16} className="mt-0.5 shrink-0 text-white/60" />
+                    <Check size={16} className="mt-0.5 shrink-0 text-vlz-red" />
                     <span className="text-sm text-white/80">{item}</span>
                   </div>
                 ))}
@@ -115,13 +116,13 @@ export default function ServiceModal({
             </div>
 
             <div className="mb-8">
-              <p className="mb-4 text-xs uppercase tracking-widest text-white/50">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-vlz-red">
                 You'll walk away with
               </p>
               <div className="flex flex-col gap-2">
                 {service.detail.walkAway.map((item) => (
                   <div key={item} className="flex items-start gap-2">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-white/40" />
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-vlz-red" />
                     <span className="text-sm text-white/80">{item}</span>
                   </div>
                 ))}
@@ -129,7 +130,7 @@ export default function ServiceModal({
             </div>
 
             <div className="mb-8">
-              <p className="mb-3 text-xs uppercase tracking-widest text-white/50">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-vlz-red">
                 This is for you if —
               </p>
               <p className="text-sm leading-relaxed text-white/80 md:text-base">
@@ -137,14 +138,7 @@ export default function ServiceModal({
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={handleBookCall}
-              className="flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-black transition-opacity hover:opacity-90"
-            >
-              Book a Call
-              <ArrowRight size={16} />
-            </button>
+            <PrimaryButton onClick={handleBookCall}>BOOK A CALL</PrimaryButton>
           </div>
         </div>
       </motion.div>

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowLeft,
-  ArrowRight,
   Bot,
   Check,
   CheckCircle2,
@@ -15,6 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import { SITE_CONFIG } from '../config/site';
+import PrimaryButton from './PrimaryButton';
 
 const SERVICES_OPTIONS = [
   {
@@ -160,13 +160,16 @@ export default function IntakeModal({
       >
         <div
           ref={containerRef}
-          className="liquid-glass relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-neutral-950/90 text-white shadow-2xl"
+          className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-vlz-dark text-white shadow-2xl"
         >
           {/* Top Bar / Progress */}
           <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
             <div className="flex items-center gap-3">
-              <span className="font-serif-display text-xl tracking-wide text-white">
-                Vantralabz
+              <span
+                className="text-xl tracking-wide text-white"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                VANTRALABZ
               </span>
               <span className="hidden text-xs text-white/40 sm:inline">•</span>
               <span className="text-xs font-medium uppercase tracking-widest text-white/50">
@@ -185,9 +188,9 @@ export default function IntakeModal({
                     key={i}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
                       step === i
-                        ? 'w-6 bg-white'
+                        ? 'w-6 bg-vlz-red'
                         : step > i
-                        ? 'w-3 bg-white/60'
+                        ? 'w-3 bg-vlz-red/50'
                         : 'w-2 bg-white/20'
                     }`}
                   />
@@ -235,13 +238,13 @@ export default function IntakeModal({
                         onClick={() => toggleService(item.id)}
                         className={`group relative flex cursor-pointer items-start gap-4 rounded-2xl p-4 transition-all ${
                           isSelected
-                            ? 'border border-white/40 bg-white/10 shadow-lg'
+                            ? 'border border-vlz-red/50 bg-vlz-red/10 shadow-lg'
                             : 'border border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.05]'
                         }`}
                       >
                         <div
                           className={`rounded-xl p-2.5 transition-colors ${
-                            isSelected ? 'bg-white text-black' : 'bg-white/5 text-white/70'
+                            isSelected ? 'bg-vlz-red text-white' : 'bg-white/5 text-white/70'
                           }`}
                         >
                           <Icon size={20} />
@@ -250,7 +253,7 @@ export default function IntakeModal({
                           <div className="flex items-center justify-between">
                             <h3 className="text-base font-medium text-white">{item.title}</h3>
                             {isSelected && (
-                              <span className="rounded-full bg-white/20 p-1 text-white">
+                              <span className="rounded-full bg-vlz-red p-1 text-white">
                                 <Check size={12} />
                               </span>
                             )}
@@ -263,13 +266,7 @@ export default function IntakeModal({
                 </div>
 
                 <div className="flex justify-end pt-4">
-                  <button
-                    onClick={() => setStep(2)}
-                    className="flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-all hover:bg-white/90"
-                  >
-                    Continue
-                    <ArrowRight size={16} />
-                  </button>
+                  <PrimaryButton onClick={() => setStep(2)}>CONTINUE</PrimaryButton>
                 </div>
               </motion.div>
             )}
@@ -306,7 +303,7 @@ export default function IntakeModal({
                         onClick={() => setSituation(opt)}
                         className={`rounded-xl p-3.5 text-left text-xs sm:text-sm transition-all ${
                           situation === opt
-                            ? 'border border-white/40 bg-white/10 text-white'
+                            ? 'border border-vlz-red/50 bg-vlz-red/10 text-white'
                             : 'border border-white/5 bg-white/[0.02] text-white/70 hover:bg-white/5'
                         }`}
                       >
@@ -321,7 +318,7 @@ export default function IntakeModal({
                   <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                     Existing Website or Store URL (Optional)
                   </label>
-                  <div className="liquid-glass rounded-xl">
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03]">
                     <input
                       type="text"
                       value={currentWebsite}
@@ -345,7 +342,7 @@ export default function IntakeModal({
                         onClick={() => setTimeline(opt)}
                         className={`rounded-xl p-2.5 text-center text-xs transition-all ${
                           timeline === opt
-                            ? 'border border-white/40 bg-white/10 text-white'
+                            ? 'border border-vlz-red/50 bg-vlz-red/10 text-white'
                             : 'border border-white/5 bg-white/[0.02] text-white/60 hover:bg-white/5'
                         }`}
                       >
@@ -363,13 +360,7 @@ export default function IntakeModal({
                     <ArrowLeft size={14} />
                     Back
                   </button>
-                  <button
-                    onClick={() => setStep(3)}
-                    className="flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-all hover:bg-white/90"
-                  >
-                    Continue
-                    <ArrowRight size={16} />
-                  </button>
+                  <PrimaryButton onClick={() => setStep(3)}>CONTINUE</PrimaryButton>
                 </div>
               </motion.div>
             )}
@@ -399,7 +390,7 @@ export default function IntakeModal({
                     <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                       Your Name *
                     </label>
-                    <div className="liquid-glass rounded-xl">
+                    <div className="rounded-xl border border-white/10 bg-white/[0.03]">
                       <input
                         type="text"
                         required
@@ -415,7 +406,7 @@ export default function IntakeModal({
                     <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                       Work Email *
                     </label>
-                    <div className="liquid-glass rounded-xl">
+                    <div className="rounded-xl border border-white/10 bg-white/[0.03]">
                       <input
                         type="email"
                         required
@@ -434,7 +425,7 @@ export default function IntakeModal({
                       <span>WhatsApp / Phone Number</span>
                       <span className="text-[10px] text-emerald-400 lowercase">for instant callback</span>
                     </label>
-                    <div className="liquid-glass rounded-xl">
+                    <div className="rounded-xl border border-white/10 bg-white/[0.03]">
                       <input
                         type="tel"
                         value={contact.whatsapp}
@@ -449,7 +440,7 @@ export default function IntakeModal({
                     <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                       Company / Organization
                     </label>
-                    <div className="liquid-glass rounded-xl">
+                    <div className="rounded-xl border border-white/10 bg-white/[0.03]">
                       <input
                         type="text"
                         value={contact.company}
@@ -465,7 +456,7 @@ export default function IntakeModal({
                   <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                     Brief Notes on what you'd like to achieve
                   </label>
-                  <div className="liquid-glass rounded-xl">
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03]">
                     <textarea
                       rows={3}
                       value={contact.notes}
@@ -486,14 +477,9 @@ export default function IntakeModal({
                     Back
                   </button>
 
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-medium text-black transition-all hover:bg-white/90 disabled:opacity-50"
-                  >
-                    {submitting ? 'Saving...' : 'Next: Pick Meeting Time'}
-                    <ArrowRight size={16} />
-                  </button>
+                  <PrimaryButton type="submit" disabled={submitting}>
+                    {submitting ? 'SAVING...' : 'NEXT: PICK MEETING TIME'}
+                  </PrimaryButton>
                 </div>
               </motion.form>
             )}
@@ -564,7 +550,7 @@ export default function IntakeModal({
                   <iframe
                     src={`${SITE_CONFIG.calendlyUrl}?embed_domain=${encodeURIComponent(
                       window.location.hostname
-                    )}&embed_type=Inline&background_color=0a0a0a&text_color=ffffff&primary_color=10b981&name=${encodeURIComponent(
+                    )}&embed_type=Inline&background_color=111111&text_color=ffffff&primary_color=f9452d&name=${encodeURIComponent(
                       contact.name
                     )}&email=${encodeURIComponent(contact.email)}&a1=${encodeURIComponent(
                       contact.whatsapp
