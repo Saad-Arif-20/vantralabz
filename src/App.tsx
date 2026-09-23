@@ -61,7 +61,7 @@ function App() {
   };
 
   return (
-    <div className="relative bg-black">
+    <div className="relative bg-vlz-offwhite">
       <Header onOpenIntake={() => handleOpenIntake()} />
       <Hero onOpenIntake={() => handleOpenIntake()} />
       <AboutSection />
