@@ -1,8 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import AmbientBackground from './AmbientBackground';
-import RevealHeading from './RevealHeading';
 import PrimaryButton from './PrimaryButton';
 
 const FAQS = [
@@ -43,36 +41,33 @@ function FAQItem({
   answer,
   isOpen,
   onToggle,
-  index,
 }: {
   question: string;
   answer: string;
   isOpen: boolean;
   onToggle: () => void;
-  index: number;
 }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+    <div className="overflow-hidden rounded-2xl bg-vlz-offgray/60">
       <button
         type="button"
         onClick={onToggle}
         className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
         aria-expanded={isOpen}
       >
-        <span className="flex items-baseline gap-4">
-          <span className="font-serif-display text-sm italic text-vlz-red">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <span className="text-base font-medium text-white md:text-lg">
+        <span className="flex items-center gap-3">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-vlz-red" />
+          <span className="text-base font-medium text-vlz-black md:text-lg">
             {question}
           </span>
         </span>
-        <ChevronDown
-          size={20}
-          className={`shrink-0 text-white/70 transition-transform duration-300 ${
-            isOpen ? 'rotate-180' : ''
+        <span
+          className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-transform duration-300 ${
+            isOpen ? 'rotate-180 bg-vlz-black text-white' : 'bg-white text-vlz-black'
           }`}
-        />
+        >
+          <ChevronDown size={16} />
+        </span>
       </button>
 
       <motion.div
@@ -81,7 +76,7 @@ function FAQItem({
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="overflow-hidden"
       >
-        <p className="px-6 pb-5 text-sm leading-relaxed text-white/60 md:text-base">
+        <p className="px-6 pb-5 pl-[2.25rem] text-sm leading-relaxed text-vlz-gray md:text-base">
           {answer}
         </p>
       </motion.div>
@@ -108,45 +103,41 @@ export default function FAQSection() {
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' });
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-black px-6 py-28 md:py-40">
+    <section id="faq" className="bg-vlz-offwhite px-4 py-16 sm:px-6 md:py-20">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
-      <AmbientBackground variant="quiet" />
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
         <div ref={headerRef} className="lg:sticky lg:top-32 lg:self-start">
-          <motion.p
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="mb-4 text-sm font-semibold uppercase tracking-widest text-vlz-red"
+            className="text-4xl font-bold leading-[1.05] tracking-tight text-vlz-black sm:text-5xl md:text-6xl"
+            style={{ fontFamily: 'var(--font-expanded)' }}
           >
-            FAQ
-          </motion.p>
-          <RevealHeading
-            as="h2"
-            className="tracking-tight text-white text-4xl md:text-6xl"
-            segments={[{ text: 'Frequently asked' }, { text: 'questions.', emphasis: true }]}
-          />
+            Clarifying the
+            <br />
+            <span className="text-vlz-red">Details</span>
+          </motion.h2>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-6 max-w-sm text-sm leading-relaxed text-white/60"
+            className="mt-10 text-sm text-vlz-gray"
           >
-            Still have a question we didn't cover here?
+            Do you have any more questions?
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-6 inline-block"
+            className="mt-4 inline-block"
           >
-            <PrimaryButton variant="secondary" href="#contact">
-              ASK US DIRECTLY
-            </PrimaryButton>
+            <PrimaryButton href="#contact">CALL US</PrimaryButton>
           </motion.div>
         </div>
 
@@ -154,7 +145,6 @@ export default function FAQSection() {
           {FAQS.map((faq, index) => (
             <FAQItem
               key={faq.question}
-              index={index}
               question={faq.question}
               answer={faq.answer}
               isOpen={openIndex === index}

@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import AboutSection from './components/AboutSection';
-import FeaturedVideoSection from './components/FeaturedVideoSection';
-import PhilosophySection from './components/PhilosophySection';
-import ServicesSection from './components/ServicesSection';
+import WordmarkDivider from './components/WordmarkDivider';
+import DesignTechSection from './components/DesignTechSection';
+import WhatSetsUsApartSection from './components/WhatSetsUsApartSection';
+import WorkThatSpeaksSection from './components/WorkThatSpeaksSection';
 import ProcessSection from './components/ProcessSection';
+import TeamSection from './components/TeamSection';
 import FAQSection from './components/FAQSection';
+import PricingSection from './components/PricingSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
+import SectionDivider from './components/SectionDivider';
 import IntakeModal from './components/IntakeModal';
 import PrimaryButton from './components/PrimaryButton';
 
@@ -63,12 +66,20 @@ function App() {
     <div className="relative bg-vlz-offwhite">
       <Header onOpenIntake={() => handleOpenIntake()} />
       <Hero onOpenIntake={() => handleOpenIntake()} />
-      <AboutSection />
-      <FeaturedVideoSection />
-      <PhilosophySection />
-      <ServicesSection onOpenIntake={(serviceTitle) => handleOpenIntake(serviceTitle)} />
+      <WordmarkDivider />
+      <DesignTechSection />
+      <SectionDivider label="SELECTED CLIENTS" />
+      <WhatSetsUsApartSection />
+      <WorkThatSpeaksSection />
+      <SectionDivider label="THE PROCESS" />
       <ProcessSection />
+      <SectionDivider label="TEAM MEMBERS" />
+      <TeamSection />
+      <SectionDivider label="FAQ" />
       <FAQSection />
+      <SectionDivider label="PRICING $ PLAN" />
+      <PricingSection />
+      <SectionDivider label="CONTACT" />
       <ContactSection />
       <Footer />
 

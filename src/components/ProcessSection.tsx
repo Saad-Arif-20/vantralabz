@@ -1,89 +1,127 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import AmbientBackground from './AmbientBackground';
-import RevealHeading from './RevealHeading';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronDown, Share2 } from 'lucide-react';
 
 const STEPS = [
   {
     number: '01',
-    title: 'Discover',
+    week: 'Week 1',
+    title: 'Research',
+    tag: 'Brainstorming',
     description:
-      "We start by understanding your business, your audience, and the idea you haven't said out loud yet — the one your brand should actually be built around.",
+      "We dive into market trends, user behaviors, and industry insights to uncover opportunities that shape smarter strategies.",
   },
   {
     number: '02',
-    title: 'Strategize',
+    week: 'Week 2',
+    title: 'Prototype',
+    tag: 'Test Before Build',
     description:
-      "We shape that idea into a clear plan: positioning, messaging, and the specific mix of services that gets you from where you are to where you're going.",
+      'We build interactive prototypes to test ideas early, refine usability, and ensure the final product delivers real impact.',
   },
   {
     number: '03',
-    title: 'Build',
+    week: 'Week 3',
+    title: 'Presentation',
+    tag: 'Ideas Made Clear',
     description:
-      'Design, code, copy, or automation — whatever the plan calls for, built to a standard we would put our own name on.',
-  },
-  {
-    number: '04',
-    title: 'Grow',
-    description:
-      "Launch is the start, not the finish. We stay close, refine what's working, and keep pushing the idea forward.",
+      'We present clear design solutions, walking you through the vision, strategy, and flow before moving to final execution.',
   },
 ];
 
-function ProcessStep({ step, index }: { step: (typeof STEPS)[number]; index: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.12 }}
-      className="relative flex flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8"
-    >
-      <span className="font-serif-display text-4xl italic text-vlz-red md:text-5xl">
-        {step.number}
-      </span>
-      <h3 className="tracking-tight text-white text-xl md:text-2xl">
-        {step.title}
-      </h3>
-      <p className="text-sm leading-relaxed text-white/60">
-        {step.description}
-      </p>
-    </motion.div>
-  );
-}
-
 export default function ProcessSection() {
-  return (
-    <section
-      id="process"
-      className="relative overflow-hidden bg-black px-6 py-28 md:py-40"
-    >
-      <AmbientBackground variant="quiet" />
+  const [openIndex, setOpenIndex] = useState(0);
 
-      <div className="relative mx-auto max-w-6xl">
-        <div className="mb-12 text-center md:mb-16">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-vlz-red">
-            How We Work
-          </p>
-          <RevealHeading
-            as="h2"
-            className="tracking-tight text-white text-4xl md:text-6xl"
-            segments={[
-              { text: 'A clear path from' },
-              { text: 'idea', emphasis: true },
-              { text: 'to' },
-              { text: 'impact.', emphasis: true },
-            ]}
-          />
+  return (
+    <section id="process" className="bg-vlz-offwhite px-4 pb-6 sm:px-6">
+      <div className="mx-auto max-w-6xl overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 text-center sm:px-10 sm:py-20">
+        <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray">
+          <Share2 size={14} className="text-vlz-red" />
+          Our Approach
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        <h2
+          className="mb-12 text-4xl font-bold tracking-tight text-vlz-white sm:text-5xl md:text-6xl"
+          style={{ fontFamily: 'var(--font-expanded)' }}
+        >
+          How We Work
+        </h2>
+
+        <div className="mx-auto mb-12 flex max-w-md items-center justify-between">
           {STEPS.map((step, index) => (
-            <ProcessStep key={step.number} step={step} index={index} />
+            <div key={step.week} className="flex items-center">
+              <span
+                className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors ${
+                  openIndex === index
+                    ? 'bg-vlz-red text-white'
+                    : 'bg-white/5 text-vlz-lightgray'
+                }`}
+              >
+                {step.week}
+              </span>
+              {index < STEPS.length - 1 && (
+                <span className="h-px w-8 bg-white/15 sm:w-16" aria-hidden />
+              )}
+            </div>
           ))}
+        </div>
+
+        <div className="flex flex-col gap-3 text-left">
+          {STEPS.map((step, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <motion.div
+                key={step.title}
+                layout
+                className={`overflow-hidden rounded-2xl border transition-colors ${
+                  isOpen
+                    ? 'border-transparent bg-vlz-white text-vlz-black'
+                    : 'border-white/10 bg-white/[0.03] text-white'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                  className="flex w-full items-center justify-between gap-4 px-5 py-4"
+                >
+                  <span className="flex items-center gap-4">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-vlz-red text-sm font-bold text-white">
+                      {step.number}
+                    </span>
+                    <span
+                      className="text-base font-semibold uppercase tracking-widest sm:text-lg"
+                      style={{ fontFamily: 'var(--font-expanded)' }}
+                    >
+                      {step.title}
+                    </span>
+                  </span>
+                  <span
+                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-transform duration-300 ${
+                      isOpen ? 'rotate-180 bg-vlz-black text-white' : 'bg-white/10 text-white'
+                    }`}
+                  >
+                    <ChevronDown size={16} />
+                  </span>
+                </button>
+
+                <motion.div
+                  initial={false}
+                  animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-5 pb-5 pl-[3.75rem]">
+                    <p className="mb-3 text-sm leading-relaxed text-vlz-gray sm:text-base">
+                      {step.description}
+                    </p>
+                    <span className="inline-block rounded-full bg-vlz-red px-3 py-1 text-xs font-semibold text-white">
+                      {step.tag}
+                    </span>
+                  </div>
+                </motion.div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
