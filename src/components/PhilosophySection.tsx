@@ -15,7 +15,7 @@ export default function PhilosophySection() {
         <RevealHeading
           as="h2"
           className="mb-6 tracking-tight text-white text-5xl md:text-7xl lg:text-8xl"
-          emphasisClassName="font-serif-display italic text-white/50"
+          emphasisClassName="font-serif-display italic text-vlz-red"
           segments={[{ text: 'Innovation' }, { text: 'x', emphasis: true }, { text: 'Vision' }]}
         />
 

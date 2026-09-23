@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
         <div className="flex items-center gap-2 text-white/70">
-          <Globe size={18} />
+          <Globe size={18} className="text-vlz-red" />
           <span className="text-sm">
             Vantralabz — ideas that grow brands.
           </span>
@@ -21,7 +21,7 @@ export default function Footer() {
               key={label}
               href="#"
               aria-label={label}
-              className="liquid-glass rounded-full p-3 text-white/80 transition-all hover:bg-white/5 hover:text-white"
+              className="rounded-full border border-white/10 bg-white/[0.03] p-3 text-white/80 transition-all hover:bg-vlz-red hover:text-white"
             >
               <Icon size={16} />
             </a>

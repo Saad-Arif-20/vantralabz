@@ -63,13 +63,13 @@ export default function AboutSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3 + index * 0.12 }}
-              className="liquid-glass flex gap-4 rounded-2xl p-5"
+              className="flex gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5"
             >
-              <span className="font-serif-display shrink-0 text-2xl italic text-white/30">
+              <span className="font-serif-display shrink-0 text-2xl italic text-vlz-red">
                 {item.number}
               </span>
               <div>
-                <h3 className="mb-1 text-sm font-medium text-white">
+                <h3 className="mb-1 text-sm font-semibold text-white">
                   {item.title}
                 </h3>
                 <p className="text-sm leading-relaxed text-white/60">

@@ -217,16 +217,16 @@ function ServiceCard({
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') onOpen();
       }}
-      className={`liquid-glass spotlight-glow group flex cursor-pointer overflow-hidden rounded-3xl transition-shadow duration-500 ${
+      className={`spotlight-glow group relative flex cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] transition-shadow duration-500 ${
         service.layout === 'tall' ? 'h-full flex-col' : 'flex-col'
       } ${
         isFeature
-          ? 'ring-1 ring-white/15 shadow-[0_0_90px_-25px_rgba(255,255,255,0.3)] md:flex-row'
+          ? 'ring-1 ring-vlz-red/30 shadow-[0_0_90px_-25px_rgba(249,69,45,0.4)] md:flex-row'
           : ''
       } ${GRID_POSITION[service.layout]}`}
     >
       {isFeature && (
-        <span className="liquid-glass absolute left-4 top-4 z-10 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white/90">
+        <span className="absolute left-4 top-4 z-10 flex items-center gap-1.5 rounded-full bg-vlz-red px-3 py-1.5 text-xs font-semibold text-white">
           <Sparkles size={12} className="text-white" />
           Our specialty
         </span>
@@ -255,10 +255,10 @@ function ServiceCard({
         }`}
       >
         <div className="mb-4 flex items-center justify-between">
-          <span className="text-xs uppercase tracking-widest text-white/50">
+          <span className="text-xs font-semibold uppercase tracking-widest text-vlz-red">
             {service.tag}
           </span>
-          <span className="liquid-glass rounded-full p-2 transition-transform duration-300 group-hover:rotate-45">
+          <span className="rounded-full bg-white/10 p-2 transition-all duration-300 group-hover:rotate-45 group-hover:bg-vlz-red">
             <ArrowUpRight size={16} className="text-white" />
           </span>
         </div>
@@ -306,7 +306,7 @@ export default function ServicesSection({ onOpenIntake }: ServicesSectionProps) 
             initial={{ opacity: 0 }}
             animate={headerInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="hidden text-sm text-white/50 md:inline"
+            className="hidden text-sm font-medium text-vlz-red md:inline"
           >
             Our services
           </motion.span>

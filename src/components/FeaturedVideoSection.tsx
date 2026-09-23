@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import WorkflowMockup from './WorkflowMockup';
+import PrimaryButton from './PrimaryButton';
 
 export default function FeaturedVideoSection() {
   const ref = useRef(null);
@@ -21,8 +22,8 @@ export default function FeaturedVideoSection() {
         <WorkflowMockup />
 
         <div className="mt-6 flex flex-col gap-6 md:mt-8 md:flex-row md:items-end md:justify-between">
-          <div className="liquid-glass max-w-md rounded-2xl p-6 md:p-8">
-            <p className="mb-3 text-xs uppercase tracking-widest text-white/60">
+          <div className="max-w-md rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-vlz-red">
               Our Approach
             </p>
             <p className="text-sm leading-relaxed text-white md:text-base">
@@ -32,14 +33,9 @@ export default function FeaturedVideoSection() {
             </p>
           </div>
 
-          <motion.a
-            href="#services"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="liquid-glass w-fit rounded-full px-8 py-3 text-sm font-medium text-white"
-          >
-            View our services
-          </motion.a>
+          <PrimaryButton href="#services" variant="secondary" className="w-fit">
+            VIEW OUR SERVICES
+          </PrimaryButton>
         </div>
       </motion.div>
     </section>

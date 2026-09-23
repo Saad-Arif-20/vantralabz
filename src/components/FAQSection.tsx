@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import AmbientBackground from './AmbientBackground';
 import RevealHeading from './RevealHeading';
+import PrimaryButton from './PrimaryButton';
 
 const FAQS = [
   {
@@ -51,7 +52,7 @@ function FAQItem({
   index: number;
 }) {
   return (
-    <div className="liquid-glass overflow-hidden rounded-2xl">
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
       <button
         type="button"
         onClick={onToggle}
@@ -59,7 +60,7 @@ function FAQItem({
         aria-expanded={isOpen}
       >
         <span className="flex items-baseline gap-4">
-          <span className="font-serif-display text-sm italic text-white/30">
+          <span className="font-serif-display text-sm italic text-vlz-red">
             {String(index + 1).padStart(2, '0')}
           </span>
           <span className="text-base font-medium text-white md:text-lg">
@@ -120,7 +121,7 @@ export default function FAQSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="mb-4 text-sm uppercase tracking-widest text-white/50"
+            className="mb-4 text-sm font-semibold uppercase tracking-widest text-vlz-red"
           >
             FAQ
           </motion.p>
@@ -137,15 +138,16 @@ export default function FAQSection() {
           >
             Still have a question we didn't cover here?
           </motion.p>
-          <motion.a
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
-            href="#contact"
-            className="liquid-glass mt-6 inline-block rounded-full px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5"
+            className="mt-6 inline-block"
           >
-            Ask us directly
-          </motion.a>
+            <PrimaryButton variant="secondary" href="#contact">
+              ASK US DIRECTLY
+            </PrimaryButton>
+          </motion.div>
         </div>
 
         <div className="flex flex-col gap-4">

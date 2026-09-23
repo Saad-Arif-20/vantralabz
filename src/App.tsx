@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Calendar } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutSection from './components/AboutSection';
@@ -11,7 +10,7 @@ import FAQSection from './components/FAQSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import IntakeModal from './components/IntakeModal';
-import MagneticButton from './components/MagneticButton';
+import PrimaryButton from './components/PrimaryButton';
 
 const mapServiceToId = (title?: string): string | undefined => {
   if (!title) return undefined;
@@ -75,13 +74,9 @@ function App() {
 
       {/* Floating Schedule / Intake Quick Action Button */}
       <div className="fixed bottom-6 right-6 z-40">
-        <MagneticButton
-          onClick={() => handleOpenIntake()}
-          className="group flex items-center gap-2.5 rounded-full px-5 py-3 text-sm font-medium text-white shadow-2xl"
-        >
-          <Calendar size={16} className="text-white/80 transition-transform group-hover:rotate-12" />
-          <span>Book a Call</span>
-        </MagneticButton>
+        <PrimaryButton onClick={() => handleOpenIntake()} className="shadow-2xl">
+          BOOK A CALL
+        </PrimaryButton>
       </div>
 
       {/* Multi-step Intake & Calendly Scheduler Modal */}

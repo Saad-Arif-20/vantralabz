@@ -40,9 +40,9 @@ function ProcessStep({ step, index }: { step: (typeof STEPS)[number]; index: num
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.12 }}
-      className="liquid-glass relative flex flex-1 flex-col gap-4 rounded-3xl p-6 md:p-8"
+      className="relative flex flex-1 flex-col gap-4 rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-8"
     >
-      <span className="font-serif-display text-4xl italic text-white/30 md:text-5xl">
+      <span className="font-serif-display text-4xl italic text-vlz-red md:text-5xl">
         {step.number}
       </span>
       <h3 className="tracking-tight text-white text-xl md:text-2xl">
@@ -65,7 +65,7 @@ export default function ProcessSection() {
 
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-12 text-center md:mb-16">
-          <p className="mb-4 text-sm uppercase tracking-widest text-white/50">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-vlz-red">
             How We Work
           </p>
           <RevealHeading

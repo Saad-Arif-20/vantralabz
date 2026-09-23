@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, ChevronDown, Globe, Mail, X } from 'lucide-react';
+import { ChevronDown, Globe, Mail, X } from 'lucide-react';
 import AmbientBackground from './AmbientBackground';
 import RevealHeading from './RevealHeading';
-import MagneticButton from './MagneticButton';
+import PrimaryButton from './PrimaryButton';
 
 const SUBJECTS = [
   'Brand Strategy',
@@ -65,7 +65,7 @@ export default function ContactSection() {
         className="relative mx-auto max-w-6xl"
       >
         <div className="mb-12 text-center md:mb-16">
-          <p className="mb-4 text-sm uppercase tracking-widest text-white/50">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-vlz-red">
             Contact
           </p>
           <RevealHeading
@@ -76,7 +76,7 @@ export default function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-5 md:gap-8">
-          <div className="liquid-glass rounded-3xl p-6 md:col-span-3 md:p-10">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:col-span-3 md:p-10">
             {status === 'sent' ? (
               <div className="flex h-full min-h-[320px] flex-col items-center justify-center text-center">
                 <h3 className="mb-3 text-2xl text-white">Message sent.</h3>
@@ -169,14 +169,13 @@ export default function ContactSection() {
                   </p>
                 )}
 
-                <MagneticButton
+                <PrimaryButton
                   type="submit"
                   disabled={status === 'sending'}
-                  className="flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-sm font-medium text-white disabled:opacity-60"
+                  className="justify-center"
                 >
-                  {status === 'sending' ? 'Sending...' : 'Send Message'}
-                  <ArrowRight size={16} />
-                </MagneticButton>
+                  {status === 'sending' ? 'SENDING...' : 'SEND MESSAGE'}
+                </PrimaryButton>
               </form>
             )}
           </div>
@@ -191,14 +190,14 @@ export default function ContactSection() {
 
             <div className="relative flex flex-col gap-8">
               <div>
-                <p className="mb-2 text-xs uppercase tracking-widest text-white/50">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-vlz-red">
                   Email Us
                 </p>
                 <p className="text-lg text-white">hello@vantralabz.com</p>
               </div>
 
               <div>
-                <p className="mb-2 text-xs uppercase tracking-widest text-white/50">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-vlz-red">
                   Location
                 </p>
                 <p className="text-lg text-white">
@@ -208,7 +207,7 @@ export default function ContactSection() {
             </div>
 
             <div className="relative">
-              <p className="mb-3 text-xs uppercase tracking-widest text-white/50">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-vlz-red">
                 Follow Us
               </p>
               <div className="flex gap-3">
@@ -221,7 +220,7 @@ export default function ContactSection() {
                     key={label}
                     href="#"
                     aria-label={label}
-                    className="liquid-glass rounded-full p-3 text-white/80 transition-all hover:bg-white/5 hover:text-white"
+                    className="rounded-full border border-white/10 bg-white/[0.03] p-3 text-white/80 transition-all hover:bg-vlz-red hover:text-white"
                   >
                     <Icon size={16} />
                   </a>

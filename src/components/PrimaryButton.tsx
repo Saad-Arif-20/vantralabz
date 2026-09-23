@@ -7,6 +7,8 @@ interface PrimaryButtonProps {
   href?: string;
   variant?: 'primary' | 'secondary';
   className?: string;
+  type?: 'button' | 'submit';
+  disabled?: boolean;
 }
 
 export default function PrimaryButton({
@@ -15,9 +17,11 @@ export default function PrimaryButton({
   href,
   variant = 'primary',
   className = '',
+  type = 'button',
+  disabled = false,
 }: PrimaryButtonProps) {
   const base =
-    'group relative inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-transform duration-200 active:scale-[0.97]';
+    'group relative inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-transform duration-200 active:scale-[0.97] disabled:opacity-60 disabled:active:scale-100';
 
   const palette =
     variant === 'primary'
@@ -48,7 +52,12 @@ export default function PrimaryButton({
   }
 
   return (
-    <button type="button" onClick={onClick} className={`${base} ${palette} ${className}`}>
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${base} ${palette} ${className}`}
+    >
       {content}
     </button>
   );
