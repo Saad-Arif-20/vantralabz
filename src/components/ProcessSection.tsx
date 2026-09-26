@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { ChevronUp, Share2 } from 'lucide-react';
 
 const STEPS = [
@@ -9,7 +9,7 @@ const STEPS = [
     title: 'Research',
     tag: 'Brainstorming',
     variant: 'primary' as const,
-    offset: 'sm:ml-0 sm:mt-0',
+    offset: 'sm:ml-0',
     description:
       'We dive into market trends, user behaviors, and industry insights to uncover opportunities that shape smarter strategies.',
   },
@@ -19,7 +19,7 @@ const STEPS = [
     title: 'Prototype',
     tag: 'Test Before Build',
     variant: 'secondary' as const,
-    offset: 'sm:ml-[22%] sm:-mt-16',
+    offset: 'sm:ml-[16%]',
     description:
       'We build interactive prototypes to test ideas early, refine usability, and ensure the final product delivers real impact.',
   },
@@ -29,7 +29,7 @@ const STEPS = [
     title: 'Presentation',
     tag: 'Ideas Made Clear',
     variant: 'secondary' as const,
-    offset: 'sm:ml-[44%] sm:-mt-16',
+    offset: 'sm:ml-[32%]',
     description:
       'We present clear design solutions, walking you through the vision, strategy, and flow before moving to final execution.',
   },
@@ -38,6 +38,19 @@ const STEPS = [
 export default function ProcessSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [openIndexes, setOpenIndexes] = useState<Set<number>>(new Set([0, 1, 2]));
+
+  const toggle = (index: number) => {
+    setOpenIndexes((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
 
   return (
     <section id="process" className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
@@ -70,16 +83,16 @@ export default function ProcessSection() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-16 text-left sm:gap-0">
+        <div className="flex flex-col gap-10 text-left sm:gap-12">
           {STEPS.map((step, index) => {
             const isPrimary = step.variant === 'primary';
+            const isOpen = openIndexes.has(index);
             return (
               <motion.div
                 key={step.title}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                style={{ zIndex: STEPS.length - index }}
                 className={`relative max-w-md sm:max-w-sm ${step.offset}`}
               >
                 <div
@@ -87,7 +100,12 @@ export default function ProcessSection() {
                     isPrimary ? 'bg-vlz-white text-vlz-black' : 'bg-vlz-dark text-white'
                   }`}
                 >
-                  <div className="flex w-full items-center justify-between gap-4 px-5 py-4">
+                  <button
+                    type="button"
+                    onClick={() => toggle(index)}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                  >
                     <span className="flex items-center gap-4">
                       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-vlz-red text-sm font-bold text-white">
                         {step.number}
@@ -100,34 +118,60 @@ export default function ProcessSection() {
                       </span>
                     </span>
                     <span
-                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${
+                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-transform duration-300 ${
                         isPrimary ? 'bg-vlz-black text-white' : 'bg-white/10 text-white'
-                      }`}
+                      } ${isOpen ? '' : 'rotate-180'}`}
                     >
                       <ChevronUp size={16} />
                     </span>
-                  </div>
+                  </button>
 
-                  <div className="px-5 pb-5 pl-[3.75rem]">
-                    <p
-                      className={`text-sm leading-relaxed sm:text-base ${
-                        isPrimary ? 'text-vlz-gray' : 'text-vlz-lightgray'
-                      }`}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-5 pl-[3.75rem]">
+                          <p
+                            className={`text-sm leading-relaxed sm:text-base ${
+                              isPrimary ? 'text-vlz-gray' : 'text-vlz-lightgray'
+                            }`}
+                          >
+                            {step.description}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="tag"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      className="overflow-hidden"
                     >
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="relative ml-8 mt-3 w-fit">
-                  <span
-                    className="absolute -top-1.5 left-3 h-3 w-3 rotate-45 bg-gradient-to-br from-vlz-red to-[rgb(255,140,80)]"
-                    aria-hidden
-                  />
-                  <span className="relative inline-block rounded-full bg-gradient-to-r from-vlz-red to-[rgb(255,140,80)] px-4 py-2 text-xs font-semibold text-white">
-                    {step.tag}
-                  </span>
-                </div>
+                      <div className="relative ml-8 mt-3 w-fit">
+                        <span
+                          className="absolute -top-1.5 left-3 h-3 w-3 rotate-45 bg-gradient-to-br from-vlz-red to-[rgb(255,140,80)]"
+                          aria-hidden
+                        />
+                        <span className="relative inline-block rounded-full bg-gradient-to-r from-vlz-red to-[rgb(255,140,80)] px-4 py-2 text-xs font-semibold text-white">
+                          {step.tag}
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}
