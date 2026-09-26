@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 import brandStrategyImg from '../assets/services/brand-strategy.webp';
 import webDesignImg from '../assets/services/web-design.webp';
@@ -58,6 +59,7 @@ const ITEMS = [
 export default function DesignTechSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <section className="bg-vlz-offwhite px-4 pb-6 sm:px-6">
@@ -107,34 +109,67 @@ export default function DesignTechSection() {
             ))}
           </div>
 
-          <div className="flex flex-col divide-y divide-white/10">
-            {ITEMS.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.15 + index * 0.08 }}
-                className="flex items-start gap-4 py-6 first:pt-0 last:pb-0"
-              >
-                <span className="mt-1 shrink-0 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-vlz-lightgray">
-                  {item.number}
-                </span>
-                <div>
-                  <div className="mb-2 flex items-center gap-2">
-                    <h3
-                      className="text-xl font-semibold text-vlz-white sm:text-2xl"
-                      style={{ fontFamily: 'var(--font-expanded)' }}
+          <div className="flex flex-col gap-3">
+            {ITEMS.map((item, index) => {
+              const isOpen = openIndex === index;
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.15 + index * 0.08 }}
+                  className={`overflow-hidden rounded-2xl transition-colors ${
+                    isOpen ? 'bg-vlz-white text-vlz-black' : 'bg-white/[0.04] text-white'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                  >
+                    <span className="flex items-center gap-4">
+                      <span
+                        className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-bold ${
+                          isOpen ? 'bg-vlz-red text-white' : 'bg-white/10 text-vlz-lightgray'
+                        }`}
+                      >
+                        {item.number}
+                      </span>
+                      <span
+                        className="text-lg font-semibold sm:text-xl"
+                        style={{ fontFamily: 'var(--font-expanded)' }}
+                      >
+                        {item.title}
+                      </span>
+                    </span>
+                    <span
+                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${
+                        isOpen ? 'bg-vlz-black text-white' : 'bg-white/10 text-white'
+                      }`}
                     >
-                      {item.title}
-                    </h3>
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-vlz-red" />
-                  </div>
-                  <p className="text-sm leading-relaxed text-vlz-lightgray">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+                      {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    </span>
+                  </button>
+
+                  <motion.div
+                    initial={false}
+                    animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-5 pb-5 pl-[3.75rem]">
+                      <p className="mb-4 text-sm leading-relaxed text-vlz-gray sm:text-base">
+                        {item.description}
+                      </p>
+                      <span className="inline-flex items-center gap-3 rounded-full bg-vlz-black px-4 py-2 text-xs font-semibold text-white">
+                        <span>{item.tag1}</span>
+                        <span>{item.tag2}</span>
+                      </span>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import WordmarkDivider from './components/WordmarkDivider';
 import DesignTechSection from './components/DesignTechSection';
+import BrandMarquee from './components/BrandMarquee';
 import WhatSetsUsApartSection from './components/WhatSetsUsApartSection';
 import WorkThatSpeaksSection from './components/WorkThatSpeaksSection';
 import ProcessSection from './components/ProcessSection';
@@ -68,7 +69,7 @@ function App() {
       <Hero onOpenIntake={() => handleOpenIntake()} />
       <WordmarkDivider />
       <DesignTechSection />
-      <SectionDivider label="SELECTED CLIENTS" />
+      <BrandMarquee />
       <WhatSetsUsApartSection />
       <WorkThatSpeaksSection />
       <SectionDivider label="THE PROCESS" />

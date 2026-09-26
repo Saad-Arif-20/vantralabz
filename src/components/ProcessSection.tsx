@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Share2 } from 'lucide-react';
 
+const STAGGER_CLASS = ['sm:ml-0', 'sm:ml-[12%]', 'sm:ml-[24%]'];
+
 const STEPS = [
   {
     number: '01',
@@ -73,10 +75,8 @@ export default function ProcessSection() {
               <motion.div
                 key={step.title}
                 layout
-                className={`overflow-hidden rounded-2xl border transition-colors ${
-                  isOpen
-                    ? 'border-transparent bg-vlz-white text-vlz-black'
-                    : 'border-white/10 bg-white/[0.03] text-white'
+                className={`max-w-md overflow-hidden rounded-2xl transition-colors sm:max-w-sm ${STAGGER_CLASS[index]} ${
+                  isOpen ? 'bg-vlz-white text-vlz-black' : 'bg-white/[0.06] text-white'
                 }`}
               >
                 <button

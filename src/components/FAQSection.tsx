@@ -142,6 +142,10 @@ export default function FAQSection() {
         </div>
 
         <div className="flex flex-col gap-4">
+          <div className="rounded-2xl bg-vlz-offgray/60 px-6 py-5 text-sm leading-relaxed text-vlz-gray">
+            We provide brand strategy, web design &amp; development, content &amp; copy,
+            long-form writing, and AI chatbots &amp; workflow automation.
+          </div>
           {FAQS.map((faq, index) => (
             <FAQItem
               key={faq.question}

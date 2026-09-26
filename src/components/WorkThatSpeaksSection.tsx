@@ -36,18 +36,28 @@ export default function WorkThatSpeaksSection() {
           </PrimaryButton>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {IMAGES.map((image, index) => (
-            <motion.div
-              key={image}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.12 }}
-              className={`aspect-[3/4] overflow-hidden rounded-2xl ${index === 0 ? 'sm:aspect-auto sm:row-span-1' : ''}`}
-            >
-              <img src={image} alt="Vantralabz work sample" className="h-full w-full object-cover" />
-            </motion.div>
-          ))}
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {IMAGES.slice(0, 2).map((image, index) => (
+              <motion.div
+                key={image}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.12 }}
+                className="aspect-square overflow-hidden rounded-2xl"
+              >
+                <img src={image} alt="Vantralabz work sample" className="h-full w-full object-cover" />
+              </motion.div>
+            ))}
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.24 }}
+            className="aspect-[21/9] overflow-hidden rounded-2xl"
+          >
+            <img src={IMAGES[2]} alt="Vantralabz work sample" className="h-full w-full object-cover" />
+          </motion.div>
         </div>
       </div>
     </section>
