@@ -103,13 +103,13 @@ export default function FAQSection() {
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' });
 
   return (
-    <section id="faq" className="bg-vlz-offwhite px-4 py-16 sm:px-6 md:py-20">
+    <section id="faq" className="bg-vlz-offwhite px-4 py-16 sm:px-6 md:py-20 lg:px-[72px]">
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
-      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+      <div className="mx-auto grid max-w-[1296px] grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
         <div ref={headerRef} className="lg:sticky lg:top-32 lg:self-start">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

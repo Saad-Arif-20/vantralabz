@@ -14,8 +14,8 @@ export default function WorkThatSpeaksSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="work" className="bg-vlz-offwhite px-4 pb-6 sm:px-6">
-      <div ref={ref} className="mx-auto max-w-[1360px] overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 sm:px-10 sm:py-20">
+    <section id="work" className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
+      <div ref={ref} className="mx-auto max-w-[1296px] overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 sm:px-10 sm:py-20">
         <div className="mb-8 flex flex-wrap items-start justify-between gap-6">
           <div>
             <div className="mb-4 flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray w-fit">

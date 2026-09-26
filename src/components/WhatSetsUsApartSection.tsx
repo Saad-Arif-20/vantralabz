@@ -15,8 +15,8 @@ export default function WhatSetsUsApartSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section className="bg-vlz-offwhite px-4 pb-6 sm:px-6">
-      <div ref={ref} className="mx-auto max-w-[1360px] overflow-hidden rounded-[40px] bg-vlz-offgray/60 px-6 py-16 sm:px-10 sm:py-20">
+    <section className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
+      <div ref={ref} className="mx-auto max-w-[1296px] overflow-hidden rounded-[40px] bg-vlz-offgray/60 px-6 py-16 sm:px-10 sm:py-20">
         <div className="mb-6 flex items-center gap-2 rounded-full bg-vlz-black px-4 py-2 text-xs font-semibold text-white w-fit">
           <Layers size={14} className="text-vlz-red" />
           Awards

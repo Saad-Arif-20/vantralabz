@@ -35,8 +35,8 @@ function FooterColumn({ label, links }: { label: string; links: string[] }) {
 
 export default function Footer() {
   return (
-    <footer className="bg-vlz-offwhite px-4 pb-8 pt-16 sm:px-6 md:pt-24">
-      <div className="mx-auto max-w-[1360px]">
+    <footer className="bg-vlz-offwhite px-4 pb-8 pt-16 sm:px-6 md:pt-24 lg:px-[72px]">
+      <div className="mx-auto max-w-[1296px]">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[380px_1fr] lg:gap-16">
           <div>
             <div className="aspect-[4/3] w-full overflow-hidden rounded-3xl">
