@@ -10,6 +10,7 @@ import ProcessSection from './components/ProcessSection';
 import TeamSection from './components/TeamSection';
 import FAQSection from './components/FAQSection';
 import PricingSection from './components/PricingSection';
+import GlobalReachSection from './components/GlobalReachSection';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import SectionDivider from './components/SectionDivider';
@@ -93,6 +94,7 @@ function App() {
       <FAQSection />
       <SectionDivider label="PRICING $ PLAN" />
       <PricingSection />
+      <GlobalReachSection />
       <SectionDivider label="CONTACT" />
       <ContactSection />
       <div ref={footerRef}>
