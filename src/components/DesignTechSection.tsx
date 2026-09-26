@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { SERVICES, type Service } from './ServicesSection';
 import ServiceModal from './ServiceModal';
 
-const STICK_OFFSET = 128; // must match the lg:top-32 applied to each sticky image/panel
+const STICK_OFFSET = 84; // must match the header's exact bottom edge (lg:top-[84px]) so no gap exists for an outgoing image to peek through
 
 interface DesignTechSectionProps {
   onOpenIntake?: (serviceTitle?: string) => void;
@@ -33,7 +33,7 @@ function ImagePane({
         type="button"
         onClick={onSelect}
         style={{ zIndex: index + 1 }}
-        className="group relative block w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-32 lg:h-[380px]"
+        className="group relative block w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-[84px] lg:h-[380px]"
       >
         <img
           src={service.image}
@@ -168,7 +168,7 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
               ))}
             </div>
 
-            <div className="lg:sticky lg:top-32 lg:self-start">
+            <div className="lg:sticky lg:top-[84px] lg:self-start">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
