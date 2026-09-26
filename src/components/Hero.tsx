@@ -12,11 +12,11 @@ export default function Hero({ onOpenIntake }: HeroProps) {
   return (
     <section id="top" className="relative bg-vlz-offwhite px-4 pb-6 pt-28 sm:px-6 sm:pt-32">
       <div
-        className="relative mx-auto max-w-6xl overflow-hidden rounded-[40px] bg-vlz-black bg-cover bg-center px-6 pb-10 pt-8 sm:px-10 sm:pb-16 sm:pt-10"
+        className="relative mx-auto flex min-h-[560px] max-w-6xl flex-col overflow-hidden rounded-[40px] bg-vlz-black bg-cover bg-center px-6 pb-10 pt-8 sm:min-h-[640px] sm:px-10 sm:pb-16 sm:pt-10"
         style={{ backgroundImage: `url(${HERO_BG_URL})` }}
       >
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/60"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"
           aria-hidden
         />
 
@@ -46,12 +46,12 @@ export default function Hero({ onOpenIntake }: HeroProps) {
           </motion.p>
         </div>
 
-        <div className="relative z-10 mt-16 sm:mt-24">
+        <div className="relative z-10 mt-16 flex flex-1 flex-col justify-end sm:mt-24">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-            className="text-[13vw] font-semibold uppercase leading-[0.95] tracking-tight text-vlz-white sm:text-[9vw] md:text-[7vw] lg:text-[80px]"
+            className="text-[13vw] font-semibold uppercase leading-[0.95] tracking-tight text-vlz-white sm:text-[9vw] md:text-[7vw] lg:text-[96px]"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             Build Brands
