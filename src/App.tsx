@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import WordmarkDivider from './components/WordmarkDivider';
@@ -29,6 +29,19 @@ const mapServiceToId = (title?: string): string | undefined => {
 function App() {
   const [isIntakeOpen, setIsIntakeOpen] = useState(false);
   const [selectedServiceId, setSelectedServiceId] = useState<string | undefined>(undefined);
+  const [hideFloatingCta, setHideFloatingCta] = useState(false);
+  const footerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = footerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHideFloatingCta(entry.isIntersecting),
+      { rootMargin: '0px 0px -100px 0px' },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleOpenIntake = (serviceTitle?: string) => {
     setSelectedServiceId(mapServiceToId(serviceTitle));
@@ -82,10 +95,16 @@ function App() {
       <PricingSection />
       <SectionDivider label="CONTACT" />
       <ContactSection />
-      <Footer />
+      <div ref={footerRef}>
+        <Footer />
+      </div>
 
       {/* Floating Schedule / Intake Quick Action Button */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div
+        className={`fixed bottom-6 right-6 z-40 transition-opacity duration-300 ${
+          hideFloatingCta ? 'pointer-events-none opacity-0' : 'opacity-100'
+        }`}
+      >
         <PrimaryButton onClick={() => handleOpenIntake()} className="shadow-2xl">
           BOOK A CALL
         </PrimaryButton>

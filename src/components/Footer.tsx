@@ -83,15 +83,12 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-10 flex items-center justify-center gap-3">
-        <img src={logoMark} alt="" className="h-[9vw] w-auto sm:h-[6vw] lg:h-16" />
-        <h2
-          className="select-none overflow-hidden text-center text-[16vw] font-bold uppercase leading-none tracking-tight text-vlz-black sm:text-[12vw] lg:text-[9rem]"
-          style={{ fontFamily: 'var(--font-expanded)' }}
-        >
-          Vantralabz
-        </h2>
-      </div>
+      <h2
+        className="mt-10 select-none text-center text-[15vw] font-bold uppercase leading-none tracking-tight text-vlz-black sm:text-[11vw] lg:text-[8.5vw] xl:text-[7.5rem]"
+        style={{ fontFamily: 'var(--font-expanded)' }}
+      >
+        Vantralabz
+      </h2>
     </footer>
   );
 }
