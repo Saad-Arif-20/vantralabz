@@ -5,40 +5,25 @@ import { ArrowUpRight } from 'lucide-react';
 import { SERVICES, type Service } from './ServicesSection';
 import ServiceModal from './ServiceModal';
 
-// The header is a floating rounded pill (16px top padding + rounded corners),
-// not a solid bar, so it does NOT opaquely cover 0-84px — only its own pill
-// shape within that band. Images must stick starting at the very top (0) so
-// the active image's own opaque content covers those transparent corners/
-// padding gaps instead of leaving whatever's behind visible through them.
-const STICK_OFFSET = 0;
-
 interface DesignTechSectionProps {
   onOpenIntake?: (serviceTitle?: string) => void;
 }
 
-function ImagePane({
+function ServiceSlide({
   service,
-  onSelect,
-  setRef,
-  index,
-  isLast,
+  number,
+  onViewMore,
 }: {
   service: Service;
-  onSelect: () => void;
-  setRef: (el: HTMLButtonElement | null) => void;
-  index: number;
-  isLast: boolean;
+  number: string;
+  onViewMore: () => void;
 }) {
   return (
-    <div
-      className={`relative aspect-video lg:aspect-auto lg:h-[920px] ${isLast ? '' : 'mb-6 lg:mb-0'} ${index === 0 ? '' : 'lg:-mt-[440px]'}`}
-    >
+    <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <button
-        ref={setRef}
         type="button"
-        onClick={onSelect}
-        style={{ zIndex: index + 1 }}
-        className="group relative block w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-0 lg:h-[380px]"
+        onClick={onViewMore}
+        className="group relative aspect-video w-full overflow-hidden rounded-2xl"
       >
         <img
           src={service.image}
@@ -49,54 +34,42 @@ function ImagePane({
           <ArrowUpRight size={18} />
         </span>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        <div className="absolute bottom-3 left-3 flex gap-2">
+        <div className="absolute bottom-3 left-3">
           <span className="rounded-full bg-black/60 px-3 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
             {service.tag}
           </span>
         </div>
       </button>
-    </div>
-  );
-}
 
-function ActivePanel({
-  service,
-  number,
-  onViewMore,
-}: {
-  service: Service;
-  number: string;
-  onViewMore: () => void;
-}) {
-  return (
-    <div>
-      <div className="mb-4 flex items-center justify-between">
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-sm font-bold text-white">
-          {number}
-        </span>
-        <span className="h-2 w-2 shrink-0 rounded-full bg-vlz-red" />
+      <div>
+        <div className="mb-4 flex items-center justify-between">
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-sm font-bold text-white">
+            {number}
+          </span>
+          <span className="h-2 w-2 shrink-0 rounded-full bg-vlz-red" />
+        </div>
+        <h3
+          className="mb-4 text-2xl font-semibold text-vlz-white sm:text-3xl"
+          style={{ fontFamily: 'var(--font-expanded)' }}
+        >
+          {service.title}
+        </h3>
+        <div className="mb-4 border-t border-white/10" />
+        <p className="mb-6 text-sm leading-relaxed text-vlz-lightgray sm:text-base">
+          {service.description}
+        </p>
+        <button
+          type="button"
+          onClick={onViewMore}
+          className="inline-flex items-center gap-2 rounded-full bg-vlz-white px-5 py-2.5 text-xs font-semibold text-vlz-black"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-vlz-red" />
+          VIEW MORE
+          <span className="grid h-6 w-6 place-items-center rounded-full bg-vlz-black text-white">
+            <ArrowUpRight size={12} />
+          </span>
+        </button>
       </div>
-      <h3
-        className="mb-4 text-2xl font-semibold text-vlz-white sm:text-3xl"
-        style={{ fontFamily: 'var(--font-expanded)' }}
-      >
-        {service.title}
-      </h3>
-      <div className="mb-4 border-t border-white/10" />
-      <p className="mb-6 text-sm leading-relaxed text-vlz-lightgray sm:text-base">
-        {service.description}
-      </p>
-      <button
-        type="button"
-        onClick={onViewMore}
-        className="inline-flex items-center gap-2 rounded-full bg-vlz-white px-5 py-2.5 text-xs font-semibold text-vlz-black"
-      >
-        <span className="h-1.5 w-1.5 rounded-full bg-vlz-red" />
-        VIEW MORE
-        <span className="grid h-6 w-6 place-items-center rounded-full bg-vlz-black text-white">
-          <ArrowUpRight size={12} />
-        </span>
-      </button>
     </div>
   );
 }
@@ -106,22 +79,26 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' });
   const [selected, setSelected] = useState<Service | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const imageRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      let active = 0;
-      for (let i = 0; i < imageRefs.current.length; i += 1) {
-        const el = imageRefs.current[i];
-        if (el && el.getBoundingClientRect().top <= STICK_OFFSET + 20) {
-          active = i;
-        }
-      }
-      setActiveIndex(active);
+      const el = scrollerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const total = el.offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;
+      const progress = total > 0 ? Math.min(Math.max(scrolled / total, 0), 0.999) : 0;
+      const idx = Math.floor(progress * SERVICES.length);
+      setActiveIndex(Math.min(SERVICES.length - 1, Math.max(0, idx)));
     };
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
@@ -156,33 +133,35 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
       </section>
 
       <section className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
-        <div className="mx-auto max-w-[1296px] rounded-[40px] bg-vlz-black px-6 py-16 sm:px-10 sm:py-20">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              {SERVICES.map((service, index) => (
-                <ImagePane
-                  key={service.title}
-                  service={service}
-                  index={index}
-                  isLast={index === SERVICES.length - 1}
-                  onSelect={() => setSelected(service)}
-                  setRef={(el) => {
-                    imageRefs.current[index] = el;
-                  }}
-                />
-              ))}
+        <div
+          ref={scrollerRef}
+          className="mx-auto max-w-[1296px] lg:h-[400vh]"
+        >
+          <div className="rounded-[40px] bg-vlz-black px-6 py-16 sm:px-10 sm:py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:overflow-hidden lg:py-0">
+            <div className="lg:hidden">
+              {/* Mobile: plain stacked list, no scroll-driven crossfade */}
+              <div className="flex flex-col gap-16">
+                {SERVICES.map((service, index) => (
+                  <ServiceSlide
+                    key={service.title}
+                    service={service}
+                    number={String(index + 1).padStart(2, '0')}
+                    onViewMore={() => setSelected(service)}
+                  />
+                ))}
+              </div>
             </div>
 
-            <div className="lg:sticky lg:top-[84px] lg:self-start">
+            <div className="hidden w-full lg:block">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -24 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
                 >
-                  <ActivePanel
+                  <ServiceSlide
                     service={SERVICES[activeIndex]}
                     number={String(activeIndex + 1).padStart(2, '0')}
                     onViewMore={() => setSelected(SERVICES[activeIndex])}
