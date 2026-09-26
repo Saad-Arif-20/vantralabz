@@ -5,7 +5,12 @@ import { ArrowUpRight } from 'lucide-react';
 import { SERVICES, type Service } from './ServicesSection';
 import ServiceModal from './ServiceModal';
 
-const STICK_OFFSET = 84; // must match the header's exact bottom edge (lg:top-[84px]) so no gap exists for an outgoing image to peek through
+// The header is a floating rounded pill (16px top padding + rounded corners),
+// not a solid bar, so it does NOT opaquely cover 0-84px — only its own pill
+// shape within that band. Images must stick starting at the very top (0) so
+// the active image's own opaque content covers those transparent corners/
+// padding gaps instead of leaving whatever's behind visible through them.
+const STICK_OFFSET = 0;
 
 interface DesignTechSectionProps {
   onOpenIntake?: (serviceTitle?: string) => void;
@@ -33,7 +38,7 @@ function ImagePane({
         type="button"
         onClick={onSelect}
         style={{ zIndex: index + 1 }}
-        className="group relative block w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-[84px] lg:h-[380px]"
+        className="group relative block w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-0 lg:h-[380px]"
       >
         <img
           src={service.image}
@@ -108,7 +113,7 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
       let active = 0;
       for (let i = 0; i < imageRefs.current.length; i += 1) {
         const el = imageRefs.current[i];
-        if (el && el.getBoundingClientRect().top <= STICK_OFFSET + 1) {
+        if (el && el.getBoundingClientRect().top <= STICK_OFFSET + 20) {
           active = i;
         }
       }
