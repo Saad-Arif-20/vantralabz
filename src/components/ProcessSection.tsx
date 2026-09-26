@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown, Share2 } from 'lucide-react';
-
-const STAGGER_CLASS = ['sm:ml-0', 'sm:ml-[12%]', 'sm:ml-[24%]'];
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { ChevronUp, Share2 } from 'lucide-react';
 
 const STEPS = [
   {
@@ -10,14 +8,18 @@ const STEPS = [
     week: 'Week 1',
     title: 'Research',
     tag: 'Brainstorming',
+    variant: 'primary' as const,
+    offset: 'sm:ml-0 sm:mt-0',
     description:
-      "We dive into market trends, user behaviors, and industry insights to uncover opportunities that shape smarter strategies.",
+      'We dive into market trends, user behaviors, and industry insights to uncover opportunities that shape smarter strategies.',
   },
   {
     number: '02',
     week: 'Week 2',
     title: 'Prototype',
     tag: 'Test Before Build',
+    variant: 'secondary' as const,
+    offset: 'sm:ml-[22%] sm:-mt-16',
     description:
       'We build interactive prototypes to test ideas early, refine usability, and ensure the final product delivers real impact.',
   },
@@ -26,17 +28,23 @@ const STEPS = [
     week: 'Week 3',
     title: 'Presentation',
     tag: 'Ideas Made Clear',
+    variant: 'secondary' as const,
+    offset: 'sm:ml-[44%] sm:-mt-16',
     description:
       'We present clear design solutions, walking you through the vision, strategy, and flow before moving to final execution.',
   },
 ];
 
 export default function ProcessSection() {
-  const [openIndex, setOpenIndex] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <section id="process" className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
-      <div className="mx-auto max-w-[1296px] overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 text-center sm:px-10 sm:py-20">
+      <div
+        ref={ref}
+        className="mx-auto max-w-[1296px] overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 text-center sm:px-10 sm:py-20"
+      >
         <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray">
           <Share2 size={14} className="text-vlz-red" />
           Our Approach
@@ -49,16 +57,10 @@ export default function ProcessSection() {
           How We Work
         </h2>
 
-        <div className="mx-auto mb-12 flex max-w-md items-center justify-between">
+        <div className="mx-auto mb-16 flex max-w-md items-center justify-between sm:mb-24">
           {STEPS.map((step, index) => (
             <div key={step.week} className="flex items-center">
-              <span
-                className={`rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-widest transition-colors ${
-                  openIndex === index
-                    ? 'bg-vlz-red text-white'
-                    : 'bg-white/5 text-vlz-lightgray'
-                }`}
-              >
+              <span className="rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray">
                 {step.week}
               </span>
               {index < STEPS.length - 1 && (
@@ -68,57 +70,64 @@ export default function ProcessSection() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-3 text-left">
+        <div className="flex flex-col gap-16 text-left sm:gap-0">
           {STEPS.map((step, index) => {
-            const isOpen = openIndex === index;
+            const isPrimary = step.variant === 'primary';
             return (
               <motion.div
                 key={step.title}
-                layout
-                className={`max-w-md overflow-hidden rounded-2xl transition-colors sm:max-w-sm ${STAGGER_CLASS[index]} ${
-                  isOpen ? 'bg-vlz-white text-vlz-black' : 'bg-white/[0.06] text-white'
-                }`}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                style={{ zIndex: STEPS.length - index }}
+                className={`relative max-w-md sm:max-w-sm ${step.offset}`}
               >
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4"
+                <div
+                  className={`overflow-hidden rounded-2xl ${
+                    isPrimary ? 'bg-vlz-white text-vlz-black' : 'bg-vlz-dark text-white'
+                  }`}
                 >
-                  <span className="flex items-center gap-4">
-                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-vlz-red text-sm font-bold text-white">
-                      {step.number}
+                  <div className="flex w-full items-center justify-between gap-4 px-5 py-4">
+                    <span className="flex items-center gap-4">
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-vlz-red text-sm font-bold text-white">
+                        {step.number}
+                      </span>
+                      <span
+                        className="text-base font-semibold uppercase tracking-widest sm:text-lg"
+                        style={{ fontFamily: 'var(--font-expanded)' }}
+                      >
+                        {step.title}
+                      </span>
                     </span>
                     <span
-                      className="text-base font-semibold uppercase tracking-widest sm:text-lg"
-                      style={{ fontFamily: 'var(--font-expanded)' }}
+                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${
+                        isPrimary ? 'bg-vlz-black text-white' : 'bg-white/10 text-white'
+                      }`}
                     >
-                      {step.title}
-                    </span>
-                  </span>
-                  <span
-                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-transform duration-300 ${
-                      isOpen ? 'rotate-180 bg-vlz-black text-white' : 'bg-white/10 text-white'
-                    }`}
-                  >
-                    <ChevronDown size={16} />
-                  </span>
-                </button>
-
-                <motion.div
-                  initial={false}
-                  animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  className="overflow-hidden"
-                >
-                  <div className="px-5 pb-5 pl-[3.75rem]">
-                    <p className="mb-3 text-sm leading-relaxed text-vlz-gray sm:text-base">
-                      {step.description}
-                    </p>
-                    <span className="inline-block rounded-full bg-vlz-red px-3 py-1 text-xs font-semibold text-white">
-                      {step.tag}
+                      <ChevronUp size={16} />
                     </span>
                   </div>
-                </motion.div>
+
+                  <div className="px-5 pb-5 pl-[3.75rem]">
+                    <p
+                      className={`text-sm leading-relaxed sm:text-base ${
+                        isPrimary ? 'text-vlz-gray' : 'text-vlz-lightgray'
+                      }`}
+                    >
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="relative ml-8 mt-3 w-fit">
+                  <span
+                    className="absolute -top-1.5 left-3 h-3 w-3 rotate-45 bg-gradient-to-br from-vlz-red to-[rgb(255,140,80)]"
+                    aria-hidden
+                  />
+                  <span className="relative inline-block rounded-full bg-gradient-to-r from-vlz-red to-[rgb(255,140,80)] px-4 py-2 text-xs font-semibold text-white">
+                    {step.tag}
+                  </span>
+                </div>
               </motion.div>
             );
           })}
