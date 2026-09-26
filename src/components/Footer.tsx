@@ -1,4 +1,5 @@
 import webDesignImg from '../assets/services/web-design.webp';
+import logoMark from '../assets/brand/logo-mark.png';
 
 const NAV_LINKS = [
   { label: 'Home', href: '#top' },
@@ -79,12 +80,15 @@ export default function Footer() {
         </div>
       </div>
 
-      <h2
-        className="mt-10 select-none overflow-hidden text-center text-[16vw] font-bold uppercase leading-none tracking-tight text-vlz-black sm:text-[12vw] lg:text-[9rem]"
-        style={{ fontFamily: 'var(--font-expanded)' }}
-      >
-        Vantralabz
-      </h2>
+      <div className="mt-10 flex items-center justify-center gap-3">
+        <img src={logoMark} alt="" className="h-[9vw] w-auto sm:h-[6vw] lg:h-16" />
+        <h2
+          className="select-none overflow-hidden text-center text-[16vw] font-bold uppercase leading-none tracking-tight text-vlz-black sm:text-[12vw] lg:text-[9rem]"
+          style={{ fontFamily: 'var(--font-expanded)' }}
+        >
+          Vantralabz
+        </h2>
+      </div>
     </footer>
   );
 }

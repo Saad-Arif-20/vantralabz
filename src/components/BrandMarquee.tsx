@@ -1,3 +1,5 @@
+import logoMark from '../assets/brand/logo-mark.png';
+
 const SEGMENTS = ['BUILD BRANDS', 'THAT LEAD'];
 
 export default function BrandMarquee() {
@@ -14,11 +16,7 @@ export default function BrandMarquee() {
             >
               {segment}
             </span>
-            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-vlz-black sm:h-20 sm:w-20">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-vlz-red text-lg font-bold text-white sm:h-12 sm:w-12">
-                V
-              </span>
-            </span>
+            <img src={logoMark} alt="" className="h-10 w-auto shrink-0 sm:h-14" />
           </span>
         ))}
       </div>
