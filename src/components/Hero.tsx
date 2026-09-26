@@ -20,7 +20,7 @@ export default function Hero({ onOpenIntake }: HeroProps) {
           loop
           muted
           playsInline
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-[center_38%]"
         />
 
         <div className="relative z-10 flex h-full flex-col justify-between">
@@ -55,7 +55,7 @@ export default function Hero({ onOpenIntake }: HeroProps) {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-              className="text-[13vw] font-semibold uppercase leading-[0.95] tracking-tight text-vlz-white sm:text-[9vw] md:text-[7vw] lg:text-[clamp(48px,6vw,96px)]"
+              className="max-w-[85%] text-[13vw] font-semibold uppercase leading-[0.95] tracking-tight text-vlz-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] sm:max-w-[70%] sm:text-[9vw] md:max-w-[55%] md:text-[7vw] lg:max-w-[480px] lg:text-[clamp(40px,5vw,72px)]"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               Build Brands
