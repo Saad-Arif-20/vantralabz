@@ -84,7 +84,7 @@ export default function Footer() {
       </div>
 
       <h2
-        className="mt-10 select-none text-center text-[15vw] font-bold uppercase leading-none tracking-tight text-vlz-black sm:text-[11vw] lg:text-[8.5vw] xl:text-[7.5rem]"
+        className="mt-10 select-none text-center text-[9.6vw] font-bold uppercase leading-none tracking-tight text-vlz-black"
         style={{ fontFamily: 'var(--font-expanded)' }}
       >
         Vantralabz
