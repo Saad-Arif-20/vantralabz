@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import PrimaryButton from './PrimaryButton';
-
-const HERO_BG_URL = 'https://framerusercontent.com/images/K8og1bzjDjE9Wjd9V0wyFnNTuE.png';
+import heroLoopVideo from '../assets/video/hero-loop.mp4';
 
 interface HeroProps {
   onOpenIntake?: () => void;
@@ -11,10 +10,15 @@ interface HeroProps {
 export default function Hero({ onOpenIntake }: HeroProps) {
   return (
     <section id="top" className="relative bg-vlz-offwhite px-4 pb-6 pt-28 sm:px-6 sm:pt-32 lg:px-[72px]">
-      <div
-        className="relative mx-auto flex min-h-[560px] max-w-[1296px] flex-col overflow-hidden rounded-[40px] bg-vlz-black bg-cover bg-center px-6 pb-10 pt-8 sm:min-h-[640px] sm:px-10 sm:pb-16 sm:pt-10 lg:aspect-[1296/720] lg:min-h-0"
-        style={{ backgroundImage: `url(${HERO_BG_URL})` }}
-      >
+      <div className="relative mx-auto flex min-h-[560px] max-w-[1296px] flex-col overflow-hidden rounded-[40px] bg-vlz-black px-6 pb-10 pt-8 sm:min-h-[640px] sm:px-10 sm:pb-16 sm:pt-10 lg:aspect-[1296/720] lg:min-h-0">
+        <video
+          src={heroLoopVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+        />
 
         <div className="relative z-10 flex flex-wrap items-start justify-between gap-3">
           <motion.div
