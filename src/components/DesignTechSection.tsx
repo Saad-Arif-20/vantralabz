@@ -31,7 +31,7 @@ function ImagePane({
 
   return (
     <div
-      className={`relative lg:h-[700px] ${isLast ? '' : 'mb-6 lg:mb-0'} ${index === 0 ? '' : 'lg:-mt-40'}`}
+      className={`relative lg:h-[700px] ${isLast ? '' : 'mb-6 lg:mb-0'} ${index === 0 ? '' : 'lg:-mt-[420px]'}`}
     >
       <button
         ref={ref}
