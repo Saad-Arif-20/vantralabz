@@ -26,7 +26,7 @@ export default function Header({ onOpenIntake }: HeaderProps) {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6"
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between rounded-[28px] bg-vlz-white px-5 py-3 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_12px_30px_-14px_rgba(0,0,0,0.25)] sm:px-6">
+      <div className="mx-auto flex max-w-[1360px] items-center justify-between rounded-[28px] bg-vlz-white px-5 py-3 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_12px_30px_-14px_rgba(0,0,0,0.25)] sm:px-6">
         <a href="#top" className="flex items-center" aria-label="Vantralabz home">
           <span
             className="text-[22px] font-semibold tracking-tight text-vlz-black sm:text-[26px]"
@@ -92,7 +92,7 @@ export default function Header({ onOpenIntake }: HeaderProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="mx-auto mt-3 flex max-w-6xl flex-col gap-1 rounded-2xl bg-vlz-white p-3 shadow-lg lg:hidden"
+            className="mx-auto mt-3 flex max-w-[1360px] flex-col gap-1 rounded-2xl bg-vlz-white p-3 shadow-lg lg:hidden"
           >
             {NAV_LINKS.map((link) => (
               <a

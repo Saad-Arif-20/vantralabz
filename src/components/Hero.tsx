@@ -12,11 +12,11 @@ export default function Hero({ onOpenIntake }: HeroProps) {
   return (
     <section id="top" className="relative bg-vlz-offwhite px-4 pb-6 pt-28 sm:px-6 sm:pt-32">
       <div
-        className="relative mx-auto flex min-h-[560px] max-w-6xl flex-col overflow-hidden rounded-[40px] bg-vlz-black bg-cover bg-center px-6 pb-10 pt-8 sm:min-h-[640px] sm:px-10 sm:pb-16 sm:pt-10"
+        className="relative mx-auto flex min-h-[560px] max-w-[1360px] flex-col overflow-hidden rounded-[40px] bg-vlz-black bg-cover bg-center px-6 pb-10 pt-8 sm:min-h-[640px] sm:px-10 sm:pb-16 sm:pt-10"
         style={{ backgroundImage: `url(${HERO_BG_URL})` }}
       >
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent"
           aria-hidden
         />
 

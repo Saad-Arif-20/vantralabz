@@ -109,7 +109,7 @@ export default function FAQSection() {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+      <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
         <div ref={headerRef} className="lg:sticky lg:top-32 lg:self-start">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

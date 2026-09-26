@@ -36,7 +36,7 @@ export default function ProcessSection() {
 
   return (
     <section id="process" className="bg-vlz-offwhite px-4 pb-6 sm:px-6">
-      <div className="mx-auto max-w-6xl overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 text-center sm:px-10 sm:py-20">
+      <div className="mx-auto max-w-[1360px] overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 text-center sm:px-10 sm:py-20">
         <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray">
           <Share2 size={14} className="text-vlz-red" />
           Our Approach

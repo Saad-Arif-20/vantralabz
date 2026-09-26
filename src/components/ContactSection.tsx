@@ -27,7 +27,7 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="bg-vlz-offwhite px-4 py-16 sm:px-6 md:py-20">
-      <div className="mx-auto mb-10 flex max-w-6xl flex-col items-center text-center md:mb-14">
+      <div className="mx-auto mb-10 flex max-w-[1360px] flex-col items-center text-center md:mb-14">
         <div className="mb-6 flex items-center gap-2 rounded-full bg-vlz-black px-4 py-2 text-xs font-semibold text-white">
           <Globe size={14} className="text-vlz-red" />
           Ready When You Are
@@ -47,7 +47,7 @@ export default function ContactSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.7 }}
-        className="mx-auto max-w-6xl overflow-hidden rounded-[40px] bg-vlz-black p-4 sm:p-8"
+        className="mx-auto max-w-[1360px] overflow-hidden rounded-[40px] bg-vlz-black p-4 sm:p-8"
       >
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-4">
           <div className="rounded-3xl bg-vlz-white p-6 sm:p-8">

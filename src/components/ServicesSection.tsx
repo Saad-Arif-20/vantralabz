@@ -295,7 +295,7 @@ export default function ServicesSection({ onOpenIntake }: ServicesSectionProps) 
     >
       <AmbientBackground variant="quiet" />
 
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-[1360px]">
         <div ref={headerRef} className="mb-12 flex items-end justify-between md:mb-16">
           <RevealHeading
             as="h2"
