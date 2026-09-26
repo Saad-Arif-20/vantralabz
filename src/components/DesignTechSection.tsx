@@ -5,6 +5,8 @@ import { ArrowUpRight } from 'lucide-react';
 import { SERVICES, type Service } from './ServicesSection';
 import ServiceModal from './ServiceModal';
 
+const STICK_OFFSET = 128; // must match the lg:top-32 applied to each sticky image/panel
+
 interface DesignTechSectionProps {
   onOpenIntake?: (serviceTitle?: string) => void;
 }
@@ -12,31 +14,26 @@ interface DesignTechSectionProps {
 function ImagePane({
   service,
   onSelect,
-  onActive,
+  setRef,
   index,
   isLast,
 }: {
   service: Service;
   onSelect: () => void;
-  onActive: () => void;
+  setRef: (el: HTMLButtonElement | null) => void;
   index: number;
   isLast: boolean;
 }) {
-  const ref = useRef(null);
-  const isCentered = useInView(ref, { margin: '-45% 0px -45% 0px' });
-
-  useEffect(() => {
-    if (isCentered) onActive();
-  }, [isCentered, onActive]);
-
   return (
-    <div className={`relative aspect-video lg:aspect-auto lg:h-[560px] ${isLast ? '' : 'mb-6 lg:mb-0'}`}>
+    <div
+      className={`relative aspect-video lg:aspect-auto lg:h-[920px] ${isLast ? '' : 'mb-6 lg:mb-0'} ${index === 0 ? '' : 'lg:-mt-[440px]'}`}
+    >
       <button
-        ref={ref}
+        ref={setRef}
         type="button"
         onClick={onSelect}
         style={{ zIndex: index + 1 }}
-        className="group relative block h-full w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-32"
+        className="group relative block w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-32 lg:h-[380px]"
       >
         <img
           src={service.image}
@@ -104,6 +101,23 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' });
   const [selected, setSelected] = useState<Service | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const imageRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      let active = 0;
+      for (let i = 0; i < imageRefs.current.length; i += 1) {
+        const el = imageRefs.current[i];
+        if (el && el.getBoundingClientRect().top <= STICK_OFFSET + 1) {
+          active = i;
+        }
+      }
+      setActiveIndex(active);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -147,7 +161,9 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
                   index={index}
                   isLast={index === SERVICES.length - 1}
                   onSelect={() => setSelected(service)}
-                  onActive={() => setActiveIndex(index)}
+                  setRef={(el) => {
+                    imageRefs.current[index] = el;
+                  }}
                 />
               ))}
             </div>
