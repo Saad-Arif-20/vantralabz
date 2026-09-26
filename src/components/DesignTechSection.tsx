@@ -13,11 +13,13 @@ function ImagePane({
   service,
   onSelect,
   onActive,
+  index,
   isLast,
 }: {
   service: Service;
   onSelect: () => void;
   onActive: () => void;
+  index: number;
   isLast: boolean;
 }) {
   const ref = useRef(null);
@@ -28,11 +30,15 @@ function ImagePane({
   }, [isCentered, onActive]);
 
   return (
-    <div ref={ref} className={isLast ? '' : 'mb-24'}>
+    <div
+      className={`relative lg:h-[700px] ${isLast ? '' : 'mb-6 lg:mb-0'} ${index === 0 ? '' : 'lg:-mt-40'}`}
+    >
       <button
+        ref={ref}
         type="button"
         onClick={onSelect}
-        className="group relative aspect-video w-full overflow-hidden rounded-2xl"
+        style={{ zIndex: index + 1 }}
+        className="group relative aspect-video w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-32"
       >
         <img
           src={service.image}
@@ -140,6 +146,7 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
                 <ImagePane
                   key={service.title}
                   service={service}
+                  index={index}
                   isLast={index === SERVICES.length - 1}
                   onSelect={() => setSelected(service)}
                   onActive={() => setActiveIndex(index)}
