@@ -9,7 +9,7 @@ const STEPS = [
     title: 'Research',
     tag: 'Brainstorming',
     variant: 'primary' as const,
-    offset: 'sm:ml-0',
+    offset: 'lg:ml-0',
     description:
       'We dive into market trends, user behaviors, and industry insights to uncover opportunities that shape smarter strategies.',
   },
@@ -19,7 +19,7 @@ const STEPS = [
     title: 'Prototype',
     tag: 'Test Before Build',
     variant: 'secondary' as const,
-    offset: 'sm:ml-[16%]',
+    offset: 'lg:ml-[calc(50%_-_12rem)]',
     description:
       'We build interactive prototypes to test ideas early, refine usability, and ensure the final product delivers real impact.',
   },
@@ -29,7 +29,7 @@ const STEPS = [
     title: 'Presentation',
     tag: 'Ideas Made Clear',
     variant: 'secondary' as const,
-    offset: 'sm:ml-[32%]',
+    offset: 'lg:ml-[calc(100%_-_24rem)]',
     description:
       'We present clear design solutions, walking you through the vision, strategy, and flow before moving to final execution.',
   },
