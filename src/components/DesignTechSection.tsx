@@ -30,15 +30,13 @@ function ImagePane({
   }, [isCentered, onActive]);
 
   return (
-    <div
-      className={`relative lg:h-[700px] ${isLast ? '' : 'mb-6 lg:mb-0'} ${index === 0 ? '' : 'lg:-mt-[420px]'}`}
-    >
+    <div className={`relative aspect-video lg:aspect-auto lg:h-[560px] ${isLast ? '' : 'mb-6 lg:mb-0'}`}>
       <button
         ref={ref}
         type="button"
         onClick={onSelect}
         style={{ zIndex: index + 1 }}
-        className="group relative aspect-video w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-32"
+        className="group relative block h-full w-full overflow-hidden rounded-2xl shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] lg:sticky lg:top-32"
       >
         <img
           src={service.image}
