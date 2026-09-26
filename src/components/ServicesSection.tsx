@@ -26,7 +26,7 @@ export type Service = {
   };
 };
 
-const SERVICES: Service[] = [
+export const SERVICES: Service[] = [
   {
     tag: 'Strategy',
     title: 'Brand Strategy',

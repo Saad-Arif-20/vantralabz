@@ -68,7 +68,7 @@ function App() {
       <Header onOpenIntake={() => handleOpenIntake()} />
       <Hero onOpenIntake={() => handleOpenIntake()} />
       <WordmarkDivider />
-      <DesignTechSection />
+      <DesignTechSection onOpenIntake={(serviceTitle) => handleOpenIntake(serviceTitle)} />
       <BrandMarquee />
       <WhatSetsUsApartSection />
       <WorkThatSpeaksSection />
