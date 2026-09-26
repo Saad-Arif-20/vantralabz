@@ -50,50 +50,44 @@ export default function Hero({ onOpenIntake }: HeroProps) {
             </motion.p>
           </div>
 
-          <div className="mt-8">
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
+          <div className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-              className="max-w-[85%] text-[13vw] font-semibold uppercase leading-[0.95] tracking-tight text-vlz-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] sm:max-w-[70%] sm:text-[9vw] md:max-w-[55%] md:text-[7vw] lg:max-w-[480px] lg:text-[clamp(40px,5vw,72px)]"
-              style={{ fontFamily: 'var(--font-display)' }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="max-w-[220px]"
             >
-              Build Brands
-              <br />
-              That Lead
-            </motion.h1>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-white/70">
+                (About)
+              </p>
+              <p className="mb-4 text-sm leading-relaxed text-white/85">
+                Brands, built to convert.
+              </p>
+              <span className="w-fit rounded-full bg-black/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-vlz-lightgray backdrop-blur-sm">
+                Available Now
+              </span>
+            </motion.div>
 
-            <div className="mt-6 flex flex-col gap-6 sm:mt-8 sm:flex-row sm:items-end sm:justify-between">
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
+            <div className="text-right">
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex flex-col gap-2"
+                transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+                className="ml-auto max-w-[85%] text-[13vw] font-semibold uppercase leading-[0.95] tracking-tight text-vlz-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] sm:max-w-[70%] sm:text-[9vw] md:max-w-[55%] md:text-[7vw] lg:max-w-[480px] lg:text-[clamp(40px,5vw,72px)]"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
-                <span className="w-fit rounded-full bg-black/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-vlz-lightgray backdrop-blur-sm">
-                  Available Now
-                </span>
-                <span className="text-sm font-semibold uppercase tracking-widest text-white">
-                  AI Automation
-                </span>
-              </motion.div>
+                Build Brands
+                <br />
+                That Lead
+              </motion.h1>
 
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="max-w-sm sm:text-right"
+                className="mt-6 flex justify-end"
               >
-                <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-white/70">
-                  (About)
-                </p>
-                <p className="mb-4 text-sm leading-relaxed text-white/85 sm:text-base">
-                  We turn early-stage ideas into brand, web, and growth systems that make
-                  you the obvious choice in your market.
-                </p>
-                <div className="sm:flex sm:justify-end">
-                  <PrimaryButton onClick={onOpenIntake}>BOOK A CALL</PrimaryButton>
-                </div>
+                <PrimaryButton onClick={onOpenIntake}>BOOK A CALL</PrimaryButton>
               </motion.div>
             </div>
           </div>
