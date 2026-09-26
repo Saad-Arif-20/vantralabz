@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -9,30 +9,30 @@ interface DesignTechSectionProps {
   onOpenIntake?: (serviceTitle?: string) => void;
 }
 
-function ServiceRow({
+function ImagePane({
   service,
-  number,
-  onViewMore,
+  onSelect,
+  onActive,
+  isLast,
 }: {
   service: Service;
-  number: string;
-  onViewMore: () => void;
+  onSelect: () => void;
+  onActive: () => void;
+  isLast: boolean;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-120px' });
+  const isCentered = useInView(ref, { margin: '-45% 0px -45% 0px' });
+
+  useEffect(() => {
+    if (isCentered) onActive();
+  }, [isCentered, onActive]);
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: 'easeOut' }}
-      className="grid grid-cols-1 gap-8 border-t border-white/10 pt-10 first:border-t-0 first:pt-0 lg:grid-cols-2 lg:items-center lg:gap-16"
-    >
+    <div ref={ref} className={isLast ? '' : 'mb-24'}>
       <button
         type="button"
-        onClick={onViewMore}
-        className="group relative aspect-video overflow-hidden rounded-2xl"
+        onClick={onSelect}
+        className="group relative aspect-video w-full overflow-hidden rounded-2xl"
       >
         <img
           src={service.image}
@@ -42,38 +42,56 @@ function ServiceRow({
         <span className="absolute left-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-transform duration-300 group-hover:rotate-45">
           <ArrowUpRight size={18} />
         </span>
-      </button>
-
-      <div>
-        <div className="mb-4 flex items-center justify-between">
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-sm font-bold text-white">
-            {number}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute bottom-3 left-3 flex gap-2">
+          <span className="rounded-full bg-black/60 px-3 py-1 text-[10px] font-medium text-white backdrop-blur-sm">
+            {service.tag}
           </span>
-          <span className="h-2 w-2 shrink-0 rounded-full bg-vlz-red" />
         </div>
-        <h3
-          className="mb-4 text-2xl font-semibold text-vlz-white sm:text-3xl"
-          style={{ fontFamily: 'var(--font-expanded)' }}
-        >
-          {service.title}
-        </h3>
-        <div className="mb-4 border-t border-white/10" />
-        <p className="mb-6 text-sm leading-relaxed text-vlz-lightgray sm:text-base">
-          {service.description}
-        </p>
-        <button
-          type="button"
-          onClick={onViewMore}
-          className="inline-flex items-center gap-2 rounded-full bg-vlz-white px-5 py-2.5 text-xs font-semibold text-vlz-black"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-vlz-red" />
-          VIEW MORE
-          <span className="grid h-6 w-6 place-items-center rounded-full bg-vlz-black text-white">
-            <ArrowUpRight size={12} />
-          </span>
-        </button>
+      </button>
+    </div>
+  );
+}
+
+function ActivePanel({
+  service,
+  number,
+  onViewMore,
+}: {
+  service: Service;
+  number: string;
+  onViewMore: () => void;
+}) {
+  return (
+    <div>
+      <div className="mb-4 flex items-center justify-between">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-sm font-bold text-white">
+          {number}
+        </span>
+        <span className="h-2 w-2 shrink-0 rounded-full bg-vlz-red" />
       </div>
-    </motion.div>
+      <h3
+        className="mb-4 text-2xl font-semibold text-vlz-white sm:text-3xl"
+        style={{ fontFamily: 'var(--font-expanded)' }}
+      >
+        {service.title}
+      </h3>
+      <div className="mb-4 border-t border-white/10" />
+      <p className="mb-6 text-sm leading-relaxed text-vlz-lightgray sm:text-base">
+        {service.description}
+      </p>
+      <button
+        type="button"
+        onClick={onViewMore}
+        className="inline-flex items-center gap-2 rounded-full bg-vlz-white px-5 py-2.5 text-xs font-semibold text-vlz-black"
+      >
+        <span className="h-1.5 w-1.5 rounded-full bg-vlz-red" />
+        VIEW MORE
+        <span className="grid h-6 w-6 place-items-center rounded-full bg-vlz-black text-white">
+          <ArrowUpRight size={12} />
+        </span>
+      </button>
+    </div>
   );
 }
 
@@ -81,6 +99,7 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' });
   const [selected, setSelected] = useState<Service | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <>
@@ -114,16 +133,37 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
       </section>
 
       <section className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
-        <div className="mx-auto max-w-[1296px] overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 sm:px-10 sm:py-20">
-          <div className="flex flex-col gap-10 lg:gap-16">
-            {SERVICES.map((service, index) => (
-              <ServiceRow
-                key={service.title}
-                service={service}
-                number={String(index + 1).padStart(2, '0')}
-                onViewMore={() => setSelected(service)}
-              />
-            ))}
+        <div className="mx-auto max-w-[1296px] rounded-[40px] bg-vlz-black px-6 py-16 sm:px-10 sm:py-20">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+            <div>
+              {SERVICES.map((service, index) => (
+                <ImagePane
+                  key={service.title}
+                  service={service}
+                  isLast={index === SERVICES.length - 1}
+                  onSelect={() => setSelected(service)}
+                  onActive={() => setActiveIndex(index)}
+                />
+              ))}
+            </div>
+
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -24 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                >
+                  <ActivePanel
+                    service={SERVICES[activeIndex]}
+                    number={String(activeIndex + 1).padStart(2, '0')}
+                    onViewMore={() => setSelected(SERVICES[activeIndex])}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </section>
