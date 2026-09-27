@@ -38,12 +38,19 @@ export default function TeamPage() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="overflow-hidden rounded-3xl border border-black/10 bg-vlz-dark"
+                    className="group overflow-hidden rounded-3xl border border-black/10 bg-vlz-dark"
                   >
-                    <div className="relative aspect-[4/5] sm:aspect-[16/11]">
-                      <TeamAvatar name={member.name} className="h-full w-full" />
+                    <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[16/11]">
+                      <TeamAvatar
+                        name={member.name}
+                        className="absolute inset-0 flex h-full w-full items-center justify-center bg-gradient-to-br from-vlz-dark to-vlz-black transition-opacity duration-500 group-hover:opacity-0"
+                      />
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 scale-110 bg-[radial-gradient(circle_at_30%_110%,rgba(249,69,45,0.9),rgba(120,20,10,0.6)_45%,transparent_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      />
                       <span
-                        className="absolute right-4 top-4 text-3xl font-bold text-white/20"
+                        className="absolute right-4 top-4 text-3xl font-bold text-white/20 transition-colors duration-500 group-hover:text-white/40"
                         style={{ fontFamily: 'var(--font-expanded)' }}
                       >
                         {member.number}
