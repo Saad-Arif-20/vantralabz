@@ -62,11 +62,13 @@ export default function GlobalReachSection() {
           expanding into Canada, the UK, Australia, and Europe.
         </p>
 
-        <div className="relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-[360px]">
-          <Globe />
+        <div className="relative mx-auto w-full max-w-[1100px] aspect-[2/1] overflow-hidden">
+          <div className="absolute inset-x-0 top-0 aspect-square w-full">
+            <Globe />
+          </div>
         </div>
 
-        <div className="relative -mt-4 flex flex-wrap items-center justify-center gap-3 sm:-mt-8">
+        <div className="relative mt-8 flex flex-wrap items-center justify-center gap-3">
           {DESTINATIONS.map((destination, index) => (
             <DestinationChip
               key={destination.label}
