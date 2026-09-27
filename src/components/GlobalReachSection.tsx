@@ -2,12 +2,13 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Globe2 } from 'lucide-react';
 import { Globe } from './ui/globe';
+import FlagIcon from './FlagIcon';
 
 const DESTINATIONS = [
-  { flag: '🇨🇦', label: 'Canada' },
-  { flag: '🇬🇧', label: 'United Kingdom' },
-  { flag: '🇪🇺', label: 'Europe' },
-  { flag: '🇦🇺', label: 'Australia' },
+  { flag: 'CA' as const, label: 'Canada' },
+  { flag: 'GB' as const, label: 'United Kingdom' },
+  { flag: 'EU' as const, label: 'Europe' },
+  { flag: 'AU' as const, label: 'Australia' },
 ];
 
 function DestinationChip({
@@ -26,9 +27,8 @@ function DestinationChip({
       transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
       className="flex items-center gap-2 rounded-full border border-black/10 bg-vlz-white px-4 py-2 text-xs font-semibold text-vlz-black shadow-sm sm:text-sm"
     >
-      <span className="text-base">{destination.flag}</span>
+      <FlagIcon code={destination.flag} />
       {destination.label}
-      <span className="h-1.5 w-1.5 rounded-full bg-vlz-red" />
     </motion.div>
   );
 }
