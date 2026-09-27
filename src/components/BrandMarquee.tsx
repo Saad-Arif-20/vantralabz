@@ -1,4 +1,4 @@
-import logoMark from '../assets/brand/logo-mark.png';
+import logoMark from '../assets/brand/logo-mark.webp';
 
 const SEGMENTS = ['BUILD BRANDS', 'THAT LEAD'];
 

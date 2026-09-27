@@ -82,7 +82,7 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const computeActiveIndex = () => {
       const el = scrollerRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
@@ -90,9 +90,23 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
       const scrolled = -rect.top;
       const progress = total > 0 ? Math.min(Math.max(scrolled / total, 0), 0.999) : 0;
       const idx = Math.floor(progress * SERVICES.length);
-      setActiveIndex(Math.min(SERVICES.length - 1, Math.max(0, idx)));
+      setActiveIndex((prev) => {
+        const next = Math.min(SERVICES.length - 1, Math.max(0, idx));
+        return next === prev ? prev : next;
+      });
     };
-    handleScroll();
+
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        computeActiveIndex();
+        ticking = false;
+      });
+    };
+
+    computeActiveIndex();
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
     return () => {

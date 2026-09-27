@@ -51,12 +51,25 @@ export function Globe({
   useEffect(() => {
     let phi = 0;
     let width = 0;
+    let isVisible = false;
 
     const onResize = () => {
       if (canvasRef.current) width = canvasRef.current.offsetWidth;
     };
     window.addEventListener('resize', onResize);
     onResize();
+
+    // The render loop below runs every frame indefinitely once started, so
+    // without this it keeps redrawing (and costing CPU/GPU) for the entire
+    // session even while this section is scrolled far out of view. Only
+    // actually update/draw while the canvas is on screen.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    if (canvasRef.current) observer.observe(canvasRef.current);
 
     // cobe 2.x has no internal animation loop or onRender callback (unlike
     // the older API some recipes still assume) — createGlobe returns
@@ -77,12 +90,14 @@ export function Globe({
       });
 
       const render = () => {
-        if (pointerInteracting.current === null) phi += 0.005;
-        globe?.update({
-          phi: phi + pointerInteractionMovement.current / 200,
-          width: width * 2,
-          height: width * 2,
-        });
+        if (isVisible) {
+          if (pointerInteracting.current === null) phi += 0.005;
+          globe?.update({
+            phi: phi + pointerInteractionMovement.current / 200,
+            width: width * 2,
+            height: width * 2,
+          });
+        }
         renderFrame = requestAnimationFrame(render);
       };
       renderFrame = requestAnimationFrame(render);
@@ -96,6 +111,7 @@ export function Globe({
       cancelAnimationFrame(setupFrame);
       cancelAnimationFrame(renderFrame);
       globe?.destroy();
+      observer.disconnect();
       window.removeEventListener('resize', onResize);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

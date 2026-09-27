@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import PrimaryButton from './PrimaryButton';
-import logoMark from '../assets/brand/logo-mark.png';
+import logoMark from '../assets/brand/logo-mark.webp';
 
 const NAV_LINKS = [
   { label: 'HOME', href: '#top' },
