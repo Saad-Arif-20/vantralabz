@@ -8,7 +8,6 @@ const STEPS = [
     week: 'Week 1',
     title: 'Research',
     tag: 'Brainstorming',
-    variant: 'primary' as const,
     offset: 'lg:ml-0',
     description:
       'We dive into market trends, user behaviors, and industry insights to uncover opportunities that shape smarter strategies.',
@@ -18,7 +17,6 @@ const STEPS = [
     week: 'Week 2',
     title: 'Prototype',
     tag: 'Test Before Build',
-    variant: 'secondary' as const,
     offset: 'lg:ml-[calc(50%_-_12rem)]',
     description:
       'We build interactive prototypes to test ideas early, refine usability, and ensure the final product delivers real impact.',
@@ -28,7 +26,6 @@ const STEPS = [
     week: 'Week 3',
     title: 'Presentation',
     tag: 'Ideas Made Clear',
-    variant: 'secondary' as const,
     offset: 'lg:ml-[calc(100%_-_24rem)]',
     description:
       'We present clear design solutions, walking you through the vision, strategy, and flow before moving to final execution.',
@@ -77,7 +74,6 @@ export default function ProcessSection() {
 
         <div className="flex flex-col gap-3 text-left sm:gap-4">
           {STEPS.map((step, index) => {
-            const isPrimary = step.variant === 'primary';
             const isOpen = openIndex === index;
             return (
               <motion.div
@@ -88,8 +84,8 @@ export default function ProcessSection() {
                 className={`relative max-w-md sm:max-w-sm ${step.offset}`}
               >
                 <div
-                  className={`overflow-hidden rounded-2xl ${
-                    isPrimary ? 'bg-vlz-white text-vlz-black' : 'bg-vlz-dark text-white'
+                  className={`overflow-hidden rounded-2xl transition-colors duration-300 ${
+                    isOpen ? 'bg-vlz-white text-vlz-black' : 'bg-vlz-dark text-white'
                   }`}
                 >
                   <button
@@ -110,8 +106,8 @@ export default function ProcessSection() {
                       </span>
                     </span>
                     <span
-                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-transform duration-300 ${
-                        isPrimary ? 'bg-vlz-black text-white' : 'bg-white/10 text-white'
+                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-all duration-300 ${
+                        isOpen ? 'bg-vlz-black text-white' : 'bg-white/10 text-white'
                       } ${isOpen ? '' : 'rotate-180'}`}
                     >
                       <ChevronUp size={16} />
@@ -129,11 +125,7 @@ export default function ProcessSection() {
                         className="overflow-hidden"
                       >
                         <div className="px-5 pb-5 pl-[3.75rem]">
-                          <p
-                            className={`text-sm leading-relaxed sm:text-base ${
-                              isPrimary ? 'text-vlz-gray' : 'text-vlz-lightgray'
-                            }`}
-                          >
+                          <p className="text-sm leading-relaxed text-vlz-gray sm:text-base">
                             {step.description}
                           </p>
                         </div>
