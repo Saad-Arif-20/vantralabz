@@ -1,41 +1,43 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Globe2, KeyRound, Lightbulb, Sparkles, Users } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
+import { GlobeHemisphereWest, Key, Lightbulb, Sparkle, UsersThree } from '@phosphor-icons/react';
 import { RollingList, type RollingListItem } from './ui/rolling-list';
 
-const ICON_SIZE = 32;
-const ICON_CLASS = 'text-vlz-red';
+const ICON_SIZE = 34;
+const ICON_COLOR = '#F9452D';
+const ICON_WEIGHT = 'duotone' as const;
 
 const DIFFERENTIATORS: RollingListItem[] = [
   {
     id: 1,
     title: 'Idea-First',
     category: 'Not Templates',
-    icon: <Lightbulb size={ICON_SIZE} className={ICON_CLASS} />,
+    icon: <Lightbulb size={ICON_SIZE} color={ICON_COLOR} weight={ICON_WEIGHT} />,
   },
   {
     id: 2,
     title: 'One Team',
     category: 'Every Discipline',
-    icon: <Users size={ICON_SIZE} className={ICON_CLASS} />,
+    icon: <UsersThree size={ICON_SIZE} color={ICON_COLOR} weight={ICON_WEIGHT} />,
   },
   {
     id: 3,
     title: 'Built To Own',
     category: 'Not To Rent',
-    icon: <KeyRound size={ICON_SIZE} className={ICON_CLASS} />,
+    icon: <Key size={ICON_SIZE} color={ICON_COLOR} weight={ICON_WEIGHT} />,
   },
   {
     id: 4,
     title: 'Remote-First',
     category: 'Global Clients',
-    icon: <Globe2 size={ICON_SIZE} className={ICON_CLASS} />,
+    icon: <GlobeHemisphereWest size={ICON_SIZE} color={ICON_COLOR} weight={ICON_WEIGHT} />,
   },
   {
     id: 5,
     title: 'AI-Native',
     category: 'By Design',
-    icon: <Sparkles size={ICON_SIZE} className={ICON_CLASS} />,
+    icon: <Sparkle size={ICON_SIZE} color={ICON_COLOR} weight={ICON_WEIGHT} />,
   },
 ];
 
