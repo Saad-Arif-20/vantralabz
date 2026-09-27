@@ -38,18 +38,10 @@ const STEPS = [
 export default function ProcessSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [openIndexes, setOpenIndexes] = useState<Set<number>>(new Set([0, 1, 2]));
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (index: number) => {
-    setOpenIndexes((prev) => {
-      const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
-      } else {
-        next.add(index);
-      }
-      return next;
-    });
+    setOpenIndex((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -83,10 +75,10 @@ export default function ProcessSection() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-10 text-left sm:gap-12">
+        <div className="flex flex-col gap-3 text-left sm:gap-4">
           {STEPS.map((step, index) => {
             const isPrimary = step.variant === 'primary';
-            const isOpen = openIndexes.has(index);
+            const isOpen = openIndex === index;
             return (
               <motion.div
                 key={step.title}
