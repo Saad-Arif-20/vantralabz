@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
-  devicePixelRatio: 2,
+  devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
   phi: 0,
   theta: 0.3,
   dark: 0,
@@ -83,19 +83,30 @@ export function Globe({
     // animation frame lets the discarded first mount get cancelled before it
     // ever creates a WebGL context, so only one real instance is created.
     const setupFrame = requestAnimationFrame(() => {
+      // createGlobe already multiplies width/height by devicePixelRatio
+      // internally, so passing the raw CSS pixel width here (not doubled) is
+      // correct — doubling it ourselves on top of that produced a canvas 4x
+      // the intended linear resolution (16x the fragment-shaded pixels),
+      // which got genuinely expensive once this globe grew to span most of
+      // the section's width.
       globe = createGlobe(canvasRef.current!, {
         ...config,
-        width: width * 2,
-        height: width * 2,
+        width,
+        height: width,
       });
 
+      // The rotation is slow and ambient, so an update every other frame
+      // (~30fps) looks identical to the eye while halving the GPU work during
+      // exactly the moments (mid-scroll) frame budget is tightest.
+      let skipFrame = false;
       const render = () => {
-        if (isVisible) {
+        skipFrame = !skipFrame;
+        if (isVisible && skipFrame) {
           if (pointerInteracting.current === null) phi += 0.005;
           globe?.update({
             phi: phi + pointerInteractionMovement.current / 200,
-            width: width * 2,
-            height: width * 2,
+            width,
+            height: width,
           });
         }
         renderFrame = requestAnimationFrame(render);
