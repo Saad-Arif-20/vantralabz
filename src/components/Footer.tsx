@@ -39,17 +39,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1296px]">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[380px_1fr] lg:gap-16">
           <div>
-            <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-vlz-red via-[rgb(120,20,10)] to-vlz-black">
-              <div
-                className="pointer-events-none absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage:
-                    'repeating-linear-gradient(115deg, rgba(255,255,255,0.5) 0px, rgba(255,255,255,0.5) 2px, transparent 2px, transparent 22px)',
-                }}
-                aria-hidden
-              />
-              <img src={logoMark} alt="Vantralabz" className="relative w-2/5 max-w-[180px]" />
-            </div>
+            <img src={logoMark} alt="Vantralabz" className="w-2/5 max-w-[180px]" />
             <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <span className="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-vlz-gray">
                 <span className="h-1.5 w-1.5 rounded-full bg-vlz-red" />
