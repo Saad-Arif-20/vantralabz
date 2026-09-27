@@ -47,7 +47,11 @@ export default function TeamPage() {
                       />
                       <div
                         aria-hidden
-                        className="absolute inset-0 scale-110 bg-[radial-gradient(circle_at_30%_110%,rgba(249,69,45,0.9),rgba(120,20,10,0.6)_45%,transparent_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                        className="absolute inset-0 bg-black opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                        style={{
+                          backgroundImage:
+                            'radial-gradient(circle at 50% 120%, #ffe9b3 0%, #ffb03c 15%, #ff6a1f 28%, #d5290f 42%, #5c0f08 62%, #000000 85%)',
+                        }}
                       />
                       <span
                         className="absolute right-4 top-4 text-3xl font-bold text-white/20 transition-colors duration-500 group-hover:text-white/40"
