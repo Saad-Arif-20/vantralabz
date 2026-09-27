@@ -60,6 +60,24 @@ export default function PageLayout({ children }: PageLayoutProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash || hash === '#intake') return;
+
+    // The browser's native "scroll to fragment on load" fires before React
+    // has painted anything (the initial HTML is just an empty #root), so it
+    // finds nothing to scroll to and silently gives up - landing every
+    // cross-page #anchor link at the very top of the page instead. Once
+    // mounted, do it ourselves.
+    const id = hash.slice(1);
+    const raf = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   const handleCloseIntake = () => {
     setIsIntakeOpen(false);
     setSelectedServiceId(undefined);

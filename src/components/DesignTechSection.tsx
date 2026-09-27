@@ -117,7 +117,7 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
 
   return (
     <>
-      <section className="bg-vlz-offwhite px-4 pb-10 pt-4 sm:px-6 lg:px-[72px]">
+      <section id="services" className="bg-vlz-offwhite px-4 pb-10 pt-4 sm:px-6 lg:px-[72px]">
         <div
           ref={headerRef}
           className="mx-auto flex max-w-[1296px] flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"
