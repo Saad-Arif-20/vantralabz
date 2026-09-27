@@ -1,7 +1,20 @@
 import createGlobe, { type COBEOptions } from 'cobe';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 
 import { cn } from '@/lib/utils';
+
+export interface GlobeMarker {
+  id: string;
+  location: [number, number];
+  size: number;
+}
+
+const DEFAULT_MARKERS: GlobeMarker[] = [
+  { id: 'ca', location: [43.6532, -79.3832], size: 0.035 },
+  { id: 'gb', location: [51.5074, -0.1278], size: 0.035 },
+  { id: 'eu', location: [52.52, 13.405], size: 0.035 },
+  { id: 'au', location: [-33.8688, 151.2093], size: 0.035 },
+];
 
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
@@ -16,22 +29,62 @@ const GLOBE_CONFIG: COBEOptions = {
   baseColor: [1, 1, 1],
   markerColor: [249 / 255, 69 / 255, 45 / 255],
   glowColor: [1, 1, 1],
-  markers: [
-    { location: [43.6532, -79.3832], size: 0.035 },
-    { location: [51.5074, -0.1278], size: 0.035 },
-    { location: [52.52, 13.405], size: 0.035 },
-    { location: [-33.8688, 151.2093], size: 0.035 },
-  ],
+  markers: DEFAULT_MARKERS,
 };
+
+const GLOBE_RADIUS = 0.8;
+const MARKER_ELEVATION = 0.05;
+
+// Reimplementation of cobe's own lat/long -> screen-space projection math
+// (verified against its compiled source) so marker overlay elements (e.g.
+// flag icons) can be positioned in plain DOM/CSS, kept in perfect sync with
+// the canvas's rotation. cobe has a built-in mechanism for this (marker
+// `id`s + CSS Anchor Positioning), but that API has no Firefox/Safari
+// support at all, which would mean broken or invisible overlays for a large
+// share of real visitors — not an acceptable tradeoff for a production site.
+function latLongToVector([lat, long]: [number, number]): [number, number, number] {
+  const latRad = (lat * Math.PI) / 180;
+  const longRad = (long * Math.PI) / 180 - Math.PI;
+  const cosLat = Math.cos(latRad);
+  return [-cosLat * Math.cos(longRad), Math.sin(latRad), cosLat * Math.sin(longRad)];
+}
+
+function projectMarker(
+  location: [number, number],
+  phi: number,
+  theta: number,
+): { x: number; y: number; visible: boolean } {
+  const [vx, vy, vz] = latLongToVector(location);
+  const radius = GLOBE_RADIUS + MARKER_ELEVATION;
+  const [x0, y0, z0] = [vx * radius, vy * radius, vz * radius];
+
+  const cosTheta = Math.cos(theta);
+  const cosPhi = Math.cos(phi);
+  const sinTheta = Math.sin(theta);
+  const sinPhi = Math.sin(phi);
+
+  const c = cosPhi * x0 + sinPhi * z0;
+  const s = sinPhi * sinTheta * x0 + cosTheta * y0 - cosPhi * sinTheta * z0;
+
+  const facingCamera = -sinPhi * cosTheta * x0 + sinTheta * y0 + cosPhi * cosTheta * z0;
+  const visible = facingCamera >= 0 || c * c + s * s >= 0.64;
+
+  return { x: (c + 1) / 2, y: (-s + 1) / 2, visible };
+}
 
 export function Globe({
   className,
   config = GLOBE_CONFIG,
+  markers = DEFAULT_MARKERS,
+  renderMarkerOverlay,
 }: {
   className?: string;
   config?: COBEOptions;
+  markers?: GlobeMarker[];
+  renderMarkerOverlay?: (marker: GlobeMarker) => ReactNode;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const overlayRefs = useRef<(HTMLDivElement | null)[]>([]);
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
 
@@ -77,6 +130,18 @@ export function Globe({
     // calling update() themselves.
     let globe: ReturnType<typeof createGlobe> | null = null;
     let renderFrame: number;
+    const theta = config.theta ?? 0.3;
+
+    const updateOverlayPositions = (currentPhi: number) => {
+      markers.forEach((marker, i) => {
+        const el = overlayRefs.current[i];
+        if (!el) return;
+        const { x, y, visible } = projectMarker(marker.location, currentPhi, theta);
+        el.style.left = `${x * 100}%`;
+        el.style.top = `${y * 100}%`;
+        el.style.opacity = visible ? '1' : '0';
+      });
+    };
 
     // React StrictMode mounts this effect twice in dev, synchronously before
     // any paint. Deferring the actual createGlobe() call to the next
@@ -89,8 +154,13 @@ export function Globe({
       // the intended linear resolution (16x the fragment-shaded pixels),
       // which got genuinely expensive once this globe grew to span most of
       // the section's width.
+      // `markers` is the single source of truth for marker positions: it
+      // always overrides config.markers here, so the WebGL dots and the
+      // overlay projection below can never drift out of sync with each
+      // other.
       globe = createGlobe(canvasRef.current!, {
         ...config,
+        markers,
         width,
         height: width,
       });
@@ -103,11 +173,13 @@ export function Globe({
         skipFrame = !skipFrame;
         if (isVisible && skipFrame) {
           if (pointerInteracting.current === null) phi += 0.005;
+          const effectivePhi = phi + pointerInteractionMovement.current / 200;
           globe?.update({
-            phi: phi + pointerInteractionMovement.current / 200,
+            phi: effectivePhi,
             width,
             height: width,
           });
+          updateOverlayPositions(effectivePhi);
         }
         renderFrame = requestAnimationFrame(render);
       };
@@ -129,9 +201,7 @@ export function Globe({
   }, []);
 
   return (
-    <div
-      className={cn('absolute inset-0 h-full w-full', className)}
-    >
+    <div className={cn('absolute inset-0 h-full w-full', className)}>
       <canvas
         className="size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]"
         ref={canvasRef}
@@ -143,6 +213,19 @@ export function Globe({
         onMouseMove={(e) => updateMovement(e.clientX)}
         onTouchMove={(e) => e.touches[0] && updateMovement(e.touches[0].clientX)}
       />
+      {renderMarkerOverlay &&
+        markers.map((marker, i) => (
+          <div
+            key={marker.id}
+            ref={(el) => {
+              overlayRefs.current[i] = el;
+            }}
+            className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2"
+            style={{ opacity: 0 }}
+          >
+            {renderMarkerOverlay(marker)}
+          </div>
+        ))}
     </div>
   );
 }

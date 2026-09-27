@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Globe2 } from 'lucide-react';
-import { Globe } from './ui/globe';
+import { Globe, type GlobeMarker } from './ui/globe';
 import FlagIcon from './FlagIcon';
 
 const DESTINATIONS = [
@@ -9,6 +9,13 @@ const DESTINATIONS = [
   { flag: 'GB' as const, label: 'United Kingdom' },
   { flag: 'EU' as const, label: 'Europe' },
   { flag: 'AU' as const, label: 'Australia' },
+];
+
+const GLOBE_MARKERS: GlobeMarker[] = [
+  { id: 'CA', location: [43.6532, -79.3832], size: 0.035 },
+  { id: 'GB', location: [51.5074, -0.1278], size: 0.035 },
+  { id: 'EU', location: [52.52, 13.405], size: 0.035 },
+  { id: 'AU', location: [-33.8688, 151.2093], size: 0.035 },
 ];
 
 function DestinationChip({
@@ -64,7 +71,12 @@ export default function GlobalReachSection() {
 
         <div className="relative mx-auto w-full max-w-[1100px] aspect-[2/1] overflow-hidden">
           <div className="absolute inset-x-0 top-0 aspect-square w-full">
-            <Globe />
+            <Globe
+              markers={GLOBE_MARKERS}
+              renderMarkerOverlay={(marker) => (
+                <FlagIcon code={marker.id as 'CA' | 'GB' | 'EU' | 'AU'} className="h-5 w-7 border border-black/10" />
+              )}
+            />
           </div>
         </div>
 
