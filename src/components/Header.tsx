@@ -49,16 +49,23 @@ export default function Header({ onOpenIntake }: HeaderProps) {
                 href={link.href}
                 onClick={() => setActive(link.label)}
                 className={`relative flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold tracking-wide transition-colors duration-200 ${
-                  isActive
-                    ? 'bg-vlz-black text-vlz-white'
-                    : 'text-vlz-gray hover:text-vlz-black'
+                  isActive ? 'text-vlz-white' : 'text-vlz-gray hover:text-vlz-black'
                 }`}
                 style={{ fontFamily: 'var(--font-expanded)' }}
               >
                 {isActive && (
-                  <span className="h-1.5 w-1.5 rounded-full bg-vlz-green" aria-hidden />
+                  <motion.span
+                    layoutId="nav-active-pill"
+                    className="absolute inset-0 rounded-full bg-vlz-black"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
                 )}
-                {link.label}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  {isActive && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-vlz-green" aria-hidden />
+                  )}
+                  {link.label}
+                </span>
               </a>
             );
           })}
