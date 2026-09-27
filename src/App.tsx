@@ -5,7 +5,6 @@ import WordmarkDivider from './components/WordmarkDivider';
 import DesignTechSection from './components/DesignTechSection';
 import BrandMarquee from './components/BrandMarquee';
 import WhatSetsUsApartSection from './components/WhatSetsUsApartSection';
-import WorkThatSpeaksSection from './components/WorkThatSpeaksSection';
 import ProcessSection from './components/ProcessSection';
 import TeamSection from './components/TeamSection';
 import FAQSection from './components/FAQSection';
@@ -85,7 +84,6 @@ function App() {
       <DesignTechSection onOpenIntake={(serviceTitle) => handleOpenIntake(serviceTitle)} />
       <BrandMarquee />
       <WhatSetsUsApartSection />
-      <WorkThatSpeaksSection />
       <SectionDivider label="THE PROCESS" />
       <ProcessSection />
       <SectionDivider label="TEAM MEMBERS" />

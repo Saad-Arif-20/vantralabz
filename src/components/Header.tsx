@@ -7,7 +7,6 @@ import logoMark from '../assets/brand/logo-mark.webp';
 const NAV_LINKS = [
   { label: 'HOME', href: '#top' },
   { label: 'SERVICES', href: '#services' },
-  { label: 'WORK', href: '#work' },
   { label: 'ABOUT', href: '#about' },
   { label: 'FAQ', href: '#faq' },
 ];

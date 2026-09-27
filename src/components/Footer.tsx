@@ -3,7 +3,6 @@ import logoMark from '../assets/brand/logo-mark.webp';
 const NAV_LINKS = [
   { label: 'Home', href: '#top' },
   { label: 'Studio', href: '#about' },
-  { label: 'Work', href: '#work' },
   { label: 'Blog', href: '#faq' },
 ];
 
