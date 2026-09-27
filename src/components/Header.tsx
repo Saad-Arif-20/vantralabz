@@ -4,20 +4,23 @@ import { Menu, X } from 'lucide-react';
 import PrimaryButton from './PrimaryButton';
 import logoMark from '../assets/brand/logo-mark.webp';
 
-const NAV_LINKS = [
-  { label: 'HOME', href: '#top' },
-  { label: 'SERVICES', href: '#services' },
-  { label: 'ABOUT', href: '#about' },
-  { label: 'FAQ', href: '#faq' },
-];
-
 interface HeaderProps {
   onOpenIntake?: () => void;
 }
 
 export default function Header({ onOpenIntake }: HeaderProps) {
+  const isTeamPage = window.location.pathname.includes('team');
+  const homeHref = isTeamPage ? '/index.html#top' : '#top';
+
+  const NAV_LINKS = [
+    { label: 'HOME', href: homeHref },
+    { label: 'SERVICES', href: isTeamPage ? '/index.html#services' : '#services' },
+    { label: 'ABOUT US', href: '/team.html' },
+    { label: 'FAQ', href: isTeamPage ? '/index.html#faq' : '#faq' },
+  ];
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [active, setActive] = useState('HOME');
+  const [active, setActive] = useState(isTeamPage ? 'ABOUT US' : 'HOME');
 
   return (
     <motion.header
@@ -27,7 +30,7 @@ export default function Header({ onOpenIntake }: HeaderProps) {
       className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-[72px]"
     >
       <div className="mx-auto flex max-w-[1296px] items-center justify-between rounded-[28px] bg-vlz-white px-5 py-3 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_12px_30px_-14px_rgba(0,0,0,0.25)] sm:px-6">
-        <a href="#top" className="flex items-center gap-2" aria-label="Vantralabz home">
+        <a href={homeHref} className="flex items-center gap-2" aria-label="Vantralabz home">
           <img src={logoMark} alt="" className="h-6 w-auto sm:h-7" />
           <span
             className="text-[22px] font-semibold tracking-tight text-vlz-black sm:text-[26px]"

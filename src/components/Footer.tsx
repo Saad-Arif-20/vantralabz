@@ -1,11 +1,5 @@
 import logoMark from '../assets/brand/logo-mark.webp';
 
-const NAV_LINKS = [
-  { label: 'Home', href: '#top' },
-  { label: 'Studio', href: '#about' },
-  { label: 'Blog', href: '#faq' },
-];
-
 const SOCIAL_LINKS = ['Twitter', 'Dribbble', 'Instagram', 'Facebook'];
 
 function FooterColumn({ label, links }: { label: string; links: string[] }) {
@@ -33,6 +27,13 @@ function FooterColumn({ label, links }: { label: string; links: string[] }) {
 }
 
 export default function Footer() {
+  const isTeamPage = window.location.pathname.includes('team');
+  const NAV_LINKS = [
+    { label: 'Home', href: isTeamPage ? '/index.html#top' : '#top' },
+    { label: 'About Us', href: '/team.html' },
+    { label: 'Blog', href: isTeamPage ? '/index.html#faq' : '#faq' },
+  ];
+
   return (
     <footer className="bg-vlz-offwhite px-4 pb-8 pt-16 sm:px-6 md:pt-24 lg:px-[72px]">
       <div className="mx-auto max-w-[1296px]">
