@@ -30,13 +30,13 @@ export default function Header({ onOpenIntake }: HeaderProps) {
       className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-[72px]"
     >
       <div className="mx-auto flex max-w-[1296px] items-center justify-between rounded-[28px] bg-vlz-white px-5 py-3 shadow-[0_1px_0_rgba(255,255,255,0.6)_inset,0_12px_30px_-14px_rgba(0,0,0,0.25)] sm:px-6">
-        <a href={homeHref} className="flex items-center gap-2" aria-label="Vantralabz home">
+        <a href={homeHref} className="flex items-center" aria-label="Vantralabz home">
           <img src={logoMark} alt="" className="h-6 w-auto sm:h-7" />
           <span
             className="text-[22px] font-semibold tracking-tight text-vlz-black sm:text-[26px]"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            VANTRALABZ
+            ANTRALABZ
           </span>
         </a>
 

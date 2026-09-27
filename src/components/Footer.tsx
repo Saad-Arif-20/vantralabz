@@ -74,10 +74,14 @@ export default function Footer() {
       </div>
 
       <h2
-        className="mt-10 select-none text-center text-[9.6vw] font-bold uppercase leading-none tracking-tight text-vlz-black"
+        className="mt-10 flex select-none items-center justify-center text-[9.6vw] font-bold uppercase leading-none tracking-tight text-vlz-black"
         style={{ fontFamily: 'var(--font-expanded)' }}
+        aria-label="Vantralabz"
       >
-        Vantralabz
+        <span className="flex items-center" aria-hidden="true">
+          <img src={logoMark} alt="" className="inline-block h-[0.8em] w-auto" />
+          ANTRALABZ
+        </span>
       </h2>
     </footer>
   );
