@@ -5,6 +5,7 @@ import { Globe, type GlobeMarker } from './ui/globe';
 import FlagIcon from './FlagIcon';
 
 const DESTINATIONS = [
+  { flag: 'US' as const, label: 'United States' },
   { flag: 'CA' as const, label: 'Canada' },
   { flag: 'GB' as const, label: 'United Kingdom' },
   { flag: 'EU' as const, label: 'Europe' },
@@ -12,10 +13,11 @@ const DESTINATIONS = [
 ];
 
 const GLOBE_MARKERS: GlobeMarker[] = [
-  { id: 'CA', location: [43.6532, -79.3832], size: 0.035 },
-  { id: 'GB', location: [51.5074, -0.1278], size: 0.035 },
-  { id: 'EU', location: [52.52, 13.405], size: 0.035 },
-  { id: 'AU', location: [-33.8688, 151.2093], size: 0.035 },
+  { id: 'US', location: [40.7128, -74.006], size: 0.018 },
+  { id: 'CA', location: [43.6532, -79.3832], size: 0.018 },
+  { id: 'GB', location: [51.5074, -0.1278], size: 0.018 },
+  { id: 'EU', location: [52.52, 13.405], size: 0.018 },
+  { id: 'AU', location: [-33.8688, 151.2093], size: 0.018 },
 ];
 
 function DestinationChip({
@@ -66,7 +68,7 @@ export default function GlobalReachSection() {
 
         <p className="relative mx-auto mb-8 max-w-lg text-center text-sm leading-relaxed text-vlz-gray sm:text-base">
           Remote-first by design, we work with clients anywhere — and we&rsquo;re actively
-          expanding into Canada, the UK, Australia, and Europe.
+          expanding into the US, Canada, the UK, Australia, and Europe.
         </p>
 
         <div className="relative mx-auto w-full max-w-[1100px] aspect-[2/1] overflow-hidden">
@@ -74,7 +76,10 @@ export default function GlobalReachSection() {
             <Globe
               markers={GLOBE_MARKERS}
               renderMarkerOverlay={(marker) => (
-                <FlagIcon code={marker.id as 'CA' | 'GB' | 'EU' | 'AU'} className="h-5 w-7 border border-black/10" />
+                <FlagIcon
+                  code={marker.id as 'CA' | 'GB' | 'EU' | 'AU' | 'US'}
+                  className="h-5 w-7 border border-black/10"
+                />
               )}
             />
           </div>

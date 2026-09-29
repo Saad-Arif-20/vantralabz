@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-type FlagCode = 'CA' | 'GB' | 'EU' | 'AU';
+type FlagCode = 'CA' | 'GB' | 'EU' | 'AU' | 'US';
 
 function Star({ x, y, scale = 1, fill = '#FFCC00' }: { x: number; y: number; scale?: number; fill?: string }) {
   return (
@@ -88,11 +88,48 @@ function AustraliaFlag() {
   );
 }
 
+const US_STAR_POSITIONS = (() => {
+  const cantonWidth = 12;
+  const cantonHeight = 10.77;
+  const rows = 4;
+  const cols = 5;
+  return Array.from({ length: rows * cols }, (_, i) => {
+    const r = Math.floor(i / cols);
+    const c = i % cols;
+    return {
+      x: (cantonWidth / (cols + 1)) * (c + 1),
+      y: (cantonHeight / (rows + 1)) * (r + 1),
+    };
+  });
+})();
+
+function USFlag() {
+  const stripeHeight = 20 / 13;
+  return (
+    <svg viewBox="0 0 30 20" className="h-full w-full">
+      {Array.from({ length: 13 }, (_, i) => (
+        <rect
+          key={i}
+          y={i * stripeHeight}
+          width="30"
+          height={stripeHeight}
+          fill={i % 2 === 0 ? '#B22234' : '#FFFFFF'}
+        />
+      ))}
+      <rect width="12" height="10.77" fill="#3C3B6E" />
+      {US_STAR_POSITIONS.map((pos, i) => (
+        <Star key={i} x={pos.x} y={pos.y} scale={0.35} fill="#FFFFFF" />
+      ))}
+    </svg>
+  );
+}
+
 const FLAGS: Record<FlagCode, () => ReactElement> = {
   CA: CanadaFlag,
   GB: UKFlag,
   EU: EUFlag,
   AU: AustraliaFlag,
+  US: USFlag,
 };
 
 export default function FlagIcon({ code, className }: { code: FlagCode; className?: string }) {
