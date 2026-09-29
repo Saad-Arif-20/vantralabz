@@ -13,7 +13,7 @@ export default function Hero({ onOpenIntake }: HeroProps) {
       id="top"
       className="relative bg-vlz-offwhite px-4 pb-6 pt-28 sm:px-6 sm:pt-32 lg:flex lg:h-[100dvh] lg:flex-col lg:px-[72px] lg:pb-6 lg:pt-24"
     >
-      <div className="relative mx-auto flex min-h-[560px] w-full max-w-[1296px] flex-col overflow-hidden rounded-[40px] bg-vlz-black px-6 pb-10 pt-8 sm:min-h-[640px] sm:px-10 sm:pb-16 sm:pt-10 lg:min-h-0 lg:flex-1">
+      <div className="relative mx-auto flex h-[560px] w-full max-w-[1296px] flex-col overflow-hidden rounded-[40px] bg-vlz-black px-6 pb-10 pt-8 sm:h-[640px] sm:px-10 sm:pb-16 sm:pt-10 lg:h-auto lg:min-h-0 lg:flex-1">
         <video
           src={heroLoopVideo}
           autoPlay
