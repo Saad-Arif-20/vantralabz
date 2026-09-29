@@ -92,6 +92,11 @@ export default function IntakeModal({
   const [submitting, setSubmitting] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollBodyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollBodyRef.current?.scrollTo({ top: 0 });
+  }, [step]);
 
   useEffect(() => {
     if (isOpen) {
@@ -180,7 +185,7 @@ export default function IntakeModal({
                 VANTRALABZ
               </span>
               <span className="hidden text-xs text-vlz-lightgray sm:inline">•</span>
-              <span className="text-xs font-medium uppercase tracking-widest text-vlz-gray">
+              <span className="hidden whitespace-nowrap text-xs font-medium uppercase tracking-widest text-vlz-gray sm:inline">
                 {step === 1 && 'Step 1 of 3: About Your Project'}
                 {step === 2 && 'Step 2 of 3: Contact Info'}
                 {step === 3 && 'Step 3 of 3: Schedule Meeting'}
@@ -215,7 +220,7 @@ export default function IntakeModal({
           </div>
 
           {/* Modal Content Body */}
-          <div className="themed-scrollbar flex-1 overflow-y-auto p-6 sm:p-8">
+          <div ref={scrollBodyRef} className="themed-scrollbar flex-1 overflow-y-auto p-6 sm:p-8">
             {/* STEP 1: Services + Project Scope */}
             {step === 1 && (
               <motion.div

@@ -17,7 +17,7 @@ function RollingListRow({ item }: { item: RollingListItem }) {
           {/* State 1: Normal */}
           <div className="flex h-[52px] items-center md:h-16">
             <h2
-              className="text-4xl font-bold uppercase tracking-tight text-vlz-black sm:text-5xl md:text-6xl"
+              className="whitespace-nowrap text-2xl font-bold uppercase tracking-tight text-vlz-black sm:text-5xl md:text-6xl"
               style={{ fontFamily: 'var(--font-expanded)' }}
             >
               {item.title}
@@ -27,7 +27,7 @@ function RollingListRow({ item }: { item: RollingListItem }) {
           {/* State 2: Hover (italic + brand red) */}
           <div className="flex h-[52px] items-center md:h-16">
             <h2
-              className="text-4xl font-bold italic uppercase tracking-tight text-vlz-red sm:text-5xl md:text-6xl"
+              className="whitespace-nowrap text-2xl font-bold italic uppercase tracking-tight text-vlz-red sm:text-5xl md:text-6xl"
               style={{ fontFamily: 'var(--font-expanded)' }}
             >
               {item.title}

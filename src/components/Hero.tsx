@@ -57,13 +57,15 @@ export default function Hero({ onOpenIntake }: HeroProps) {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="max-w-[220px]"
             >
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-white/70">
-                (About)
-              </p>
-              <p className="mb-4 text-sm leading-relaxed text-white/85">
-                Brands, built to convert.
-              </p>
-              <span className="w-fit rounded-full bg-black/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-vlz-lightgray backdrop-blur-sm">
+              <div className="w-fit rounded-2xl bg-black/35 px-3 py-2.5 backdrop-blur-sm">
+                <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-white/80">
+                  (About)
+                </p>
+                <p className="text-sm leading-relaxed text-white">
+                  Brands, built to convert.
+                </p>
+              </div>
+              <span className="mt-4 inline-block w-fit rounded-full bg-black/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-vlz-lightgray backdrop-blur-sm">
                 Available Now
               </span>
             </motion.div>

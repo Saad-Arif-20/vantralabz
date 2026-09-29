@@ -73,18 +73,19 @@ export default function Header({ onOpenIntake }: HeaderProps) {
         </nav>
 
         <div className="flex items-center gap-3">
-          <PrimaryButton
-            className="hidden sm:inline-flex"
-            onClick={() => {
-              if (onOpenIntake) {
-                onOpenIntake();
-              } else {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            CONTACT US
-          </PrimaryButton>
+          <div className="hidden sm:block">
+            <PrimaryButton
+              onClick={() => {
+                if (onOpenIntake) {
+                  onOpenIntake();
+                } else {
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              CONTACT US
+            </PrimaryButton>
+          </div>
           <button
             type="button"
             onClick={() => setMobileMenuOpen((open) => !open)}
