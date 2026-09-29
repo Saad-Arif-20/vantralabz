@@ -139,7 +139,6 @@ export default function ProcessSection() {
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' });
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [scrollIndex, setScrollIndex] = useState(0);
-  const [mobileOpenIndex, setMobileOpenIndex] = useState<number | null>(0);
 
   useEffect(() => {
     const computeIndex = () => {
@@ -175,18 +174,14 @@ export default function ProcessSection() {
     };
   }, []);
 
-  const toggleMobile = (index: number) => {
-    setMobileOpenIndex((prev) => (prev === index ? null : index));
-  };
-
   return (
     <section id="process" className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
-      <div ref={scrollerRef} className="mx-auto max-w-[1296px] lg:h-[240vh]">
-        <div className="overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 text-center sm:px-10 sm:py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:py-20">
+      <div ref={scrollerRef} className="mx-auto h-[240vh] max-w-[1296px]">
+        <div className="sticky top-0 flex h-screen items-center overflow-hidden rounded-[40px] bg-vlz-black px-6 py-20 text-center sm:px-10">
           <div className="w-full">
             <div
               ref={headerRef}
-              className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray lg:mb-4"
+              className="mx-auto mb-4 flex w-fit items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray"
               style={{
                 opacity: headerInView ? 1 : 0,
                 transform: headerInView ? 'none' : 'translateY(16px)',
@@ -198,7 +193,7 @@ export default function ProcessSection() {
             </div>
 
             <h2
-              className="mb-12 text-4xl font-bold tracking-tight text-vlz-white sm:text-5xl md:text-6xl lg:mb-6"
+              className="mb-6 text-4xl font-bold tracking-tight text-vlz-white sm:text-5xl md:text-6xl"
               style={{
                 fontFamily: 'var(--font-expanded)',
                 opacity: headerInView ? 1 : 0,
@@ -209,7 +204,7 @@ export default function ProcessSection() {
               How We Work
             </h2>
 
-            <div className="mx-auto mb-16 flex max-w-md items-center justify-between sm:mb-24 lg:mb-10">
+            <div className="mx-auto mb-10 flex max-w-md items-center justify-between">
               {STEPS.map((step, index) => (
                 <div key={step.week} className="flex items-center">
                   <span className="rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray">
@@ -222,20 +217,8 @@ export default function ProcessSection() {
               ))}
             </div>
 
-            {/* Mobile: click-to-toggle accordion (no scroll-pinning on small screens) */}
-            <div className="flex flex-col gap-3 text-left sm:gap-4 lg:hidden">
-              {STEPS.map((step, index) => (
-                <ProcessStepCard
-                  key={step.title}
-                  step={step}
-                  isOpen={mobileOpenIndex === index}
-                  onToggle={() => toggleMobile(index)}
-                />
-              ))}
-            </div>
-
-            {/* Desktop: scroll progress through the tall wrapper drives which step is open */}
-            <div className="hidden flex-col gap-3 text-left sm:gap-4 lg:flex">
+            {/* Scroll progress through the tall wrapper drives which step is open, at every screen size */}
+            <div className="flex flex-col gap-3 text-left sm:gap-4">
               {STEPS.map((step, index) => (
                 <ProcessStepCard key={step.title} step={step} isOpen={scrollIndex === index} />
               ))}

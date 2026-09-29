@@ -147,26 +147,9 @@ export default function DesignTechSection({ onOpenIntake }: DesignTechSectionPro
       </section>
 
       <section className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
-        <div
-          ref={scrollerRef}
-          className="mx-auto max-w-[1296px] lg:h-[400vh]"
-        >
-          <div className="rounded-[40px] bg-vlz-black px-6 py-16 sm:px-10 sm:py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:overflow-hidden lg:py-0">
-            <div className="lg:hidden">
-              {/* Mobile: plain stacked list, no scroll-driven crossfade */}
-              <div className="flex flex-col gap-16">
-                {SERVICES.map((service, index) => (
-                  <ServiceSlide
-                    key={service.title}
-                    service={service}
-                    number={String(index + 1).padStart(2, '0')}
-                    onViewMore={() => setSelected(service)}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="hidden w-full lg:block">
+        <div ref={scrollerRef} className="mx-auto h-[400vh] max-w-[1296px]">
+          <div className="sticky top-0 flex h-screen items-center overflow-hidden rounded-[40px] bg-vlz-black px-6 py-10 sm:px-10 sm:py-16">
+            <div className="w-full">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
