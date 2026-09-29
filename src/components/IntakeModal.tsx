@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   Clock,
   Globe,
-  MessageCircle,
   PenTool,
   ShoppingBag,
   Sparkles,
@@ -484,7 +483,7 @@ export default function IntakeModal({
               </motion.form>
             )}
 
-            {/* STEP 4: Calendly Embed + WhatsApp Callback */}
+            {/* STEP 4: Calendly Embed */}
             {step === 4 && (
               <motion.div
                 key="step4"
@@ -514,25 +513,13 @@ export default function IntakeModal({
                           Thanks, <strong className="text-white">{contact.name || 'there'}</strong>. We’ve sent your details to Hamza & the team.
                           <br />
                           <span className="text-white/50">
-                            <strong>Optional:</strong> Pick a calendar slot below (we pre-filled your name & email), ping Hamza on WhatsApp, or finish now.
+                            <strong>Optional:</strong> Pick a calendar slot below (we pre-filled your name & email), or finish now.
                           </span>
                         </p>
                       </div>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 sm:self-center">
-                      <a
-                        href={`https://wa.me/923370388868?text=${encodeURIComponent(
-                          `Hi, I'm ${contact.name}. I just submitted my project inquiry on Vantralabz and wanted to connect here.`
-                        )}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-xs font-medium text-emerald-200 transition-colors hover:bg-emerald-500/20"
-                      >
-                        <MessageCircle size={15} className="text-emerald-400" />
-                        Ping on WhatsApp
-                      </a>
-
                       <button
                         type="button"
                         onClick={onClose}
