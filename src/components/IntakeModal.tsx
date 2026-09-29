@@ -159,10 +159,20 @@ export default function IntakeModal({
       >
         <div
           ref={containerRef}
-          className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-vlz-dark text-white shadow-2xl"
+          className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-[rgba(249,69,45,0.18)] bg-vlz-black text-white shadow-2xl"
         >
+          {/* Warm ambient brand glow, matching the rest of the site's red/orange-on-black look */}
+          <div
+            className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[140%] -translate-x-1/2 rounded-full opacity-40 blur-[110px]"
+            style={{
+              background:
+                'radial-gradient(closest-side, rgba(249,69,45,0.55), rgba(214,47,26,0.25) 55%, transparent 75%)',
+            }}
+            aria-hidden
+          />
+
           {/* Top Bar / Progress */}
-          <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+          <div className="relative flex items-center justify-between border-b border-[rgba(249,69,45,0.15)] px-6 py-4">
             <div className="flex items-center gap-3">
               <span
                 className="text-xl tracking-wide text-white"
@@ -198,7 +208,7 @@ export default function IntakeModal({
               <button
                 onClick={onClose}
                 aria-label="Close intake"
-                className="rounded-full p-1.5 text-white/50 transition-colors hover:bg-white/10 hover:text-white"
+                className="rounded-full p-1.5 text-white/50 transition-colors hover:bg-[rgba(249,69,45,0.15)] hover:text-white"
               >
                 <X size={20} />
               </button>
@@ -241,12 +251,12 @@ export default function IntakeModal({
                           className={`group relative flex cursor-pointer items-start gap-4 rounded-2xl p-4 transition-all ${
                             isSelected
                               ? 'border border-vlz-red/50 bg-vlz-red/10 shadow-lg'
-                              : 'border border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.05]'
+                              : 'border border-[rgba(249,69,45,0.08)] bg-[rgba(249,69,45,0.02)] hover:border-[rgba(249,69,45,0.3)] hover:bg-[rgba(249,69,45,0.06)]'
                           }`}
                         >
                           <div
                             className={`rounded-xl p-2.5 transition-colors ${
-                              isSelected ? 'bg-vlz-red text-white' : 'bg-white/5 text-white/70'
+                              isSelected ? 'bg-vlz-red text-white' : 'bg-[rgba(249,69,45,0.1)] text-vlz-red/70'
                             }`}
                           >
                             <Icon size={20} />
@@ -282,7 +292,7 @@ export default function IntakeModal({
                         className={`rounded-xl p-3.5 text-left text-xs sm:text-sm transition-all ${
                           situation === opt
                             ? 'border border-vlz-red/50 bg-vlz-red/10 text-white'
-                            : 'border border-white/5 bg-white/[0.02] text-white/70 hover:bg-white/5'
+                            : 'border border-[rgba(249,69,45,0.08)] bg-[rgba(249,69,45,0.02)] text-white/70 hover:bg-[rgba(249,69,45,0.06)]'
                         }`}
                       >
                         {opt}
@@ -296,7 +306,7 @@ export default function IntakeModal({
                   <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                     Existing Website or Store URL (Optional)
                   </label>
-                  <div className="rounded-xl border border-white/10 bg-white/[0.03]">
+                  <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
                     <input
                       type="text"
                       value={currentWebsite}
@@ -321,7 +331,7 @@ export default function IntakeModal({
                         className={`rounded-xl p-2.5 text-center text-xs transition-all ${
                           timeline === opt
                             ? 'border border-vlz-red/50 bg-vlz-red/10 text-white'
-                            : 'border border-white/5 bg-white/[0.02] text-white/60 hover:bg-white/5'
+                            : 'border border-[rgba(249,69,45,0.08)] bg-[rgba(249,69,45,0.02)] text-white/60 hover:bg-[rgba(249,69,45,0.06)]'
                         }`}
                       >
                         {opt}
@@ -361,7 +371,7 @@ export default function IntakeModal({
                     <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                       Your Name *
                     </label>
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03]">
+                    <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
                       <input
                         type="text"
                         required
@@ -377,7 +387,7 @@ export default function IntakeModal({
                     <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                       Work Email *
                     </label>
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03]">
+                    <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
                       <input
                         type="email"
                         required
@@ -396,7 +406,7 @@ export default function IntakeModal({
                       <span>WhatsApp / Phone Number</span>
                       <span className="text-[10px] text-emerald-400 lowercase">for instant callback</span>
                     </label>
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03]">
+                    <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
                       <input
                         type="tel"
                         value={contact.whatsapp}
@@ -411,7 +421,7 @@ export default function IntakeModal({
                     <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                       Company / Organization
                     </label>
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03]">
+                    <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
                       <input
                         type="text"
                         value={contact.company}
@@ -427,7 +437,7 @@ export default function IntakeModal({
                   <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
                     Brief Notes on what you'd like to achieve
                   </label>
-                  <div className="rounded-xl border border-white/10 bg-white/[0.03]">
+                  <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
                     <textarea
                       rows={3}
                       value={contact.notes}
