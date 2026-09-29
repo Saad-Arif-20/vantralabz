@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import IntakeModal from './IntakeModal';
 import PrimaryButton from './PrimaryButton';
+import WhatsAppButton from './WhatsAppButton';
 
 const mapServiceToId = (title?: string): string | undefined => {
   if (!title) return undefined;
@@ -106,6 +107,15 @@ export default function PageLayout({ children }: PageLayoutProps) {
         <PrimaryButton onClick={() => handleOpenIntake()} className="shadow-2xl">
           BOOK A CALL
         </PrimaryButton>
+      </div>
+
+      {/* Floating WhatsApp direct-message button - no form, just opens a chat */}
+      <div
+        className={`fixed bottom-6 left-6 z-40 transition-opacity duration-300 ${
+          hideFloatingCta ? 'pointer-events-none opacity-0' : 'opacity-100'
+        }`}
+      >
+        <WhatsAppButton />
       </div>
 
       {/* Multi-step Intake & Calendly Scheduler Modal */}

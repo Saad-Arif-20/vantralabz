@@ -522,8 +522,8 @@ export default function IntakeModal({
 
                     <div className="flex flex-wrap items-center gap-2 sm:self-center">
                       <a
-                        href={`https://wa.me/15550192834?text=${encodeURIComponent(
-                          `Hi Hamza, I'm ${contact.name}. I just submitted my project inquiry on Vantralabz and wanted to connect here.`
+                        href={`https://wa.me/923370388868?text=${encodeURIComponent(
+                          `Hi, I'm ${contact.name}. I just submitted my project inquiry on Vantralabz and wanted to connect here.`
                         )}`}
                         target="_blank"
                         rel="noreferrer"
