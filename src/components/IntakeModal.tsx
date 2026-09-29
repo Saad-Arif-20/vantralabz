@@ -114,7 +114,7 @@ export default function IntakeModal({
     );
   };
 
-  const handleNextToStep4 = async (e: React.FormEvent) => {
+  const handleSubmitContact = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!contact.name || !contact.email) return;
 
@@ -139,9 +139,9 @@ export default function IntakeModal({
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
       });
-      setStep(4);
+      setStep(3);
     } catch {
-      setStep(4);
+      setStep(3);
     } finally {
       setSubmitting(false);
     }
@@ -172,17 +172,16 @@ export default function IntakeModal({
               </span>
               <span className="hidden text-xs text-white/40 sm:inline">•</span>
               <span className="text-xs font-medium uppercase tracking-widest text-white/50">
-                {step === 1 && 'Step 1 of 4: Select Services'}
-                {step === 2 && 'Step 2 of 4: Project Scope'}
-                {step === 3 && 'Step 3 of 4: Contact Info'}
-                {step === 4 && 'Step 4 of 4: Schedule Meeting'}
+                {step === 1 && 'Step 1 of 3: About Your Project'}
+                {step === 2 && 'Step 2 of 3: Contact Info'}
+                {step === 3 && 'Step 3 of 3: Schedule Meeting'}
               </span>
             </div>
 
             <div className="flex items-center gap-4">
               {/* Step indicator pills */}
-              <div className="hidden gap-1.5 sm:flex">
-                {[1, 2, 3, 4].map((i) => (
+              <div className="flex gap-1.5">
+                {[1, 2, 3].map((i) => (
                   <div
                     key={i}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -208,7 +207,7 @@ export default function IntakeModal({
 
           {/* Modal Content Body */}
           <div className="flex-1 overflow-y-auto p-6 sm:p-8">
-            {/* STEP 1: Services */}
+            {/* STEP 1: Services + Project Scope */}
             {step === 1 && (
               <motion.div
                 key="step1"
@@ -220,73 +219,53 @@ export default function IntakeModal({
               >
                 <div>
                   <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">
-                    What can we help you build?
+                    Let's scope out your project
                   </h2>
                   <p className="mt-1 text-sm text-white/60">
-                    Select all services that align with your current goals.
+                    Takes about a minute — this helps us prepare specific insights before our call.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {SERVICES_OPTIONS.map((item) => {
-                    const Icon = item.icon;
-                    const isSelected = selectedServices.includes(item.id);
-                    return (
-                      <div
-                        key={item.id}
-                        onClick={() => toggleService(item.id)}
-                        className={`group relative flex cursor-pointer items-start gap-4 rounded-2xl p-4 transition-all ${
-                          isSelected
-                            ? 'border border-vlz-red/50 bg-vlz-red/10 shadow-lg'
-                            : 'border border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.05]'
-                        }`}
-                      >
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                    What can we help you build?
+                  </label>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {SERVICES_OPTIONS.map((item) => {
+                      const Icon = item.icon;
+                      const isSelected = selectedServices.includes(item.id);
+                      return (
                         <div
-                          className={`rounded-xl p-2.5 transition-colors ${
-                            isSelected ? 'bg-vlz-red text-white' : 'bg-white/5 text-white/70'
+                          key={item.id}
+                          onClick={() => toggleService(item.id)}
+                          className={`group relative flex cursor-pointer items-start gap-4 rounded-2xl p-4 transition-all ${
+                            isSelected
+                              ? 'border border-vlz-red/50 bg-vlz-red/10 shadow-lg'
+                              : 'border border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.05]'
                           }`}
                         >
-                          <Icon size={20} />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <h3 className="text-base font-medium text-white">{item.title}</h3>
-                            {isSelected && (
-                              <span className="rounded-full bg-vlz-red p-1 text-white">
-                                <Check size={12} />
-                              </span>
-                            )}
+                          <div
+                            className={`rounded-xl p-2.5 transition-colors ${
+                              isSelected ? 'bg-vlz-red text-white' : 'bg-white/5 text-white/70'
+                            }`}
+                          >
+                            <Icon size={20} />
                           </div>
-                          <p className="mt-1 text-xs leading-relaxed text-white/50">{item.desc}</p>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <h3 className="text-base font-medium text-white">{item.title}</h3>
+                              {isSelected && (
+                                <span className="rounded-full bg-vlz-red p-1 text-white">
+                                  <Check size={12} />
+                                </span>
+                              )}
+                            </div>
+                            <p className="mt-1 text-xs leading-relaxed text-white/50">{item.desc}</p>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="flex justify-end pt-4">
-                  <PrimaryButton onClick={() => setStep(2)}>CONTINUE</PrimaryButton>
-                </div>
-              </motion.div>
-            )}
-
-            {/* STEP 2: Project Scope & Situation */}
-            {step === 2 && (
-              <motion.div
-                key="step2"
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.25 }}
-                className="space-y-6"
-              >
-                <div>
-                  <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">
-                    Tell us about your current status
-                  </h2>
-                  <p className="mt-1 text-sm text-white/60">
-                    This helps us prepare specific insights before our call.
-                  </p>
+                      );
+                    })}
+                  </div>
                 </div>
 
                 {/* Situation radio cards */}
@@ -351,24 +330,17 @@ export default function IntakeModal({
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4">
-                  <button
-                    onClick={() => setStep(1)}
-                    className="flex items-center gap-1.5 text-xs text-white/60 transition-colors hover:text-white"
-                  >
-                    <ArrowLeft size={14} />
-                    Back
-                  </button>
-                  <PrimaryButton onClick={() => setStep(3)}>CONTINUE</PrimaryButton>
+                <div className="flex justify-end pt-4">
+                  <PrimaryButton onClick={() => setStep(2)}>CONTINUE</PrimaryButton>
                 </div>
               </motion.div>
             )}
 
-            {/* STEP 3: Contact Info */}
-            {step === 3 && (
+            {/* STEP 2: Contact Info */}
+            {step === 2 && (
               <motion.form
-                key="step3"
-                onSubmit={handleNextToStep4}
+                key="step2"
+                onSubmit={handleSubmitContact}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
@@ -469,7 +441,7 @@ export default function IntakeModal({
                 <div className="flex items-center justify-between pt-3">
                   <button
                     type="button"
-                    onClick={() => setStep(2)}
+                    onClick={() => setStep(1)}
                     className="flex items-center gap-1.5 text-xs text-white/60 transition-colors hover:text-white"
                   >
                     <ArrowLeft size={14} />
@@ -483,10 +455,10 @@ export default function IntakeModal({
               </motion.form>
             )}
 
-            {/* STEP 4: Calendly Embed */}
-            {step === 4 && (
+            {/* STEP 3: Calendly Embed */}
+            {step === 3 && (
               <motion.div
-                key="step4"
+                key="step3"
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
