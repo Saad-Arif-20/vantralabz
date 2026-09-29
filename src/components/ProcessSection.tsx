@@ -182,7 +182,7 @@ export default function ProcessSection() {
   return (
     <section id="process" className="bg-vlz-offwhite px-4 pb-6 sm:px-6 lg:px-[72px]">
       <div ref={scrollerRef} className="mx-auto max-w-[1296px] lg:h-[240vh]">
-        <div className="overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 text-center sm:px-10 sm:py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:py-0">
+        <div className="overflow-hidden rounded-[40px] bg-vlz-black px-6 py-16 text-center sm:px-10 sm:py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:py-20">
           <div className="w-full">
             <div
               ref={headerRef}
