@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { SITE_CONFIG } from '../config/site';
 
 function WhatsAppIcon() {
@@ -9,15 +11,47 @@ function WhatsAppIcon() {
 }
 
 export default function WhatsAppButton({ className }: { className?: string }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <a
-      href={SITE_CONFIG.whatsappUrl}
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Chat with us on WhatsApp"
-      className={`grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_-6px_rgba(37,211,102,0.6)] transition-transform hover:scale-105 ${className ?? ''}`}
+    <div
+      className="relative flex items-center"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
     >
-      <WhatsAppIcon />
-    </a>
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0, x: -10, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -10, scale: 0.9 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="absolute left-full ml-4 hidden whitespace-nowrap rounded-xl bg-vlz-black px-4 py-2.5 shadow-xl sm:block"
+            role="tooltip"
+          >
+            <span className="flex items-center gap-2 text-sm font-semibold text-white">
+              <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-vlz-green" aria-hidden />
+              Talk to us on WhatsApp!
+            </span>
+            <span
+              className="absolute right-full top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 bg-vlz-black"
+              aria-hidden
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <a
+        href={SITE_CONFIG.whatsappUrl}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat with us on WhatsApp"
+        className={`grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_8px_24px_-6px_rgba(37,211,102,0.6)] transition-transform hover:scale-105 ${className ?? ''}`}
+      >
+        <WhatsAppIcon />
+      </a>
+    </div>
   );
 }
