@@ -206,7 +206,7 @@ export default function IntakeModal({
           </div>
 
           {/* Modal Content Body */}
-          <div className="flex-1 overflow-y-auto p-6 sm:p-8">
+          <div className="themed-scrollbar flex-1 overflow-y-auto p-6 sm:p-8">
             {/* STEP 1: Services + Project Scope */}
             {step === 1 && (
               <motion.div
@@ -465,47 +465,34 @@ export default function IntakeModal({
                 transition={{ duration: 0.25 }}
                 className="space-y-6"
               >
-                {/* Big, Clear Confirmation Banner */}
-                <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/30 p-5">
-                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                    <div className="flex items-start gap-3.5">
-                      <div className="mt-0.5 rounded-full bg-emerald-500/20 p-2 text-emerald-400">
-                        <CheckCircle2 size={24} />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h3 className="text-base font-semibold text-white">
-                            Your Project Inquiry Has Been Received!
-                          </h3>
-                          <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-medium text-emerald-300">
-                            Sent to Team
-                          </span>
-                        </div>
-                        <p className="mt-1 text-xs leading-relaxed text-white/70">
-                          Thanks, <strong className="text-white">{contact.name || 'there'}</strong>. We’ve sent your details to Hamza & the team.
-                          <br />
-                          <span className="text-white/50">
-                            <strong>Optional:</strong> Pick a calendar slot below (we pre-filled your name & email), or finish now.
-                          </span>
-                        </p>
-                      </div>
+                {/* Compact confirmation banner */}
+                <div className="flex flex-col gap-3 rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-950/40 to-emerald-950/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-400">
+                      <CheckCircle2 size={20} />
                     </div>
-
-                    <div className="flex flex-wrap items-center gap-2 sm:self-center">
-                      <button
-                        type="button"
-                        onClick={onClose}
-                        className="flex items-center gap-1.5 rounded-full bg-white px-5 py-2 text-xs font-medium text-black transition-all hover:bg-white/90"
-                      >
-                        <Check size={14} />
-                        Done & Return
-                      </button>
-                    </div>
+                    <p className="text-sm leading-snug text-white/80">
+                      <strong className="font-semibold text-white">
+                        Thanks{contact.name ? `, ${contact.name}` : ''} — your inquiry is in!
+                      </strong>{' '}
+                      <span className="text-white/50">
+                        Pick a time below, or finish now — totally optional.
+                      </span>
+                    </p>
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-white px-5 py-2 text-xs font-medium text-black transition-all hover:bg-white/90"
+                  >
+                    <Check size={14} />
+                    Done & Return
+                  </button>
                 </div>
 
                 {/* Embedded Calendly Scheduling Widget with Prefilled Info */}
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-900 shadow-inner">
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-vlz-black">
                   <iframe
                     src={`${SITE_CONFIG.calendlyUrl}?embed_domain=${encodeURIComponent(
                       window.location.hostname
@@ -522,19 +509,10 @@ export default function IntakeModal({
                   />
                 </div>
 
-                <div className="flex flex-col items-center justify-between gap-3 text-xs text-white/50 sm:flex-row">
-                  <span className="flex items-center gap-1.5">
-                    <Clock size={13} />
-                    Your name & email are pre-filled automatically on the calendar.
-                  </span>
-
-                  <button
-                    onClick={onClose}
-                    className="rounded-full border border-white/10 px-4 py-1.5 text-xs text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                  >
-                    Done / Return to Website
-                  </button>
-                </div>
+                <span className="flex items-center justify-center gap-1.5 text-center text-xs text-white/40">
+                  <Clock size={13} />
+                  Your name & email are pre-filled automatically on the calendar.
+                </span>
               </motion.div>
             )}
           </div>
