@@ -159,29 +159,28 @@ export default function IntakeModal({
       >
         <div
           ref={containerRef}
-          className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-[rgba(249,69,45,0.18)] bg-vlz-black text-white shadow-2xl"
+          className="relative flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-3xl border border-black/10 bg-vlz-white text-vlz-black shadow-2xl"
         >
-          {/* Warm ambient brand glow, matching the rest of the site's red/orange-on-black look */}
+          {/* Brand accent stripe across the top */}
           <div
-            className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[140%] -translate-x-1/2 rounded-full opacity-40 blur-[110px]"
+            className="absolute inset-x-0 top-0 h-1"
             style={{
-              background:
-                'radial-gradient(closest-side, rgba(249,69,45,0.55), rgba(214,47,26,0.25) 55%, transparent 75%)',
+              background: 'linear-gradient(90deg, rgb(249,69,45), rgb(255,140,80), rgb(249,69,45))',
             }}
             aria-hidden
           />
 
           {/* Top Bar / Progress */}
-          <div className="relative flex items-center justify-between border-b border-[rgba(249,69,45,0.15)] px-6 py-4">
+          <div className="relative flex items-center justify-between border-b border-black/10 px-6 py-4">
             <div className="flex items-center gap-3">
               <span
-                className="text-xl tracking-wide text-white"
+                className="text-xl tracking-wide text-vlz-black"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 VANTRALABZ
               </span>
-              <span className="hidden text-xs text-white/40 sm:inline">•</span>
-              <span className="text-xs font-medium uppercase tracking-widest text-white/50">
+              <span className="hidden text-xs text-vlz-lightgray sm:inline">•</span>
+              <span className="text-xs font-medium uppercase tracking-widest text-vlz-gray">
                 {step === 1 && 'Step 1 of 3: About Your Project'}
                 {step === 2 && 'Step 2 of 3: Contact Info'}
                 {step === 3 && 'Step 3 of 3: Schedule Meeting'}
@@ -199,7 +198,7 @@ export default function IntakeModal({
                         ? 'w-6 bg-vlz-red'
                         : step > i
                         ? 'w-3 bg-vlz-red/50'
-                        : 'w-2 bg-white/20'
+                        : 'w-2 bg-black/10'
                     }`}
                   />
                 ))}
@@ -208,7 +207,7 @@ export default function IntakeModal({
               <button
                 onClick={onClose}
                 aria-label="Close intake"
-                className="rounded-full p-1.5 text-white/50 transition-colors hover:bg-[rgba(249,69,45,0.15)] hover:text-white"
+                className="rounded-full p-1.5 text-vlz-gray transition-colors hover:bg-vlz-black hover:text-white"
               >
                 <X size={20} />
               </button>
@@ -228,16 +227,16 @@ export default function IntakeModal({
                 className="space-y-6"
               >
                 <div>
-                  <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">
+                  <h2 className="text-2xl font-medium tracking-tight text-vlz-black sm:text-3xl">
                     Let's scope out your project
                   </h2>
-                  <p className="mt-1 text-sm text-white/60">
+                  <p className="mt-1 text-sm text-vlz-gray">
                     Takes about a minute — this helps us prepare specific insights before our call.
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                  <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                     What can we help you build?
                   </label>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -251,26 +250,26 @@ export default function IntakeModal({
                           className={`group relative flex cursor-pointer items-start gap-4 rounded-2xl p-4 transition-all ${
                             isSelected
                               ? 'border border-vlz-red/50 bg-vlz-red/10 shadow-lg'
-                              : 'border border-[rgba(249,69,45,0.08)] bg-[rgba(249,69,45,0.02)] hover:border-[rgba(249,69,45,0.3)] hover:bg-[rgba(249,69,45,0.06)]'
+                              : 'border border-black/10 bg-vlz-offwhite hover:border-vlz-red/30 hover:bg-[rgba(249,69,45,0.05)]'
                           }`}
                         >
                           <div
                             className={`rounded-xl p-2.5 transition-colors ${
-                              isSelected ? 'bg-vlz-red text-white' : 'bg-[rgba(249,69,45,0.1)] text-vlz-red/70'
+                              isSelected ? 'bg-vlz-red text-white' : 'bg-[rgba(249,69,45,0.1)] text-vlz-red'
                             }`}
                           >
                             <Icon size={20} />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center justify-between">
-                              <h3 className="text-base font-medium text-white">{item.title}</h3>
+                              <h3 className="text-base font-medium text-vlz-black">{item.title}</h3>
                               {isSelected && (
                                 <span className="rounded-full bg-vlz-red p-1 text-white">
                                   <Check size={12} />
                                 </span>
                               )}
                             </div>
-                            <p className="mt-1 text-xs leading-relaxed text-white/50">{item.desc}</p>
+                            <p className="mt-1 text-xs leading-relaxed text-vlz-gray">{item.desc}</p>
                           </div>
                         </div>
                       );
@@ -280,7 +279,7 @@ export default function IntakeModal({
 
                 {/* Situation radio cards */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                  <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                     Where are you currently at?
                   </label>
                   <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -291,8 +290,8 @@ export default function IntakeModal({
                         onClick={() => setSituation(opt)}
                         className={`rounded-xl p-3.5 text-left text-xs sm:text-sm transition-all ${
                           situation === opt
-                            ? 'border border-vlz-red/50 bg-vlz-red/10 text-white'
-                            : 'border border-[rgba(249,69,45,0.08)] bg-[rgba(249,69,45,0.02)] text-white/70 hover:bg-[rgba(249,69,45,0.06)]'
+                            ? 'border border-vlz-red/50 bg-vlz-red/10 text-vlz-black'
+                            : 'border border-black/10 bg-vlz-offwhite text-vlz-gray hover:border-vlz-red/30 hover:bg-[rgba(249,69,45,0.05)]'
                         }`}
                       >
                         {opt}
@@ -303,23 +302,23 @@ export default function IntakeModal({
 
                 {/* Existing Website Input */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                  <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                     Existing Website or Store URL (Optional)
                   </label>
-                  <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
+                  <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
                     <input
                       type="text"
                       value={currentWebsite}
                       onChange={(e) => setCurrentWebsite(e.target.value)}
                       placeholder="e.g. yourcompany.com"
-                      className="w-full bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none"
+                      className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
                     />
                   </div>
                 </div>
 
                 {/* Timeline selector */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                  <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                     Expected Timeline
                   </label>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -330,8 +329,8 @@ export default function IntakeModal({
                         onClick={() => setTimeline(opt)}
                         className={`rounded-xl p-2.5 text-center text-xs transition-all ${
                           timeline === opt
-                            ? 'border border-vlz-red/50 bg-vlz-red/10 text-white'
-                            : 'border border-[rgba(249,69,45,0.08)] bg-[rgba(249,69,45,0.02)] text-white/60 hover:bg-[rgba(249,69,45,0.06)]'
+                            ? 'border border-vlz-red/50 bg-vlz-red/10 text-vlz-black'
+                            : 'border border-black/10 bg-vlz-offwhite text-vlz-gray hover:border-vlz-red/30 hover:bg-[rgba(249,69,45,0.05)]'
                         }`}
                       >
                         {opt}
@@ -358,43 +357,43 @@ export default function IntakeModal({
                 className="space-y-5"
               >
                 <div>
-                  <h2 className="text-2xl font-medium tracking-tight sm:text-3xl">
+                  <h2 className="text-2xl font-medium tracking-tight text-vlz-black sm:text-3xl">
                     Who should Hamza connect with?
                   </h2>
-                  <p className="mt-1 text-sm text-white/60">
+                  <p className="mt-1 text-sm text-vlz-gray">
                     We'll use this to send confirmation details and prepare your project breakdown.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                    <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                       Your Name *
                     </label>
-                    <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
+                    <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
                       <input
                         type="text"
                         required
                         value={contact.name}
                         onChange={(e) => setContact({ ...contact, name: e.target.value })}
                         placeholder="John Smith"
-                        className="w-full bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none"
+                        className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                    <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                       Work Email *
                     </label>
-                    <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
+                    <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
                       <input
                         type="email"
                         required
                         value={contact.email}
                         onChange={(e) => setContact({ ...contact, email: e.target.value })}
                         placeholder="john@company.com"
-                        className="w-full bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none"
+                        className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
                       />
                     </div>
                   </div>
@@ -402,48 +401,48 @@ export default function IntakeModal({
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <label className="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-white/50">
+                    <label className="flex items-center justify-between text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                       <span>WhatsApp / Phone Number</span>
-                      <span className="text-[10px] text-emerald-400 lowercase">for instant callback</span>
+                      <span className="text-[10px] text-emerald-600 lowercase">for instant callback</span>
                     </label>
-                    <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
+                    <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
                       <input
                         type="tel"
                         value={contact.whatsapp}
                         onChange={(e) => setContact({ ...contact, whatsapp: e.target.value })}
                         placeholder="+1 (555) 000-0000"
-                        className="w-full bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none"
+                        className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                    <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                       Company / Organization
                     </label>
-                    <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
+                    <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
                       <input
                         type="text"
                         value={contact.company}
                         onChange={(e) => setContact({ ...contact, company: e.target.value })}
                         placeholder="Acme Inc."
-                        className="w-full bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/30 focus:outline-none"
+                        className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold uppercase tracking-widest text-white/50">
+                  <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
                     Brief Notes on what you'd like to achieve
                   </label>
-                  <div className="rounded-xl border border-[rgba(249,69,45,0.12)] bg-white/[0.03]">
+                  <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
                     <textarea
                       rows={3}
                       value={contact.notes}
                       onChange={(e) => setContact({ ...contact, notes: e.target.value })}
                       placeholder="e.g. Need a modern website with clean booking flow and automated customer onboarding..."
-                      className="w-full resize-none bg-transparent px-4 py-2.5 text-sm text-white placeholder:text-white/30 focus:outline-none"
+                      className="w-full resize-none bg-transparent px-4 py-2.5 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
                     />
                   </div>
                 </div>
@@ -452,7 +451,7 @@ export default function IntakeModal({
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="flex items-center gap-1.5 text-xs text-white/60 transition-colors hover:text-white"
+                    className="flex items-center gap-1.5 text-xs text-vlz-gray transition-colors hover:text-vlz-black"
                   >
                     <ArrowLeft size={14} />
                     Back
@@ -476,16 +475,16 @@ export default function IntakeModal({
                 className="space-y-6"
               >
                 {/* Compact confirmation banner */}
-                <div className="flex flex-col gap-3 rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-950/40 to-emerald-950/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-500/15 text-emerald-400">
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-600">
                       <CheckCircle2 size={20} />
                     </div>
-                    <p className="text-sm leading-snug text-white/80">
-                      <strong className="font-semibold text-white">
+                    <p className="text-sm leading-snug text-vlz-gray">
+                      <strong className="font-semibold text-vlz-black">
                         Thanks{contact.name ? `, ${contact.name}` : ''} — your inquiry is in!
                       </strong>{' '}
-                      <span className="text-white/50">
+                      <span className="text-vlz-gray">
                         Pick a time below, or finish now — totally optional.
                       </span>
                     </p>
@@ -494,7 +493,7 @@ export default function IntakeModal({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-white px-5 py-2 text-xs font-medium text-black transition-all hover:bg-white/90"
+                    className="flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-vlz-black px-5 py-2 text-xs font-medium text-white transition-all hover:bg-vlz-black/85"
                   >
                     <Check size={14} />
                     Done & Return
@@ -502,11 +501,11 @@ export default function IntakeModal({
                 </div>
 
                 {/* Embedded Calendly Scheduling Widget with Prefilled Info */}
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-vlz-black">
+                <div className="overflow-hidden rounded-2xl border border-black/10 bg-vlz-white">
                   <iframe
                     src={`${SITE_CONFIG.calendlyUrl}?embed_domain=${encodeURIComponent(
                       window.location.hostname
-                    )}&embed_type=Inline&background_color=111111&text_color=ffffff&primary_color=f9452d&name=${encodeURIComponent(
+                    )}&embed_type=Inline&background_color=ffffff&text_color=111111&primary_color=f9452d&name=${encodeURIComponent(
                       contact.name
                     )}&email=${encodeURIComponent(contact.email)}&a1=${encodeURIComponent(
                       contact.whatsapp
@@ -519,7 +518,7 @@ export default function IntakeModal({
                   />
                 </div>
 
-                <span className="flex items-center justify-center gap-1.5 text-center text-xs text-white/40">
+                <span className="flex items-center justify-center gap-1.5 text-center text-xs text-vlz-lightgray">
                   <Clock size={13} />
                   Your name & email are pre-filled automatically on the calendar.
                 </span>
