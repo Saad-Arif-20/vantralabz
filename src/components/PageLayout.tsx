@@ -22,19 +22,32 @@ interface PageLayoutProps {
 export default function PageLayout({ children }: PageLayoutProps) {
   const [isIntakeOpen, setIsIntakeOpen] = useState(false);
   const [selectedServiceId, setSelectedServiceId] = useState<string | undefined>(undefined);
-  const [hideFloatingCta, setHideFloatingCta] = useState(false);
+  const [footerNear, setFooterNear] = useState(false);
+  const [heroInView, setHeroInView] = useState(false);
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = footerRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => setHideFloatingCta(entry.isIntersecting),
+      ([entry]) => setFooterNear(entry.isIntersecting),
       { rootMargin: '0px 0px -100px 0px' },
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const hero = document.getElementById('top');
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) => setHeroInView(entry.isIntersecting));
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  // Only show the floating CTAs once the hero (which has its own visible
+  // "Book a Call") has scrolled out of view, and hide them again near the footer.
+  const hideFloatingCta = heroInView || footerNear;
 
   const handleOpenIntake = (serviceTitle?: string) => {
     setSelectedServiceId(mapServiceToId(serviceTitle));

@@ -55,7 +55,7 @@ export default function Hero({ onOpenIntake }: HeroProps) {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="max-w-[220px]"
+              className="hidden max-w-[220px] lg:block"
             >
               <div className="w-fit rounded-2xl bg-black/35 px-3 py-2.5 backdrop-blur-sm">
                 <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-white/80">
