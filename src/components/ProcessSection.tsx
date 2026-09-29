@@ -186,7 +186,7 @@ export default function ProcessSection() {
           <div className="w-full">
             <div
               ref={headerRef}
-              className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray"
+              className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray lg:mb-4"
               style={{
                 opacity: headerInView ? 1 : 0,
                 transform: headerInView ? 'none' : 'translateY(16px)',
@@ -198,7 +198,7 @@ export default function ProcessSection() {
             </div>
 
             <h2
-              className="mb-12 text-4xl font-bold tracking-tight text-vlz-white sm:text-5xl md:text-6xl"
+              className="mb-12 text-4xl font-bold tracking-tight text-vlz-white sm:text-5xl md:text-6xl lg:mb-6"
               style={{
                 fontFamily: 'var(--font-expanded)',
                 opacity: headerInView ? 1 : 0,
@@ -209,7 +209,7 @@ export default function ProcessSection() {
               How We Work
             </h2>
 
-            <div className="mx-auto mb-16 flex max-w-md items-center justify-between sm:mb-24">
+            <div className="mx-auto mb-16 flex max-w-md items-center justify-between sm:mb-24 lg:mb-10">
               {STEPS.map((step, index) => (
                 <div key={step.week} className="flex items-center">
                   <span className="rounded-full bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-vlz-lightgray">
