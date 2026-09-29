@@ -17,6 +17,7 @@ export default function Header({ onOpenIntake }: HeaderProps) {
     { label: 'SERVICES', href: isTeamPage ? '/index.html#services' : '#services' },
     { label: 'ABOUT US', href: '/team.html' },
     { label: 'FAQ', href: isTeamPage ? '/index.html#faq' : '#faq' },
+    { label: 'PRICING', href: isTeamPage ? '/index.html#pricing' : '#pricing' },
   ];
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

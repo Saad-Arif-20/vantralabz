@@ -14,7 +14,12 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* Not "smooth": ProcessSection's scroll-linked accordion resizes the page
+       mid-flight when a jump target lies past it, which derails the browser's
+       native animated scroll and makes it stop short of the actual target
+       (confirmed on FAQ/Pricing/Contact nav links). An instant jump has no
+       window for that to happen. */
+    scroll-behavior: auto;
     scroll-padding-top: 120px;
     @apply font-sans;
   }

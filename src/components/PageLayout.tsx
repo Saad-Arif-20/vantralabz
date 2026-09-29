@@ -72,7 +72,10 @@ export default function PageLayout({ children }: PageLayoutProps) {
     const id = hash.slice(1);
     const raf = requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // 'auto' (instant), not 'smooth': ProcessSection's scroll-linked
+        // accordion resizes the page mid-flight for any target past it,
+        // which derails an animated scroll before it reaches the target.
+        document.getElementById(id)?.scrollIntoView({ behavior: 'auto', block: 'start' });
       });
     });
     return () => cancelAnimationFrame(raf);
