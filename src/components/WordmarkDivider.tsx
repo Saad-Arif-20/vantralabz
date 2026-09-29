@@ -6,7 +6,7 @@ export default function WordmarkDivider() {
     <div className="bg-vlz-offwhite">
       <div className="mx-auto max-w-[1440px] px-4 pb-10 pt-4 sm:px-6 lg:px-[72px]">
         <h2
-          className="select-none text-center text-[11vw] font-bold uppercase leading-none tracking-tight text-vlz-black sm:text-[9.5vw] lg:text-[7.5rem]"
+          className="select-none text-center text-[9vw] font-bold uppercase leading-none tracking-tight text-vlz-black sm:text-[9.5vw] lg:text-[7.5rem]"
           style={{ fontFamily: 'var(--font-expanded)' }}
           aria-label="Vantralabz"
         >
