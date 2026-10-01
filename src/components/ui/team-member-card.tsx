@@ -71,7 +71,7 @@ export default function TeamMemberCard({
             src={imageUrl}
             alt={fullName}
             style={{ objectPosition: facePosition ?? '50% 20%' }}
-            className="h-full w-full object-cover grayscale transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0"
+            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </motion.div>
 
@@ -99,7 +99,7 @@ export default function TeamMemberCard({
             )}
           </p>
 
-          <div className={cn('flex items-center gap-5 sm:gap-6', isRight && 'sm:flex-row-reverse')}>
+          <div className={cn('flex w-full items-center gap-5 sm:gap-6', isRight && 'sm:flex-row-reverse')}>
             <motion.button
               type="button"
               onClick={onConnect}
@@ -117,7 +117,7 @@ export default function TeamMemberCard({
               />
             </motion.button>
 
-            <p className="max-w-[220px] text-sm leading-relaxed text-vlz-gray">{description}</p>
+            <p className="flex-1 text-sm leading-relaxed text-vlz-gray sm:text-base">{description}</p>
           </div>
         </motion.div>
       </div>
