@@ -4,7 +4,7 @@ import { Handshake, Lightbulb, TrendingUp, Users } from 'lucide-react';
 import PageLayout from '../components/PageLayout';
 import PrimaryButton from '../components/PrimaryButton';
 import RevealHeading from '../components/RevealHeading';
-import TeamAvatar from '../components/TeamAvatar';
+import TeamMemberCard from '../components/ui/team-member-card';
 import { TEAM } from '../data/team';
 
 const STORY_PARAGRAPHS = [
@@ -120,9 +120,6 @@ function OurStorySection() {
 }
 
 export default function TeamPage() {
-  const gridRef = useRef(null);
-  const gridInView = useInView(gridRef, { once: true, margin: '-100px' });
-
   return (
     <PageLayout>
       {(openIntake) => (
@@ -152,47 +149,21 @@ export default function TeamPage() {
 
           <OurStorySection />
 
-          <section className="bg-vlz-offwhite px-4 pb-16 sm:px-6 lg:px-[72px]">
-            <div ref={gridRef} className="mx-auto max-w-[1296px]">
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                {TEAM.map((member, index) => (
-                  <motion.div
-                    key={member.name}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={gridInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="group relative overflow-hidden rounded-3xl border border-black/10 bg-vlz-dark p-6 sm:p-7"
-                  >
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      style={{
-                        backgroundImage:
-                          'radial-gradient(circle at 50% 120%, #ffe9b3 0%, #ffb03c 15%, #ff6a1f 28%, #d5290f 42%, #5c0f08 62%, #000000 85%)',
-                      }}
-                    />
-                    <span
-                      className="absolute right-6 top-6 text-sm font-bold text-white/20 sm:right-7 sm:top-7"
-                      style={{ fontFamily: 'var(--font-expanded)' }}
-                    >
-                      {member.number}
-                    </span>
-                    <div className="relative flex items-center gap-5 pr-8">
-                      <TeamAvatar
-                        name={member.name}
-                        image={member.image}
-                        facePosition={member.facePosition}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <h2 className="text-lg font-bold uppercase tracking-wide text-white sm:text-xl">
-                          {member.name}
-                        </h2>
-                        <p className="mt-1 text-sm text-vlz-lightgray">{member.role}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+          <section className="bg-vlz-offwhite px-4 pb-16 pt-6 sm:px-6 lg:px-[72px]">
+            <div className="mx-auto flex max-w-[1296px] flex-col gap-20 sm:gap-24">
+              {TEAM.map((member, index) => (
+                <TeamMemberCard
+                  key={member.firstName}
+                  position={index % 2 === 0 ? 'left' : 'right'}
+                  role={member.role}
+                  firstName={member.firstName}
+                  lastName={member.lastName}
+                  imageUrl={member.image}
+                  facePosition={member.facePosition}
+                  description={member.bio}
+                  onConnect={() => openIntake()}
+                />
+              ))}
             </div>
           </section>
 
