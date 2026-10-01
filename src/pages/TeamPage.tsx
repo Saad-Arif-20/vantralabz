@@ -161,30 +161,38 @@ export default function TeamPage() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={gridInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="group relative overflow-hidden rounded-3xl border border-black/10 bg-vlz-dark p-6 sm:p-7"
+                    className="group overflow-hidden rounded-3xl border border-black/10 bg-vlz-dark"
                   >
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      style={{
-                        backgroundImage:
-                          'radial-gradient(circle at 50% 120%, #ffe9b3 0%, #ffb03c 15%, #ff6a1f 28%, #d5290f 42%, #5c0f08 62%, #000000 85%)',
-                      }}
-                    />
-                    <span
-                      className="absolute right-6 top-6 text-sm font-bold text-white/20 sm:right-7 sm:top-7"
-                      style={{ fontFamily: 'var(--font-expanded)' }}
-                    >
-                      {member.number}
-                    </span>
-                    <div className="relative flex items-center gap-5 pr-8">
-                      <TeamAvatar name={member.name} />
-                      <div className="min-w-0 flex-1">
-                        <h2 className="text-lg font-bold uppercase tracking-wide text-white sm:text-xl">
-                          {member.name}
-                        </h2>
-                        <p className="mt-1 text-sm text-vlz-lightgray">{member.role}</p>
-                      </div>
+                    <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[16/11]">
+                      {member.image ? (
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          style={{ objectPosition: member.facePosition }}
+                          className="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                        />
+                      ) : (
+                        <TeamAvatar
+                          name={member.name}
+                          className="absolute inset-0 flex h-full w-full items-center justify-center bg-gradient-to-br from-vlz-dark to-vlz-black"
+                        />
+                      )}
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0 opacity-70 transition-opacity duration-500 group-hover:opacity-30"
+                      />
+                      <span
+                        className="absolute right-4 top-4 text-3xl font-bold text-white/30 drop-shadow-md transition-colors duration-500 group-hover:text-white/50"
+                        style={{ fontFamily: 'var(--font-expanded)' }}
+                      >
+                        {member.number}
+                      </span>
+                    </div>
+                    <div className="border-t border-white/10 bg-vlz-white px-5 py-5">
+                      <h2 className="text-lg font-bold uppercase tracking-wide text-vlz-black sm:text-xl">
+                        {member.name}
+                      </h2>
+                      <p className="mt-1 text-sm text-vlz-gray">{member.role}</p>
                     </div>
                   </motion.div>
                 ))}
