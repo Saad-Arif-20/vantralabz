@@ -13,15 +13,11 @@ export default function TeamAvatar({ name, className }: { name: string; classNam
     <div
       className={
         className ??
-        'flex h-full w-full items-center justify-center bg-gradient-to-br from-vlz-dark to-vlz-black'
+        'grid h-20 w-20 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-vlz-red to-[rgb(255,140,80)] text-2xl font-bold text-white shadow-lg sm:h-24 sm:w-24 sm:text-3xl'
       }
+      style={{ fontFamily: 'var(--font-expanded)' }}
     >
-      <span
-        className="text-4xl font-bold text-white/25"
-        style={{ fontFamily: 'var(--font-expanded)' }}
-      >
-        {getInitials(name)}
-      </span>
+      {getInitials(name)}
     </div>
   );
 }
