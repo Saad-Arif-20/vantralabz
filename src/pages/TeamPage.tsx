@@ -154,7 +154,7 @@ export default function TeamPage() {
               {TEAM.map((member, index) => (
                 <TeamMemberCard
                   key={member.firstName}
-                  position={index % 2 === 0 ? 'left' : 'right'}
+                  position={index % 2 === 0 ? 'right' : 'left'}
                   role={member.role}
                   firstName={member.firstName}
                   lastName={member.lastName}
