@@ -17,7 +17,13 @@ const GLOBE_MARKERS: GlobeMarker[] = [
   { id: 'CA', location: [43.6532, -79.3832], size: 0.018 },
   { id: 'GB', location: [51.5074, -0.1278], size: 0.018 },
   { id: 'EU', location: [52.52, 13.405], size: 0.018 },
-  { id: 'AU', location: [-33.8688, 151.2093], size: 0.018 },
+  // Not Australia's real coordinates. The globe only ever renders the top
+  // half of the sphere (a deliberate "horizon" look, not a full circle), and
+  // Australia's real latitude (-33.9) projects to y 0.75-0.83 there - always
+  // below that cutoff, so it could never appear no matter how long it
+  // rotates. Placed here instead, in the same visible band as the other
+  // markers, since showing it at all mattered more than exact placement.
+  { id: 'AU', location: [47, -40], size: 0.018 },
 ];
 
 function DestinationChip({
