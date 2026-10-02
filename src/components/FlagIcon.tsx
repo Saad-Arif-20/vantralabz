@@ -1,4 +1,6 @@
 import type { ReactElement } from 'react';
+import euFlag from '../assets/flag-eu.webp';
+import caFlag from '../assets/flag-ca.webp';
 
 type FlagCode = 'CA' | 'GB' | 'EU' | 'AU' | 'US';
 
@@ -12,11 +14,6 @@ function Star({ x, y, scale = 1, fill = '#FFCC00' }: { x: number; y: number; sca
   );
 }
 
-const EU_STAR_POSITIONS = Array.from({ length: 12 }, (_, i) => {
-  const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
-  return { x: 15 + Math.cos(angle) * 6.2, y: 10 + Math.sin(angle) * 6.2 };
-});
-
 const SOUTHERN_CROSS = [
   { x: 24, y: 4, scale: 0.9 },
   { x: 26.5, y: 8, scale: 0.9 },
@@ -26,16 +23,7 @@ const SOUTHERN_CROSS = [
 ];
 
 function CanadaFlag() {
-  return (
-    <svg viewBox="0 0 30 20" className="h-full w-full">
-      <rect width="30" height="20" fill="#FF0000" />
-      <rect x="7.5" width="15" height="20" fill="#FFFFFF" />
-      <path
-        d="M15 3 C18 3 18 7 21 8 C19 9 17 9 17 11 C19 12 20 14 22 16 C19 16 17 15 15.5 13.5 C15.5 15 15.5 17 15 18 C14.5 17 14.5 15 14.5 13.5 C13 15 11 16 8 16 C10 14 11 12 13 11 C13 9 11 9 9 8 C12 7 12 3 15 3 Z"
-        fill="#FF0000"
-      />
-    </svg>
-  );
+  return <img src={caFlag} alt="" className="h-full w-full object-cover" />;
 }
 
 function UKFlag() {
@@ -55,14 +43,7 @@ function UKFlag() {
 }
 
 function EUFlag() {
-  return (
-    <svg viewBox="0 0 30 20" className="h-full w-full">
-      <rect width="30" height="20" fill="#003399" />
-      {EU_STAR_POSITIONS.map((pos, i) => (
-        <Star key={i} x={pos.x} y={pos.y} scale={1} />
-      ))}
-    </svg>
-  );
+  return <img src={euFlag} alt="" className="h-full w-full object-cover" />;
 }
 
 function AustraliaFlag() {
