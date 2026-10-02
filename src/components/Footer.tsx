@@ -63,7 +63,7 @@ export default function Footer() {
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-black/10 pt-6 text-xs text-vlz-gray sm:flex-row md:mt-24">
           <p>© {new Date().getFullYear()} Vantralabz. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-vlz-black">
+            <a href="/terms.html" className="hover:text-vlz-black">
               Terms of Use
             </a>
             <a href="/privacy.html" className="hover:text-vlz-black">
