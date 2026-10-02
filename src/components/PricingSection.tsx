@@ -6,6 +6,7 @@ import PrimaryButton from './PrimaryButton';
 const PLANS = [
   {
     tier: 'STARTER',
+    name: 'Starter',
     subtitle: 'For a single, focused service',
     variant: 'light' as const,
     features: [
@@ -21,6 +22,7 @@ const PLANS = [
   },
   {
     tier: 'FULL SCOPE',
+    name: 'Full Scope',
     subtitle: 'For multi-service, ongoing partnerships',
     variant: 'red' as const,
     features: [
@@ -83,12 +85,12 @@ export default function PricingSection() {
                   {plan.subtitle}
                 </p>
 
-                <div className="flex items-end justify-between gap-4">
+                <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
                   <span
                     className="text-4xl font-bold sm:text-5xl"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    Custom
+                    {plan.name}
                   </span>
                   <p
                     className={`text-right text-xs leading-relaxed ${
