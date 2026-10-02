@@ -5,7 +5,7 @@ import PrimaryButton from './PrimaryButton';
 
 const PLANS = [
   {
-    tier: 'STARTER',
+    tier: 'PLAN 01',
     name: 'Starter',
     subtitle: 'For a single, focused service',
     variant: 'light' as const,
@@ -21,7 +21,7 @@ const PLANS = [
     ],
   },
   {
-    tier: 'FULL SCOPE',
+    tier: 'PLAN 02',
     name: 'Full Scope',
     subtitle: 'For multi-service, ongoing partnerships',
     variant: 'red' as const,
