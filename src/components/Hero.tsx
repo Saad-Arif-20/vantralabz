@@ -62,11 +62,11 @@ export default function Hero({ onOpenIntake }: HeroProps) {
                   (About)
                 </p>
                 <p className="text-sm leading-relaxed text-white">
-                  Brands, built to convert.
+                  Web design, automation, and growth systems.
                 </p>
               </div>
               <span className="mt-4 inline-block w-fit rounded-full bg-black/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-vlz-lightgray backdrop-blur-sm">
-                Available Now
+                Remote-First
               </span>
             </motion.div>
 
