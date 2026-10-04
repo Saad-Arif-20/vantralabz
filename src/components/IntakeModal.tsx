@@ -123,7 +123,7 @@ export default function IntakeModal({
       setCalendarKey((k) => k + 1);
       setPrefillSrc(null);
       setPrefillReadySrc(null);
-      setPlainTimePicked(false);
+      setUsePrefill(false);
     }
     wasOpen.current = isOpen;
   }, [isOpen]);
@@ -136,13 +136,11 @@ export default function IntakeModal({
   // calendar is shown, so there is never a wait.
   const [prefillSrc, setPrefillSrc] = useState<string | null>(null);
   const [prefillReadySrc, setPrefillReadySrc] = useState<string | null>(null);
-  // Set once the visitor has picked a time in the plain calendar; from then on we
-  // never swap calendars under them.
-  const [plainTimePicked, setPlainTimePicked] = useState(false);
-  const plainFrameRef = useRef<HTMLIFrameElement>(null);
+  // Which calendar step 3 shows is decided once, when the visitor clicks Next, and
+  // never changes afterwards, so the calendar never reloads or flashes.
+  const [usePrefill, setUsePrefill] = useState(false);
   const prefillFrameRef = useRef<HTMLIFrameElement>(null);
   const emailLooksValid = /\S+@\S+\.\S+/.test(contact.email);
-  const usePrefill = prefillSrc !== null && prefillReadySrc === prefillSrc && !plainTimePicked;
 
   useEffect(() => {
     if (!isOpen || step === 1 || !contact.name.trim() || !emailLooksValid) return;
@@ -153,7 +151,7 @@ export default function IntakeModal({
             contact.email.trim()
           )}`
         ),
-      500
+      300
     );
     return () => clearTimeout(t);
   }, [isOpen, step, contact.name, contact.email, emailLooksValid, calendlyBase]);
@@ -162,10 +160,11 @@ export default function IntakeModal({
     const onMessage = (e: MessageEvent) => {
       if (e.origin !== 'https://calendly.com') return;
       const event = e.data?.event;
-      if (e.source === prefillFrameRef.current?.contentWindow) {
-        if (event === 'calendly.event_type_viewed') setPrefillReadySrc(prefillSrc);
-      } else if (e.source === plainFrameRef.current?.contentWindow) {
-        if (event === 'calendly.date_and_time_selected') setPlainTimePicked(true);
+      if (
+        e.source === prefillFrameRef.current?.contentWindow &&
+        event === 'calendly.event_type_viewed'
+      ) {
+        setPrefillReadySrc(prefillSrc);
       }
     };
     window.addEventListener('message', onMessage);
@@ -225,6 +224,7 @@ export default function IntakeModal({
       body: JSON.stringify(payload),
       keepalive: true,
     }).catch(() => {});
+    setUsePrefill(prefillSrc !== null && prefillReadySrc === prefillSrc);
     setStep(3);
   };
 
@@ -596,7 +596,6 @@ export default function IntakeModal({
             >
               <iframe
                 key={calendarKey}
-                ref={plainFrameRef}
                 src={calendlySrc}
                 width="100%"
                 height="620"
