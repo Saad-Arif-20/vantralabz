@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Bot,
   Check,
   CheckCircle2,
-  Clock,
   Globe,
   PenTool,
   ShoppingBag,
@@ -89,37 +88,42 @@ export default function IntakeModal({
     notes: '',
   });
 
-  const [loadedSrc, setLoadedSrc] = useState('');
 
   const calendlyBase = `${SITE_CONFIG.calendlyUrl}?embed_domain=${encodeURIComponent(
     window.location.hostname
   )}&embed_type=Inline&background_color=ffffff&text_color=111111&primary_color=f9452d`;
 
-  // The calendar loads in the background from the moment the modal opens
-  // (unfilled). Once a name and valid email are typed it is swapped, early, to a
-  // pre-filled URL. Step 3 never changes the src, so it never triggers a reload:
-  // whatever is already loaded is what the visitor sees.
-  const [warmSrc, setWarmSrc] = useState(calendlyBase);
-  const emailLooksValid = /\S+@\S+\.\S+/.test(contact.email);
+  // The modal stays mounted (just hidden) and the calendar is loaded in the
+  // background a few seconds after the page itself has loaded. It is never
+  // reloaded while the modal is open, so it is already rendered by step 3.
+  const [preloadCalendar, setPreloadCalendar] = useState(false);
+  const [calendarKey, setCalendarKey] = useState(0);
+  const wasOpen = useRef(false);
 
   useEffect(() => {
-    if (!isOpen || step !== 2) return;
-    if (!(contact.name && emailLooksValid)) return;
-    const t = setTimeout(
-      () =>
-        setWarmSrc(
-          `${calendlyBase}&name=${encodeURIComponent(contact.name)}&email=${encodeURIComponent(
-            contact.email
-          )}`
-        ),
-      900
-    );
-    return () => clearTimeout(t);
-  }, [isOpen, step, contact.name, contact.email, emailLooksValid, calendlyBase]);
+    const start = () => setTimeout(() => setPreloadCalendar(true), 2500);
+    if (document.readyState === 'complete') {
+      const t = start();
+      return () => clearTimeout(t);
+    }
+    let t: ReturnType<typeof setTimeout>;
+    const onLoad = () => {
+      t = start();
+    };
+    window.addEventListener('load', onLoad, { once: true });
+    return () => {
+      window.removeEventListener('load', onLoad);
+      clearTimeout(t);
+    };
+  }, []);
 
-  const calendlySrc = warmSrc;
+  // After the modal closes, quietly load a fresh calendar for the next opening.
+  useEffect(() => {
+    if (wasOpen.current && !isOpen) setCalendarKey((k) => k + 1);
+    wasOpen.current = isOpen;
+  }, [isOpen]);
 
-  const calendlyLoaded = loadedSrc === calendlySrc;
+  const calendlySrc = preloadCalendar || isOpen ? calendlyBase : undefined;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollBodyRef = useRef<HTMLDivElement>(null);
@@ -132,7 +136,6 @@ export default function IntakeModal({
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       setStep(initialStep);
-      setWarmSrc(calendlyBase);
       if (initialService) {
         setSelectedServices([initialService]);
       }
@@ -142,7 +145,7 @@ export default function IntakeModal({
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen, initialStep, initialService, calendlyBase]);
+  }, [isOpen, initialStep, initialService]);
 
   const toggleService = (id: string) => {
     setSelectedServices((prev) =>
@@ -178,15 +181,17 @@ export default function IntakeModal({
     setStep(3);
   };
 
-  if (!isOpen) return null;
-
   return (
-    <AnimatePresence>
+    <>
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-3 backdrop-blur-md sm:p-6"
+        initial={false}
+        animate={{ opacity: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.2 }}
+        inert={!isOpen}
+        aria-hidden={!isOpen}
+        className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 ${
+          isOpen ? 'bg-black/85 backdrop-blur-md' : 'pointer-events-none bg-black/85'
+        }`}
       >
         <div
           ref={containerRef}
@@ -530,11 +535,6 @@ export default function IntakeModal({
                     Done & Return
                   </button>
                 </div>
-
-                <span className="flex items-center justify-center gap-1.5 text-center text-xs text-vlz-lightgray">
-                  <Clock size={13} />
-                  Your name & email are pre-filled automatically on the calendar.
-                </span>
               </motion.div>
             )}
 
@@ -547,25 +547,20 @@ export default function IntakeModal({
                   : 'pointer-events-none fixed left-0 top-0 -z-10 h-[620px] w-[600px] opacity-0'
               }
             >
-              {!calendlyLoaded && (
-                <div className="absolute inset-0 grid place-items-center text-sm text-vlz-lightgray">
-                  Loading calendar…
-                </div>
-              )}
               <iframe
+                key={calendarKey}
                 src={calendlySrc}
                 width="100%"
                 height="620"
                 frameBorder="0"
                 title="Schedule with Hamza Ghouri"
                 tabIndex={step === 3 ? 0 : -1}
-                onLoad={() => setLoadedSrc(calendlySrc)}
                 className="relative w-full"
               />
             </div>
           </div>
         </div>
       </motion.div>
-    </AnimatePresence>
+    </>
   );
 }
