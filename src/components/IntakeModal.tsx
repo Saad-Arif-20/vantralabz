@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -95,28 +95,29 @@ export default function IntakeModal({
     window.location.hostname
   )}&embed_type=Inline&background_color=ffffff&text_color=111111&primary_color=f9452d`;
 
-  const prefilledSrc = useMemo(
-    () =>
-      `${calendlyBase}&name=${encodeURIComponent(contact.name)}&email=${encodeURIComponent(
-        contact.email
-      )}&a1=${encodeURIComponent(contact.whatsapp)}`,
-    [calendlyBase, contact.name, contact.email, contact.whatsapp]
-  );
-
-  // The calendar is loaded in the background from the moment the modal opens
-  // (unfilled), then swapped to the pre-filled URL once the visitor has typed a
-  // valid email, so it is already rendered by the time they reach step 3.
+  // The calendar loads in the background from the moment the modal opens
+  // (unfilled). Once a name and valid email are typed it is swapped, early, to a
+  // pre-filled URL. Step 3 never changes the src, so it never triggers a reload:
+  // whatever is already loaded is what the visitor sees.
   const [warmSrc, setWarmSrc] = useState(calendlyBase);
   const emailLooksValid = /\S+@\S+\.\S+/.test(contact.email);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || step !== 2) return;
     if (!(contact.name && emailLooksValid)) return;
-    const t = setTimeout(() => setWarmSrc(prefilledSrc), 700);
+    const t = setTimeout(
+      () =>
+        setWarmSrc(
+          `${calendlyBase}&name=${encodeURIComponent(contact.name)}&email=${encodeURIComponent(
+            contact.email
+          )}`
+        ),
+      900
+    );
     return () => clearTimeout(t);
-  }, [isOpen, contact.name, emailLooksValid, prefilledSrc]);
+  }, [isOpen, step, contact.name, contact.email, emailLooksValid, calendlyBase]);
 
-  const calendlySrc = step === 3 ? prefilledSrc : warmSrc;
+  const calendlySrc = warmSrc;
 
   const calendlyLoaded = loadedSrc === calendlySrc;
 
@@ -543,7 +544,7 @@ export default function IntakeModal({
               className={
                 step === 3
                   ? 'relative mt-6 h-[620px] overflow-hidden rounded-2xl border border-black/10 bg-vlz-white'
-                  : 'pointer-events-none fixed -left-[9999px] top-0 h-[620px] w-[600px] opacity-0'
+                  : 'pointer-events-none fixed left-0 top-0 -z-10 h-[620px] w-[600px] opacity-0'
               }
             >
               {!calendlyLoaded && (
