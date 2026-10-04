@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -89,7 +89,36 @@ export default function IntakeModal({
     notes: '',
   });
 
-  const [submitting, setSubmitting] = useState(false);
+  const [loadedSrc, setLoadedSrc] = useState('');
+
+  const calendlyBase = `${SITE_CONFIG.calendlyUrl}?embed_domain=${encodeURIComponent(
+    window.location.hostname
+  )}&embed_type=Inline&background_color=ffffff&text_color=111111&primary_color=f9452d`;
+
+  const prefilledSrc = useMemo(
+    () =>
+      `${calendlyBase}&name=${encodeURIComponent(contact.name)}&email=${encodeURIComponent(
+        contact.email
+      )}&a1=${encodeURIComponent(contact.whatsapp)}`,
+    [calendlyBase, contact.name, contact.email, contact.whatsapp]
+  );
+
+  // The calendar is loaded in the background from the moment the modal opens
+  // (unfilled), then swapped to the pre-filled URL once the visitor has typed a
+  // valid email, so it is already rendered by the time they reach step 3.
+  const [warmSrc, setWarmSrc] = useState(calendlyBase);
+  const emailLooksValid = /\S+@\S+\.\S+/.test(contact.email);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    if (!(contact.name && emailLooksValid)) return;
+    const t = setTimeout(() => setWarmSrc(prefilledSrc), 700);
+    return () => clearTimeout(t);
+  }, [isOpen, contact.name, emailLooksValid, prefilledSrc]);
+
+  const calendlySrc = step === 3 ? prefilledSrc : warmSrc;
+
+  const calendlyLoaded = loadedSrc === calendlySrc;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollBodyRef = useRef<HTMLDivElement>(null);
@@ -102,6 +131,7 @@ export default function IntakeModal({
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       setStep(initialStep);
+      setWarmSrc(calendlyBase);
       if (initialService) {
         setSelectedServices([initialService]);
       }
@@ -111,7 +141,7 @@ export default function IntakeModal({
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen, initialStep, initialService]);
+  }, [isOpen, initialStep, initialService, calendlyBase]);
 
   const toggleService = (id: string) => {
     setSelectedServices((prev) =>
@@ -122,8 +152,6 @@ export default function IntakeModal({
   const handleSubmitContact = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!contact.name || !contact.email) return;
-
-    setSubmitting(true);
 
     const payload = {
       name: contact.name,
@@ -138,18 +166,15 @@ export default function IntakeModal({
       leadSource: 'Interactive Intake & Calendly Flow',
     };
 
-    try {
-      await fetch(SITE_CONFIG.formspreeEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      setStep(3);
-    } catch {
-      setStep(3);
-    } finally {
-      setSubmitting(false);
-    }
+    // Send in the background so the calendar appears immediately instead of
+    // waiting on the form service's response.
+    fetch(SITE_CONFIG.formspreeEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    }).catch(() => {});
+    setStep(3);
   };
 
   if (!isOpen) return null;
@@ -462,8 +487,8 @@ export default function IntakeModal({
                     Back
                   </button>
 
-                  <PrimaryButton type="submit" disabled={submitting}>
-                    {submitting ? 'SAVING...' : 'NEXT: PICK MEETING TIME'}
+                  <PrimaryButton type="submit">
+                    NEXT: PICK MEETING TIME
                   </PrimaryButton>
                 </div>
               </motion.form>
@@ -505,30 +530,38 @@ export default function IntakeModal({
                   </button>
                 </div>
 
-                {/* Embedded Calendly Scheduling Widget with Prefilled Info */}
-                <div className="overflow-hidden rounded-2xl border border-black/10 bg-vlz-white">
-                  <iframe
-                    src={`${SITE_CONFIG.calendlyUrl}?embed_domain=${encodeURIComponent(
-                      window.location.hostname
-                    )}&embed_type=Inline&background_color=ffffff&text_color=111111&primary_color=f9452d&name=${encodeURIComponent(
-                      contact.name
-                    )}&email=${encodeURIComponent(contact.email)}&a1=${encodeURIComponent(
-                      contact.whatsapp
-                    )}`}
-                    width="100%"
-                    height="620"
-                    frameBorder="0"
-                    title="Schedule with Hamza Ghouri"
-                    className="w-full"
-                  />
-                </div>
-
                 <span className="flex items-center justify-center gap-1.5 text-center text-xs text-vlz-lightgray">
                   <Clock size={13} />
                   Your name & email are pre-filled automatically on the calendar.
                 </span>
               </motion.div>
             )}
+
+            {/* Persistent Calendly embed: stays mounted (offscreen) on steps 1-2 so it is ready on step 3 */}
+            <div
+              aria-hidden={step !== 3}
+              className={
+                step === 3
+                  ? 'relative mt-6 h-[620px] overflow-hidden rounded-2xl border border-black/10 bg-vlz-white'
+                  : 'pointer-events-none fixed -left-[9999px] top-0 h-[620px] w-[600px] opacity-0'
+              }
+            >
+              {!calendlyLoaded && (
+                <div className="absolute inset-0 grid place-items-center text-sm text-vlz-lightgray">
+                  Loading calendar…
+                </div>
+              )}
+              <iframe
+                src={calendlySrc}
+                width="100%"
+                height="620"
+                frameBorder="0"
+                title="Schedule with Hamza Ghouri"
+                tabIndex={step === 3 ? 0 : -1}
+                onLoad={() => setLoadedSrc(calendlySrc)}
+                className="relative w-full"
+              />
+            </div>
           </div>
         </div>
       </motion.div>
