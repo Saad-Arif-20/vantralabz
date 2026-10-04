@@ -119,11 +119,50 @@ export default function IntakeModal({
 
   // After the modal closes, quietly load a fresh calendar for the next opening.
   useEffect(() => {
-    if (wasOpen.current && !isOpen) setCalendarKey((k) => k + 1);
+    if (wasOpen.current && !isOpen) {
+      setCalendarKey((k) => k + 1);
+      setPrefillSrc(null);
+      setPrefillReadySrc(null);
+      setUsePrefill(false);
+    }
     wasOpen.current = isOpen;
   }, [isOpen]);
 
   const calendlySrc = preloadCalendar || isOpen ? calendlyBase : undefined;
+
+  // A second, pre-filled copy of the calendar is loaded invisibly while the
+  // visitor is on step 2. Step 3 shows it only if it has finished rendering by
+  // then (Calendly tells us via postMessage); otherwise the already-loaded plain
+  // calendar is shown, so there is never a wait.
+  const [prefillSrc, setPrefillSrc] = useState<string | null>(null);
+  const [prefillReadySrc, setPrefillReadySrc] = useState<string | null>(null);
+  const [usePrefill, setUsePrefill] = useState(false);
+  const prefillFrameRef = useRef<HTMLIFrameElement>(null);
+  const emailLooksValid = /\S+@\S+\.\S+/.test(contact.email);
+
+  useEffect(() => {
+    if (!isOpen || step !== 2 || !contact.name.trim() || !emailLooksValid) return;
+    const t = setTimeout(
+      () =>
+        setPrefillSrc(
+          `${calendlyBase}&name=${encodeURIComponent(contact.name.trim())}&email=${encodeURIComponent(
+            contact.email.trim()
+          )}`
+        ),
+      900
+    );
+    return () => clearTimeout(t);
+  }, [isOpen, step, contact.name, contact.email, emailLooksValid, calendlyBase]);
+
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== 'https://calendly.com') return;
+      if (e.source !== prefillFrameRef.current?.contentWindow) return;
+      if (e.data?.event === 'calendly.event_type_viewed') setPrefillReadySrc(prefillSrc);
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, [prefillSrc]);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollBodyRef = useRef<HTMLDivElement>(null);
@@ -178,6 +217,8 @@ export default function IntakeModal({
       body: JSON.stringify(payload),
       keepalive: true,
     }).catch(() => {});
+    // Lock in which calendar to show now, so it never swaps while the visitor uses it.
+    setUsePrefill(prefillSrc !== null && prefillReadySrc === prefillSrc);
     setStep(3);
   };
 
@@ -554,9 +595,24 @@ export default function IntakeModal({
                 height="620"
                 frameBorder="0"
                 title="Schedule with Hamza Ghouri"
-                tabIndex={step === 3 ? 0 : -1}
-                className="relative w-full"
+                tabIndex={step === 3 && !usePrefill ? 0 : -1}
+                aria-hidden={usePrefill}
+                className={`absolute inset-0 h-full w-full ${usePrefill ? 'pointer-events-none opacity-0' : ''}`}
               />
+              {prefillSrc && (
+                <iframe
+                  key={`${calendarKey}-${prefillSrc}`}
+                  ref={prefillFrameRef}
+                  src={prefillSrc}
+                  width="100%"
+                  height="620"
+                  frameBorder="0"
+                  title="Schedule with Hamza Ghouri (pre-filled)"
+                  tabIndex={step === 3 && usePrefill ? 0 : -1}
+                  aria-hidden={!usePrefill}
+                  className={`absolute inset-0 h-full w-full ${usePrefill ? '' : 'pointer-events-none opacity-0'}`}
+                />
+              )}
             </div>
           </div>
         </div>
