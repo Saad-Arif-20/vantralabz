@@ -143,7 +143,7 @@ export default function IntakeModal({
   const emailLooksValid = /\S+@\S+\.\S+/.test(contact.email);
 
   useEffect(() => {
-    if (!isOpen || step === 1 || !contact.name.trim() || !emailLooksValid) return;
+    if (!isOpen || step === 3 || !contact.name.trim() || !emailLooksValid) return;
     const t = setTimeout(
       () =>
         setPrefillSrc(
@@ -151,7 +151,7 @@ export default function IntakeModal({
             contact.email.trim()
           )}`
         ),
-      300
+      600
     );
     return () => clearTimeout(t);
   }, [isOpen, step, contact.name, contact.email, emailLooksValid, calendlyBase]);
@@ -264,8 +264,8 @@ export default function IntakeModal({
               </span>
               <span className="hidden text-xs text-vlz-lightgray sm:inline">•</span>
               <span className="hidden whitespace-nowrap text-xs font-medium uppercase tracking-widest text-vlz-gray sm:inline">
-                {step === 1 && 'Step 1 of 3: About Your Project'}
-                {step === 2 && 'Step 2 of 3: Contact Info'}
+                {step === 1 && 'Step 1 of 3: You & Your Project'}
+                {step === 2 && 'Step 2 of 3: More Details'}
                 {step === 3 && 'Step 3 of 3: Schedule Meeting'}
               </span>
             </div>
@@ -301,8 +301,12 @@ export default function IntakeModal({
           <div ref={scrollBodyRef} className="themed-scrollbar flex-1 overflow-y-auto p-6 sm:p-8">
             {/* STEP 1: Services + Project Scope */}
             {step === 1 && (
-              <motion.div
+              <motion.form
                 key="step1"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setStep(2);
+                }}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
@@ -316,6 +320,40 @@ export default function IntakeModal({
                   <p className="mt-1 text-sm text-vlz-gray">
                     Takes about a minute — this helps us prepare specific insights before our call.
                   </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
+                      Your Name *
+                    </label>
+                    <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
+                      <input
+                        type="text"
+                        required
+                        value={contact.name}
+                        onChange={(e) => setContact({ ...contact, name: e.target.value })}
+                        placeholder="John Smith"
+                        className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
+                      Work Email *
+                    </label>
+                    <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
+                      <input
+                        type="email"
+                        required
+                        value={contact.email}
+                        onChange={(e) => setContact({ ...contact, email: e.target.value })}
+                        placeholder="john@company.com"
+                        className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -423,9 +461,9 @@ export default function IntakeModal({
                 </div>
 
                 <div className="flex justify-end pt-4">
-                  <PrimaryButton onClick={() => setStep(2)}>CONTINUE</PrimaryButton>
+                  <PrimaryButton type="submit">CONTINUE</PrimaryButton>
                 </div>
-              </motion.div>
+              </motion.form>
             )}
 
             {/* STEP 2: Contact Info */}
@@ -441,45 +479,11 @@ export default function IntakeModal({
               >
                 <div>
                   <h2 className="text-2xl font-medium tracking-tight text-vlz-black sm:text-3xl">
-                    Who should Hamza connect with?
+                    A few more details
                   </h2>
                   <p className="mt-1 text-sm text-vlz-gray">
-                    We'll use this to send confirmation details and prepare your project breakdown.
+                    Optional, but it helps Hamza prepare your project breakdown before the call.
                   </p>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
-                      Your Name *
-                    </label>
-                    <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
-                      <input
-                        type="text"
-                        required
-                        value={contact.name}
-                        onChange={(e) => setContact({ ...contact, name: e.target.value })}
-                        placeholder="John Smith"
-                        className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-widest text-vlz-gray">
-                      Work Email *
-                    </label>
-                    <div className="rounded-xl border border-black/10 bg-vlz-offwhite transition-colors focus-within:border-vlz-red/40 focus-within:ring-2 focus-within:ring-vlz-red/20">
-                      <input
-                        type="email"
-                        required
-                        value={contact.email}
-                        onChange={(e) => setContact({ ...contact, email: e.target.value })}
-                        placeholder="john@company.com"
-                        className="w-full bg-transparent px-4 py-3 text-sm text-vlz-black placeholder:text-vlz-lightgray focus:outline-none"
-                      />
-                    </div>
-                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
