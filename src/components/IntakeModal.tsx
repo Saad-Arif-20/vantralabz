@@ -124,6 +124,8 @@ export default function IntakeModal({
       setPrefillSrc(null);
       setPrefillReadySrc(null);
       setUsePrefill(false);
+      setPlainHeight(620);
+      setPrefillHeight(620);
     }
     wasOpen.current = isOpen;
   }, [isOpen]);
@@ -139,6 +141,12 @@ export default function IntakeModal({
   // Which calendar step 3 shows is decided once, when the visitor clicks Next, and
   // never changes afterwards, so the calendar never reloads or flashes.
   const [usePrefill, setUsePrefill] = useState(false);
+  // Calendly reports how tall its content is; sizing the frame to it means the
+  // frame never scrolls internally (so picking a date doesn't jump it back to the
+  // top) and the modal's own scroll position is kept instead.
+  const [plainHeight, setPlainHeight] = useState(620);
+  const [prefillHeight, setPrefillHeight] = useState(620);
+  const plainFrameRef = useRef<HTMLIFrameElement>(null);
   const prefillFrameRef = useRef<HTMLIFrameElement>(null);
   const emailLooksValid = /\S+@\S+\.\S+/.test(contact.email);
 
@@ -160,11 +168,13 @@ export default function IntakeModal({
     const onMessage = (e: MessageEvent) => {
       if (e.origin !== 'https://calendly.com') return;
       const event = e.data?.event;
-      if (
-        e.source === prefillFrameRef.current?.contentWindow &&
-        event === 'calendly.event_type_viewed'
-      ) {
-        setPrefillReadySrc(prefillSrc);
+      const isPrefill = e.source === prefillFrameRef.current?.contentWindow;
+      if (isPrefill && event === 'calendly.event_type_viewed') setPrefillReadySrc(prefillSrc);
+      if (event === 'calendly.page_height') {
+        const h = parseInt(e.data?.payload?.height, 10);
+        if (!Number.isFinite(h)) return;
+        if (isPrefill) setPrefillHeight(h);
+        else if (e.source === plainFrameRef.current?.contentWindow) setPlainHeight(h);
       }
     };
     window.addEventListener('message', onMessage);
@@ -594,12 +604,14 @@ export default function IntakeModal({
               aria-hidden={step !== 3}
               className={
                 step === 3
-                  ? 'relative mt-6 h-[620px] overflow-hidden rounded-2xl border border-black/10 bg-vlz-white'
+                  ? 'relative mt-6 overflow-hidden rounded-2xl border border-black/10 bg-vlz-white'
                   : 'pointer-events-none fixed left-0 top-0 -z-10 h-[620px] w-[600px] opacity-0'
               }
+              style={step === 3 ? { height: Math.max(620, usePrefill ? prefillHeight : plainHeight) } : undefined}
             >
               <iframe
                 key={calendarKey}
+                ref={plainFrameRef}
                 src={calendlySrc}
                 width="100%"
                 height="620"
