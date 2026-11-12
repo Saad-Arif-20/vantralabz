@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Local MCP config (holds API keys/tokens)
+.mcp.json
+
+# Forms server secrets (SMTP password) — lives only on the VPS
+scripts/forms-server/.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +28,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Never commit private data, working notes or loose source media (repo is public)
+*.xlsx
+notes/
+/*.png
+/*.jpg
+/*.mp4
+scripts/forms-server/node_modules/
